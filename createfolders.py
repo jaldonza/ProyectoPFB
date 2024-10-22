@@ -20,10 +20,13 @@ folders = [
 # Crear las carpetas
 for folder in folders:
     os.makedirs(folder, exist_ok=True)
+    # Crear un archivo .gitkeep en cada carpeta
+    with open(os.path.join(folder, '.gitkeep'), 'w') as f:
+        pass
 
 # Crear archivos básicos
 open("YahooFinanceApp/.gitignore", 'a').close()
 open("YahooFinanceApp/README.md", 'a').close()
 open("YahooFinanceApp/requirements.txt", 'a').close()
 
-print("Estructura de carpetas creada con éxito")
+print("Estructura de carpetas creada con éxito y .gitkeep añadidos")
