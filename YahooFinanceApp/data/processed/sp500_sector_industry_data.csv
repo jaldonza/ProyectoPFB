@@ -1,0 +1,485 @@
+ID,Ticker,Company Name,Sector,Industry,Timestamp
+e4d7b994-c5cd-4c78-be4d-a3c6e8f8e547,A,"Agilent Technologies, Inc.",Healthcare,Diagnostics & Research,2024-10-26 10:59:48.067714
+3fbf15c0-a8c7-4693-a94f-18be81d78703,AAPL,Apple Inc.,Technology,Consumer Electronics,2024-10-26 10:59:48.067714
+25b4da4a-f02f-4aa0-b31b-c448024e4be9,ABBV,AbbVie Inc.,Healthcare,Drug Manufacturers - General,2024-10-26 10:59:48.067714
+0f4606cf-5b6e-4ea8-a3ec-42737466e167,ABMD,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+9391bb14-abef-4a9b-ab3a-6e894f8ddd06,ACN,Accenture plc,Technology,Information Technology Services,2024-10-26 10:59:48.067714
+8741e080-589f-4551-a076-d942351adb4d,ADBE,Adobe Inc.,Technology,Software - Infrastructure,2024-10-26 10:59:48.067714
+335a0544-42bb-4442-91a3-9e11a537ae25,ADI,"Analog Devices, Inc.",Technology,Semiconductors,2024-10-26 10:59:48.067714
+cf0a6c65-31e9-4749-8a34-f6f697790952,ADM,Archer-Daniels-Midland Company,Consumer Defensive,Farm Products,2024-10-26 10:59:48.067714
+322176b4-55d7-41d1-b647-d624ecfd339d,ADP,"Automatic Data Processing, Inc.",Technology,Software - Application,2024-10-26 10:59:48.067714
+b80b67b0-725c-4e1f-a61d-bb52f4d998bf,ADSK,"Autodesk, Inc.",Technology,Software - Application,2024-10-26 10:59:48.067714
+c648edd7-ea9b-4864-be00-c52e6df3bc1b,AEE,Ameren Corporation,Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+2287be25-edf3-46f2-8ee6-42d8e1fa9fe4,AEP,"American Electric Power Company, Inc.",Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+8e5bee46-9c94-461a-a24b-e96377769a6a,AES,The AES Corporation,Utilities,Utilities - Diversified,2024-10-26 10:59:48.067714
+b8a9ea0f-420a-443e-aaff-1bf080a845f5,AFL,Aflac Incorporated,Financial Services,Insurance - Life,2024-10-26 10:59:48.067714
+f2555cde-f509-49f4-9918-d8aacd01f199,AIG,"American International Group, Inc.",Financial Services,Insurance - Diversified,2024-10-26 10:59:48.067714
+43f9a394-abd6-42af-9567-0e3ef87fca76,AIZ,"Assurant, Inc.",Financial Services,Insurance - Property & Casualty,2024-10-26 10:59:48.067714
+0c5eef63-b792-4190-b121-8cf365a610ff,AJG,Arthur J. Gallagher & Co.,Financial Services,Insurance Brokers,2024-10-26 10:59:48.067714
+bca4a799-5fd0-4e20-93e8-8bba7ef8bf82,AKAM,"Akamai Technologies, Inc.",Technology,Software - Infrastructure,2024-10-26 10:59:48.067714
+59d0579e-3845-4dfa-b883-dd2ed890daa6,ALB,Albemarle Corporation,Basic Materials,Specialty Chemicals,2024-10-26 10:59:48.067714
+c1e3602a-39bb-436c-81ae-c2f1ed72f408,ALGN,"Align Technology, Inc.",Healthcare,Medical Instruments & Supplies,2024-10-26 10:59:48.067714
+e67d1713-b992-4e2f-b150-cf0c294099b1,ALK,"Alaska Air Group, Inc.",Industrials,Airlines,2024-10-26 10:59:48.067714
+f44a1768-43d0-42a8-8aaf-f9b0203d3a2a,ALL,The Allstate Corporation,Financial Services,Insurance - Property & Casualty,2024-10-26 10:59:48.067714
+afb62963-af20-4b6a-a799-f2d0a802ec48,AMAT,"Applied Materials, Inc.",Technology,Semiconductor Equipment & Materials,2024-10-26 10:59:48.067714
+efbc309f-9102-42bd-9438-1b44b90b0dc3,AMCR,Amcor plc,Consumer Cyclical,Packaging & Containers,2024-10-26 10:59:48.067714
+d29564a9-d7bc-4f34-ac9f-4156a421e848,AMD,"Advanced Micro Devices, Inc.",Technology,Semiconductors,2024-10-26 10:59:48.067714
+b6566439-e26b-40fc-b759-877785223772,AME,"AMETEK, Inc.",Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+d8ea2f9d-8def-4d6d-b901-9d843c6198cc,AMGN,Amgen Inc.,Healthcare,Drug Manufacturers - General,2024-10-26 10:59:48.067714
+eb2cecc3-0b84-4d3c-8b19-5728ada46b2c,AMP,"Ameriprise Financial, Inc.",Financial Services,Asset Management,2024-10-26 10:59:48.067714
+d4c83007-ee35-4060-94eb-92f2aa4458b2,AMT,American Tower Corporation,Real Estate,REIT - Specialty,2024-10-26 10:59:48.067714
+662b3ae9-399d-4628-bcda-54052e113ccb,AMZN,"Amazon.com, Inc.",Consumer Cyclical,Internet Retail,2024-10-26 10:59:48.067714
+7a403a19-0fa8-4266-8a83-8e5510487dd8,ANET,"Arista Networks, Inc.",Technology,Computer Hardware,2024-10-26 10:59:48.067714
+f0093d6d-11fa-4cf9-bc86-86806f1916d7,ANSS,"ANSYS, Inc.",Technology,Software - Application,2024-10-26 10:59:48.067714
+fb007ac8-1fe6-4297-bad0-24d4d980600a,AON,Aon plc,Financial Services,Insurance Brokers,2024-10-26 10:59:48.067714
+d35b8ba6-cff6-4a72-a55d-853415928e2b,AOS,A. O. Smith Corporation,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+4a54fe11-37c4-49c5-b373-2932ca85d481,APA,APA Corporation,Energy,Oil & Gas E&P,2024-10-26 10:59:48.067714
+0a099726-fde5-465f-9a65-fdca02ae1c83,APD,"Air Products and Chemicals, Inc.",Basic Materials,Specialty Chemicals,2024-10-26 10:59:48.067714
+d4e3edf7-c046-48f2-9180-e33bb94f39c4,APH,Amphenol Corporation,Technology,Electronic Components,2024-10-26 10:59:48.067714
+a6e245e6-12ee-4888-a1d8-f9d51bef93d8,ARE,"Alexandria Real Estate Equities, Inc.",Real Estate,REIT - Office,2024-10-26 10:59:48.067714
+22f5ae80-7eba-4812-b9f9-ebd4571b7a22,ATO,Atmos Energy Corporation,Utilities,Utilities - Regulated Gas,2024-10-26 10:59:48.067714
+78c587b9-2c34-442f-891f-fca3591f0363,ATVI,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+44baedbe-a80f-404d-b2ca-d2a6f38d1f73,AVB,"AvalonBay Communities, Inc.",Real Estate,REIT - Residential,2024-10-26 10:59:48.067714
+ccc601db-747d-4adf-a60b-66d10efd1158,AVGO,Broadcom Inc.,Technology,Semiconductors,2024-10-26 10:59:48.067714
+323034b7-3acb-4958-a796-c43d7609857e,AVY,Avery Dennison Corporation,Consumer Cyclical,Packaging & Containers,2024-10-26 10:59:48.067714
+aac3a3fb-3c5f-4ff9-80b7-fb096226fcde,AWK,"American Water Works Company, Inc.",Utilities,Utilities - Regulated Water,2024-10-26 10:59:48.067714
+a41e0873-420b-4560-938e-456077e83068,AXP,American Express Company,Financial Services,Credit Services,2024-10-26 10:59:48.067714
+4a5cbe7b-f240-4403-bddf-3e22f5862fc3,AZO,"AutoZone, Inc.",Consumer Cyclical,Specialty Retail,2024-10-26 10:59:48.067714
+70a1888c-4608-49f0-af69-840f186e71ff,BA,The Boeing Company,Industrials,Aerospace & Defense,2024-10-26 10:59:48.067714
+3a6acaed-9764-493a-9c80-85c96a335b2e,BAC,Bank of America Corporation,Financial Services,Banks - Diversified,2024-10-26 10:59:48.067714
+0876b1bb-8f2a-46a1-8d04-4f776a01a598,BALL,Ball Corporation,Consumer Cyclical,Packaging & Containers,2024-10-26 10:59:48.067714
+cc0cc3d4-e22a-4233-84c0-e9f7c933c1be,BAX,Baxter International Inc.,Healthcare,Medical Instruments & Supplies,2024-10-26 10:59:48.067714
+5050712d-2b73-4eb7-b6f4-6802987ebdd6,BBWI,"Bath & Body Works, Inc.",Consumer Cyclical,Specialty Retail,2024-10-26 10:59:48.067714
+3ce16a59-f245-4fea-ae11-73235447274d,BBY,"Best Buy Co., Inc.",Consumer Cyclical,Specialty Retail,2024-10-26 10:59:48.067714
+1311e48c-49f2-48a4-a923-ba91ac5a3d76,BIO,"Bio-Rad Laboratories, Inc.",Healthcare,Medical Devices,2024-10-26 10:59:48.067714
+39fb0a00-c125-4d68-be14-e8780c4af348,BK,The Bank of New York Mellon Corporation,Financial Services,Banks - Diversified,2024-10-26 10:59:48.067714
+2d7c73d6-00ae-4720-8941-1203147f4654,BKNG,Booking Holdings Inc.,Consumer Cyclical,Travel Services,2024-10-26 10:59:48.067714
+ab0809a7-1c63-4b54-90e4-d12c29a74e78,BKR,Baker Hughes Company,Energy,Oil & Gas Equipment & Services,2024-10-26 10:59:48.067714
+d9265652-8eaf-42d5-8256-1f50b0510fbb,BLK,"BlackRock, Inc.",Financial Services,Asset Management,2024-10-26 10:59:48.067714
+f5e77397-9508-4e46-9b49-1b581e935e1e,BLL,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+d8a6b7ed-f0c3-4076-b7a1-955a78b1dd28,BMY,Bristol-Myers Squibb Company,Healthcare,Drug Manufacturers - General,2024-10-26 10:59:48.067714
+c2d1cf34-2086-4e8f-8097-00ed1ad2bdca,BR,"Broadridge Financial Solutions, Inc.",Technology,Information Technology Services,2024-10-26 10:59:48.067714
+b9a3a774-cf35-4167-8fee-91cc6c7468a5,BRK.B,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+90e7f402-215a-4767-9b44-33e67cb92738,BRO,"Brown & Brown, Inc.",Financial Services,Insurance Brokers,2024-10-26 10:59:48.067714
+d781e514-2bea-404f-ba2d-5097794efd5d,BSX,Boston Scientific Corporation,Healthcare,Medical Devices,2024-10-26 10:59:48.067714
+76ab8580-61b3-4a74-869a-33e360d247f4,BWA,BorgWarner Inc.,Consumer Cyclical,Auto Parts,2024-10-26 10:59:48.067714
+645a9987-1211-486a-9efa-d28460ee3d80,BXP,"BXP, Inc.",Real Estate,REIT - Office,2024-10-26 10:59:48.067714
+15023b1d-f4bb-48ae-aa81-8c957c2fcb2f,C,Citigroup Inc.,Financial Services,Banks - Diversified,2024-10-26 10:59:48.067714
+5d3dc6a4-88fa-49f3-93cd-ac658c8a9d8b,CAG,"Conagra Brands, Inc.",Consumer Defensive,Packaged Foods,2024-10-26 10:59:48.067714
+b5af84a3-f252-4622-88ef-03ba710f0ab0,CAH,"Cardinal Health, Inc.",Healthcare,Medical Distribution,2024-10-26 10:59:48.067714
+987e503d-4296-49da-8602-411ec294ba41,CARR,Carrier Global Corporation,Industrials,Building Products & Equipment,2024-10-26 10:59:48.067714
+efdb32bc-29b9-4300-a7d2-fb0095d67429,CAT,Caterpillar Inc.,Industrials,Farm & Heavy Construction Machinery,2024-10-26 10:59:48.067714
+f4041380-8e22-4b2d-80ae-08815ea03fb7,CB,Chubb Limited,Financial Services,Insurance - Property & Casualty,2024-10-26 10:59:48.067714
+caffbe3d-559d-4abb-8002-7beacf706d41,CBOE,"Cboe Global Markets, Inc.",Financial Services,Financial Data & Stock Exchanges,2024-10-26 10:59:48.067714
+7cd0a948-22fc-4722-919a-0c935f263569,CBRE,"CBRE Group, Inc.",Real Estate,Real Estate Services,2024-10-26 10:59:48.067714
+fb74b7fa-f55f-4420-a760-bcfb5e5e4d44,CCI,Crown Castle Inc.,Real Estate,REIT - Specialty,2024-10-26 10:59:48.067714
+37735c74-f445-43fd-adad-8ca0aafac54d,CCL,Carnival Corporation & plc,Consumer Cyclical,Travel Services,2024-10-26 10:59:48.067714
+5b9cebf5-939b-47a9-a10b-3e6628d73674,CDAY,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+8eaaa31c-6947-4543-b340-0b4dfa9ed1f6,CDNS,"Cadence Design Systems, Inc.",Technology,Software - Application,2024-10-26 10:59:48.067714
+579273bd-e221-4e08-97b7-3f3b0ffb9172,CDW,CDW Corporation,Technology,Information Technology Services,2024-10-26 10:59:48.067714
+ddd8ae29-723b-49f0-8b15-9d5836568103,CE,Celanese Corporation,Basic Materials,Chemicals,2024-10-26 10:59:48.067714
+406ed4e1-f69b-4fea-a974-ccab0f904583,CERN,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+e4249362-0b9a-451a-86bb-95988f901ad8,CF,"CF Industries Holdings, Inc.",Basic Materials,Agricultural Inputs,2024-10-26 10:59:48.067714
+5ddead3a-aea4-48a7-888d-e25c467c82d3,CFG,"Citizens Financial Group, Inc.",Financial Services,Banks - Regional,2024-10-26 10:59:48.067714
+733a5d35-7693-4e1d-b799-57e28e0beffa,CHD,"Church & Dwight Co., Inc.",Consumer Defensive,Household & Personal Products,2024-10-26 10:59:48.067714
+befd37cb-89c2-481f-9719-edefc4d7a13f,CHRW,"C.H. Robinson Worldwide, Inc.",Industrials,Integrated Freight & Logistics,2024-10-26 10:59:48.067714
+49a6bcca-d502-42d2-90df-f7eea315b0ea,CHTR,"Charter Communications, Inc.",Communication Services,Telecom Services,2024-10-26 10:59:48.067714
+81e09dff-c091-4281-a508-6b429ec2101f,CI,The Cigna Group,Healthcare,Healthcare Plans,2024-10-26 10:59:48.067714
+5f606e92-2e7d-4a20-899b-bec70c5aa31b,CINF,Cincinnati Financial Corporation,Financial Services,Insurance - Property & Casualty,2024-10-26 10:59:48.067714
+7dc4458b-6d22-4601-b85b-ac37704a563c,CL,Colgate-Palmolive Company,Consumer Defensive,Household & Personal Products,2024-10-26 10:59:48.067714
+34f0073f-5a4a-444d-98ed-fca328a9b167,CLX,The Clorox Company,Consumer Defensive,Household & Personal Products,2024-10-26 10:59:48.067714
+50058f0f-a265-4604-854e-b3d161d6327d,CMA,Comerica Incorporated,Financial Services,Banks - Regional,2024-10-26 10:59:48.067714
+7983c826-34c0-4d22-97b5-9bc20a4d2ae3,CMCSA,Comcast Corporation,Communication Services,Telecom Services,2024-10-26 10:59:48.067714
+f753474f-b3f5-49e4-a339-e9ce0f4ac0e1,CME,CME Group Inc.,Financial Services,Financial Data & Stock Exchanges,2024-10-26 10:59:48.067714
+f8812f7e-d6e7-45b8-927c-0a9b86546869,CMG,"Chipotle Mexican Grill, Inc.",Consumer Cyclical,Restaurants,2024-10-26 10:59:48.067714
+886af950-504c-4fbd-be39-8dda8e2ed0d7,CMS,CMS Energy Corporation,Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+e9ac907c-da51-4a5c-8df3-a2ce51dcea28,CNC,Centene Corporation,Healthcare,Healthcare Plans,2024-10-26 10:59:48.067714
+14f10c87-fe46-4a74-a9c1-e7977c612c2e,CNP,"CenterPoint Energy, Inc.",Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+70b4aa84-a1ed-4231-850b-64077a4185d4,COF,Capital One Financial Corporation,Financial Services,Credit Services,2024-10-26 10:59:48.067714
+e7992f5a-b3b9-432f-a84a-ff238ee24d2d,COO,"The Cooper Companies, Inc.",Healthcare,Medical Instruments & Supplies,2024-10-26 10:59:48.067714
+8b12308f-5fdf-4a31-b5dd-72bfba54b359,COP,ConocoPhillips,Energy,Oil & Gas E&P,2024-10-26 10:59:48.067714
+1227a5eb-0445-4c1d-ac15-6988eb7a09aa,COST,Costco Wholesale Corporation,Consumer Defensive,Discount Stores,2024-10-26 10:59:48.067714
+a6253bfe-3178-4786-9dc1-c437449a4c47,CPB,Campbell Soup Company,Consumer Defensive,Packaged Foods,2024-10-26 10:59:48.067714
+59b5ffce-15b9-4bc9-814e-746a9df23731,CRL,"Charles River Laboratories International, Inc.",Healthcare,Diagnostics & Research,2024-10-26 10:59:48.067714
+7973c1bf-fed7-473e-b088-fbb6a5d69cdd,CRM,"Salesforce, Inc.",Technology,Software - Application,2024-10-26 10:59:48.067714
+451946e5-4efc-474e-ad84-9aac73e8be4a,CSCO,"Cisco Systems, Inc.",Technology,Communication Equipment,2024-10-26 10:59:48.067714
+d021bcbc-0a4c-477e-901c-a3b17df827ed,CSX,CSX Corporation,Industrials,Railroads,2024-10-26 10:59:48.067714
+9ad7dadf-482c-42bb-9ca0-47f9e6696def,CTAS,Cintas Corporation,Industrials,Specialty Business Services,2024-10-26 10:59:48.067714
+23db39c2-194b-46ce-a128-e1e0e1fc9e4b,CTLT,"Catalent, Inc.",Healthcare,Drug Manufacturers - Specialty & Generic,2024-10-26 10:59:48.067714
+e5c1dcc9-9cb9-410b-bbf6-47e6900f6860,CTRA,Coterra Energy Inc.,Energy,Oil & Gas E&P,2024-10-26 10:59:48.067714
+dfa433d1-1ec7-4d68-a850-8c5139a13020,CTSH,Cognizant Technology Solutions Corporation,Technology,Information Technology Services,2024-10-26 10:59:48.067714
+ed411c73-95ff-4e0b-a7b5-8784487b2ac5,CTVA,"Corteva, Inc.",Basic Materials,Agricultural Inputs,2024-10-26 10:59:48.067714
+8d3c5ee6-fa3d-4125-b41e-32199a06ffa9,CVS,CVS Health Corporation,Healthcare,Healthcare Plans,2024-10-26 10:59:48.067714
+4fe0e3fb-6b88-48cf-9f11-b11b6441b052,CVX,Chevron Corporation,Energy,Oil & Gas Integrated,2024-10-26 10:59:48.067714
+cb0aafbe-4891-4ceb-b517-0115912b289c,D,"Dominion Energy, Inc.",Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+54850286-f943-461a-a8d8-12fc2448e248,DAL,"Delta Air Lines, Inc.",Industrials,Airlines,2024-10-26 10:59:48.067714
+a54043c4-7393-4842-b179-c5bf52de30cc,DD,"DuPont de Nemours, Inc.",Basic Materials,Specialty Chemicals,2024-10-26 10:59:48.067714
+e3ba876f-19bf-4c6f-87f8-88ba1ea20b8f,DE,Deere & Company,Industrials,Farm & Heavy Construction Machinery,2024-10-26 10:59:48.067714
+bd05a443-6fce-4af6-9ea3-67e3593fbbd4,DFS,Discover Financial Services,Financial Services,Credit Services,2024-10-26 10:59:48.067714
+43c92844-1572-4ebb-90b0-0a513b336e08,DG,Dollar General Corporation,Consumer Defensive,Discount Stores,2024-10-26 10:59:48.067714
+06049434-eacb-46f5-8472-0d44f330a24e,DGX,Quest Diagnostics Incorporated,Healthcare,Diagnostics & Research,2024-10-26 10:59:48.067714
+f84aafa0-b882-40ac-bbe0-3c1a6274ad53,DHI,"D.R. Horton, Inc.",Consumer Cyclical,Residential Construction,2024-10-26 10:59:48.067714
+c10902fd-2f8b-485f-a71b-b49259278150,DHR,Danaher Corporation,Healthcare,Diagnostics & Research,2024-10-26 10:59:48.067714
+c8ec3ed4-ea79-4c75-8cf5-5ab6f2276563,DIS,The Walt Disney Company,Communication Services,Entertainment,2024-10-26 10:59:48.067714
+90e5cd45-0a04-4e39-9f4a-ddc2372c756a,DISCA,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+27df9dbb-b1f8-4238-98ca-b2fc1b97c744,DISCK,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+8eccc2e5-a488-4333-933d-2db8c8cb89e3,DISH,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+e3eee6a7-d941-47d4-a4ac-2d1b8a8064c3,DLR,"Digital Realty Trust, Inc.",Real Estate,REIT - Specialty,2024-10-26 10:59:48.067714
+cb6567fd-337a-4fa3-9299-92088083f9d1,DLTR,"Dollar Tree, Inc.",Consumer Defensive,Discount Stores,2024-10-26 10:59:48.067714
+87615588-cfab-4bc1-b189-0033904b638d,DOV,Dover Corporation,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+70e77dfd-f190-42c2-9cb1-c1d5cae0706e,DOW,Dow Inc.,Basic Materials,Chemicals,2024-10-26 10:59:48.067714
+a1a3c0f5-8d58-4f13-9b51-313d334fb637,DPZ,"Domino's Pizza, Inc.",Consumer Cyclical,Restaurants,2024-10-26 10:59:48.067714
+b4866507-c726-4b1a-a26f-8a56f94d4da3,DRE,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+66e9ce96-95f6-4905-9e60-66678bd17e94,DRI,"Darden Restaurants, Inc.",Consumer Cyclical,Restaurants,2024-10-26 10:59:48.067714
+8b62aef8-a8b3-4975-8b42-3b152c60462d,DTE,DTE Energy Company,Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+91b5d8ee-e64e-480a-a709-db2978ba36dc,DUK,Duke Energy Corporation,Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+675ba654-649e-49cf-9cf7-fdeb79e71d89,DVA,DaVita Inc.,Healthcare,Medical Care Facilities,2024-10-26 10:59:48.067714
+5612ecbb-e2bb-4e8b-a64f-45106298d062,DVN,Devon Energy Corporation,Energy,Oil & Gas E&P,2024-10-26 10:59:48.067714
+db619a30-d551-4270-a644-d77d0c82ca69,DXCM,"DexCom, Inc.",Healthcare,Medical Devices,2024-10-26 10:59:48.067714
+0647bf48-6548-4183-8f5b-9aa300a2c9fc,EA,Electronic Arts Inc.,Communication Services,Electronic Gaming & Multimedia,2024-10-26 10:59:48.067714
+a609b466-c08a-4c94-ba2f-da947523754e,EBAY,eBay Inc.,Consumer Cyclical,Internet Retail,2024-10-26 10:59:48.067714
+40ec5383-065d-4e37-acc0-2be2921df22c,ECL,Ecolab Inc.,Basic Materials,Specialty Chemicals,2024-10-26 10:59:48.067714
+318c3acf-783c-45cc-b935-81db744d2c23,ED,"Consolidated Edison, Inc.",Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+e9a2bc64-31ca-4455-8a37-23afa23198f1,EFX,Equifax Inc.,Industrials,Consulting Services,2024-10-26 10:59:48.067714
+cbef4d15-7918-4c66-a5d0-bd99d6052ff3,EIX,Edison International,Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+f7c2832e-76de-4353-91cb-572aee02b9de,EL,The Estée Lauder Companies Inc.,Consumer Defensive,Household & Personal Products,2024-10-26 10:59:48.067714
+36230987-c6ba-46db-9164-9c797a9dab4f,EMN,Eastman Chemical Company,Basic Materials,Specialty Chemicals,2024-10-26 10:59:48.067714
+509d9ef4-72eb-4998-8b59-1949b87d965f,EMR,Emerson Electric Co.,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+d51cef1e-7788-41a2-8b76-11bf6fa1a533,ENPH,"Enphase Energy, Inc.",Technology,Solar,2024-10-26 10:59:48.067714
+e20e7197-0dd7-4a25-b544-e1cd29c0da7a,EOG,"EOG Resources, Inc.",Energy,Oil & Gas E&P,2024-10-26 10:59:48.067714
+1b0952be-ac10-47a7-b24f-0e6d099a21a8,EPAM,"EPAM Systems, Inc.",Technology,Information Technology Services,2024-10-26 10:59:48.067714
+1019fbd5-6318-4778-92be-30355d7255ba,EQIX,"Equinix, Inc.",Real Estate,REIT - Specialty,2024-10-26 10:59:48.067714
+1ca2b1bf-2b67-4346-a042-b7e2f3cd29af,EQR,Equity Residential,Real Estate,REIT - Residential,2024-10-26 10:59:48.067714
+790d276f-c7d1-4bb5-82cb-21407edd6eb0,ES,Eversource Energy,Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+58dc476b-7281-4819-950f-a26736402c16,ESS,"Essex Property Trust, Inc.",Real Estate,REIT - Residential,2024-10-26 10:59:48.067714
+1a6a9f01-6fd5-4e8e-a0ca-0ebbf4718946,ETN,Eaton Corporation plc,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+ed0c25f5-5416-4c72-b2aa-2ce41e581569,ETR,Entergy Corporation,Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+6abe33f1-f5d5-436a-9323-a41779ab9873,EVRG,"Evergy, Inc.",Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+f7f7493f-f67b-4526-bdc3-f8810a78b80d,EW,Edwards Lifesciences Corporation,Healthcare,Medical Devices,2024-10-26 10:59:48.067714
+7827a86b-e217-47f3-b425-0c5630dcde69,EXC,Exelon Corporation,Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+8dbeb22d-b279-44e8-bd87-3878276f8800,EXPD,"Expeditors International of Washington, Inc.",Industrials,Integrated Freight & Logistics,2024-10-26 10:59:48.067714
+6fe23dd9-4e39-4162-85e6-5ac9b3a22300,EXPE,"Expedia Group, Inc.",Consumer Cyclical,Travel Services,2024-10-26 10:59:48.067714
+62690a63-bdad-4c8e-ab09-7ed3593b1d5b,EXR,Extra Space Storage Inc.,Real Estate,REIT - Industrial,2024-10-26 10:59:48.067714
+a633decd-c237-4b0c-9fcf-08663e4d06e1,F,Ford Motor Company,Consumer Cyclical,Auto Manufacturers,2024-10-26 10:59:48.067714
+744fff62-f628-49a1-b1a4-5394e22e24d9,FANG,"Diamondback Energy, Inc.",Energy,Oil & Gas E&P,2024-10-26 10:59:48.067714
+8de7c219-dd16-4073-bcb6-65c8e8617764,FAST,Fastenal Company,Industrials,Industrial Distribution,2024-10-26 10:59:48.067714
+c2670d7c-9f46-46dd-b97a-ef9b8e75fba3,FBHS,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+e4ba1033-7ceb-4ff2-a001-e60592a5facb,FCX,Freeport-McMoRan Inc.,Basic Materials,Copper,2024-10-26 10:59:48.067714
+6839122c-9c29-4f66-bd72-e1f02f8c4233,FDX,FedEx Corporation,Industrials,Integrated Freight & Logistics,2024-10-26 10:59:48.067714
+1bbdfb82-8fc4-467a-b816-fe732cbaf30d,FE,FirstEnergy Corp.,Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+39500f9c-c468-468b-8716-5b148c547f55,FFIV,"F5, Inc.",Technology,Software - Infrastructure,2024-10-26 10:59:48.067714
+ab46cd4e-f6a2-47c5-86ed-099d32b74bb3,FIS,"Fidelity National Information Services, Inc.",Technology,Information Technology Services,2024-10-26 10:59:48.067714
+fd4211f9-796e-47a0-a6db-e6afbbe30df8,FISV,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+eb6e80cc-5f3f-4073-9ec1-7c8b0ba66c8c,FITB,Fifth Third Bancorp,Financial Services,Banks - Regional,2024-10-26 10:59:48.067714
+00f082ed-01bf-429f-bf08-fe7bd61d3e21,FLIR,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+d2906220-e7b8-43dd-b31a-ee21a06040c1,FLS,Flowserve Corporation,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+c29b35bf-f3dd-4127-948f-ad5758f06478,FLT,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+cbae20a2-46c1-4653-baa2-4dc7b170e9b3,FMC,FMC Corporation,Basic Materials,Agricultural Inputs,2024-10-26 10:59:48.067714
+11f90c52-4f27-48ba-8119-277893c25019,FOX,Fox Corporation,Communication Services,Entertainment,2024-10-26 10:59:48.067714
+18e52160-7f72-4177-9186-9f51c2c3088c,FOXA,Fox Corporation,Communication Services,Entertainment,2024-10-26 10:59:48.067714
+54929406-4e8d-4866-93a4-2d96598790fe,FRC,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+58d27bca-3549-432f-994d-5a04654579f6,FRT,Federal Realty Investment Trust,Real Estate,REIT - Retail,2024-10-26 10:59:48.067714
+a256ccb4-3939-4448-b033-ba690fb71773,FTNT,"Fortinet, Inc.",Technology,Software - Infrastructure,2024-10-26 10:59:48.067714
+9151d5aa-5987-4c47-992f-7458b976f6c3,FTV,Fortive Corporation,Technology,Scientific & Technical Instruments,2024-10-26 10:59:48.067714
+abef605a-2fdd-436a-88f4-90fd82300390,GD,General Dynamics Corporation,Industrials,Aerospace & Defense,2024-10-26 10:59:48.067714
+bfb01850-267c-4812-ae32-a99f691c9da5,GE,GE Aerospace,Industrials,Aerospace & Defense,2024-10-26 10:59:48.067714
+c1f1f69c-028b-4e92-a145-d94c37517cc0,GILD,"Gilead Sciences, Inc.",Healthcare,Drug Manufacturers - General,2024-10-26 10:59:48.067714
+305b4389-505f-4a91-8943-a8c0f28582d3,GIS,"General Mills, Inc.",Consumer Defensive,Packaged Foods,2024-10-26 10:59:48.067714
+7fc548e4-21e1-445a-9636-4f797a979f42,GL,Globe Life Inc.,Financial Services,Insurance - Life,2024-10-26 10:59:48.067714
+fbb533d5-9e3a-40c9-9844-f30c43024698,GLW,Corning Incorporated,Technology,Electronic Components,2024-10-26 10:59:48.067714
+3505491c-0b1a-45c3-86af-5522723a301d,GM,General Motors Company,Consumer Cyclical,Auto Manufacturers,2024-10-26 10:59:48.067714
+c389fe4c-b861-4d90-9620-2a94b1f0e6ba,GNRC,Generac Holdings Inc.,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+54828ea5-60f5-408a-9bdd-7f3c8c1e7009,GOOG,Alphabet Inc.,Communication Services,Internet Content & Information,2024-10-26 10:59:48.067714
+bcda88ef-3681-418f-bd3e-2ed41394696f,GOOGL,Alphabet Inc.,Communication Services,Internet Content & Information,2024-10-26 10:59:48.067714
+9af5853c-3409-4c2b-993e-dd64a08be389,GPC,Genuine Parts Company,Consumer Cyclical,Auto Parts,2024-10-26 10:59:48.067714
+6444e406-97a6-4a3d-9cb7-2157c0a68a51,GPN,Global Payments Inc.,Industrials,Specialty Business Services,2024-10-26 10:59:48.067714
+01ba1dd5-6589-4d76-8d78-c7337ce021af,GRMN,Garmin Ltd.,Technology,Scientific & Technical Instruments,2024-10-26 10:59:48.067714
+7f8956ce-0d8c-4827-baf9-5178a0bde5e5,GS,"The Goldman Sachs Group, Inc.",Financial Services,Capital Markets,2024-10-26 10:59:48.067714
+a6cbe353-373d-4481-a2d7-98de8d3e1d85,GWW,"W.W. Grainger, Inc.",Industrials,Industrial Distribution,2024-10-26 10:59:48.067714
+690597d2-7142-4c7c-9a3e-c687d273ef72,HAL,Halliburton Company,Energy,Oil & Gas Equipment & Services,2024-10-26 10:59:48.067714
+5cb58ce6-b9a9-4b82-827d-3a6c05379a1c,HAS,"Hasbro, Inc.",Consumer Cyclical,Leisure,2024-10-26 10:59:48.067714
+554c9d9d-f265-406b-aa23-8a8849dadcbb,HBAN,Huntington Bancshares Incorporated,Financial Services,Banks - Regional,2024-10-26 10:59:48.067714
+b17748db-b377-4568-8f2d-c0c92f3ea49f,HBI,Hanesbrands Inc.,Consumer Cyclical,Apparel Manufacturing,2024-10-26 10:59:48.067714
+051ca2c9-daf2-419b-9887-ed456361328e,HCA,"HCA Healthcare, Inc.",Healthcare,Medical Care Facilities,2024-10-26 10:59:48.067714
+5b462c9b-fcfb-4025-b5bc-acddc11105c9,HD,"The Home Depot, Inc.",Consumer Cyclical,Home Improvement Retail,2024-10-26 10:59:48.067714
+8815438b-28ff-47e0-bcfd-16187606d502,HES,Hess Corporation,Energy,Oil & Gas E&P,2024-10-26 10:59:48.067714
+48626bac-769d-45fa-a9f1-f940936a97f8,HIG,"The Hartford Financial Services Group, Inc.",Financial Services,Insurance - Property & Casualty,2024-10-26 10:59:48.067714
+4a46fc25-f12b-425e-9cbf-c8876cc49513,HII,"Huntington Ingalls Industries, Inc.",Industrials,Aerospace & Defense,2024-10-26 10:59:48.067714
+8c4f17c3-87c6-4508-9ee8-9a54a87febdd,HLT,Hilton Worldwide Holdings Inc.,Consumer Cyclical,Lodging,2024-10-26 10:59:48.067714
+8ddef759-df32-40f8-a5e3-8664cc6c48d4,HOLX,"Hologic, Inc.",Healthcare,Medical Instruments & Supplies,2024-10-26 10:59:48.067714
+6a596baa-aa00-461e-bae4-5944e51d140b,HON,Honeywell International Inc.,Industrials,Conglomerates,2024-10-26 10:59:48.067714
+a3a17ad7-2418-43f2-a5d9-5e09b01255ad,HPE,Hewlett Packard Enterprise Company,Technology,Communication Equipment,2024-10-26 10:59:48.067714
+d5619919-c58f-4bcc-bb14-3ed135779277,HPQ,HP Inc.,Technology,Computer Hardware,2024-10-26 10:59:48.067714
+41288ad9-0556-4f59-bbf1-f04ba23b3b7a,HRL,Hormel Foods Corporation,Consumer Defensive,Packaged Foods,2024-10-26 10:59:48.067714
+46739b3e-b929-4dea-9bf8-9e5d39afd890,HSIC,"Henry Schein, Inc.",Healthcare,Medical Distribution,2024-10-26 10:59:48.067714
+228e8707-66bc-4119-83f1-4cd28bbd7c85,HST,"Host Hotels & Resorts, Inc.",Real Estate,REIT - Hotel & Motel,2024-10-26 10:59:48.067714
+f7611485-18a0-40f7-b5c4-53af06b07cc3,HSY,The Hershey Company,Consumer Defensive,Confectioners,2024-10-26 10:59:48.067714
+d7d2224c-0fdb-4860-9ccf-be1b34505549,HUM,Humana Inc.,Healthcare,Healthcare Plans,2024-10-26 10:59:48.067714
+71bc0d6c-8b48-4cc0-85ff-ae891e35b28e,HWM,Howmet Aerospace Inc.,Industrials,Aerospace & Defense,2024-10-26 10:59:48.067714
+8de89013-0807-45fd-a0fa-60f073aacdda,IBM,International Business Machines Corporation,Technology,Information Technology Services,2024-10-26 10:59:48.067714
+7b7680ee-375a-4a38-8c9f-b97f5b195edc,ICE,"Intercontinental Exchange, Inc.",Financial Services,Financial Data & Stock Exchanges,2024-10-26 10:59:48.067714
+23d11c21-a3aa-47ba-81e0-8c6dcb7946d0,IDXX,"IDEXX Laboratories, Inc.",Healthcare,Diagnostics & Research,2024-10-26 10:59:48.067714
+01382050-aff8-4a1b-a37f-6db06107b752,IEX,IDEX Corporation,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+8f5c73af-d1d3-4a44-a005-762151c96dca,IFF,International Flavors & Fragrances Inc.,Basic Materials,Specialty Chemicals,2024-10-26 10:59:48.067714
+19b472a5-6f82-4722-be06-066de96fa71f,ILMN,"Illumina, Inc.",Healthcare,Diagnostics & Research,2024-10-26 10:59:48.067714
+6d28881a-9446-4cee-9222-9431eb8b6bcc,INCY,Incyte Corporation,Healthcare,Biotechnology,2024-10-26 10:59:48.067714
+4beb793a-d7d8-4379-9102-c7c9c50523b8,INTC,Intel Corporation,Technology,Semiconductors,2024-10-26 10:59:48.067714
+d2132575-b051-4b07-b7ef-dc46fde25835,INTU,Intuit Inc.,Technology,Software - Application,2024-10-26 10:59:48.067714
+be95cb36-70ad-4510-9910-d96c0ef9f2b4,IP,International Paper Company,Consumer Cyclical,Packaging & Containers,2024-10-26 10:59:48.067714
+3483e480-a4f7-4352-a1e6-91a2adb9fcc3,IPG,"The Interpublic Group of Companies, Inc.",Communication Services,Advertising Agencies,2024-10-26 10:59:48.067714
+0db1c5a9-714c-4a60-a93d-4af5319efff7,IPGP,IPG Photonics Corporation,Technology,Semiconductor Equipment & Materials,2024-10-26 10:59:48.067714
+e7cc813e-f93b-414d-8864-46931f736830,IQV,IQVIA Holdings Inc.,Healthcare,Diagnostics & Research,2024-10-26 10:59:48.067714
+373f37ba-bfcc-46a7-b2de-f14c46fce07e,IR,Ingersoll Rand Inc.,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+b92d0259-2552-43f9-9616-0fa53f2b3282,IRM,Iron Mountain Incorporated,Real Estate,REIT - Specialty,2024-10-26 10:59:48.067714
+6e3db0f7-810c-439a-a29e-fbf8c600cf3b,ISRG,"Intuitive Surgical, Inc.",Healthcare,Medical Instruments & Supplies,2024-10-26 10:59:48.067714
+61e0f8c9-b76b-4c51-9d86-ccd272b9608c,IT,"Gartner, Inc.",Technology,Information Technology Services,2024-10-26 10:59:48.067714
+b4481363-92f0-4877-a4f5-4f447fae4a6e,ITW,Illinois Tool Works Inc.,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+c5cc0d36-f77a-4a87-9334-03f92c564dde,IVZ,Invesco Ltd.,Financial Services,Asset Management,2024-10-26 10:59:48.067714
+3ebc04a4-a407-45ec-921a-f9a1c0f943bf,J,Jacobs Solutions Inc.,Industrials,Engineering & Construction,2024-10-26 10:59:48.067714
+9d98170e-6a72-4644-9231-b6e721a9e184,JBHT,"J.B. Hunt Transport Services, Inc.",Industrials,Integrated Freight & Logistics,2024-10-26 10:59:48.067714
+e5327ab1-bad9-4f14-80cc-da8f69bbd2e4,JCI,Johnson Controls International plc,Industrials,Building Products & Equipment,2024-10-26 10:59:48.067714
+dad8caa3-4ed7-4df3-bfa3-6c3dbe3b346b,JKHY,"Jack Henry & Associates, Inc.",Technology,Information Technology Services,2024-10-26 10:59:48.067714
+42f4a858-de4b-4fe2-b566-8a3038ec43a2,JNJ,Johnson & Johnson,Healthcare,Drug Manufacturers - General,2024-10-26 10:59:48.067714
+e0795211-fc2d-4288-b963-069a0f644da4,JNPR,"Juniper Networks, Inc.",Technology,Communication Equipment,2024-10-26 10:59:48.067714
+601041f9-56df-44a5-8509-99376ce46bb2,JPM,JPMorgan Chase & Co.,Financial Services,Banks - Diversified,2024-10-26 10:59:48.067714
+8af8b12b-eece-4452-8fb5-9a1977665b3c,K,Kellanova,Consumer Defensive,Packaged Foods,2024-10-26 10:59:48.067714
+eef504b1-29af-41ab-9aab-442bc830e45d,KEY,KeyCorp,Financial Services,Banks - Regional,2024-10-26 10:59:48.067714
+348af2f3-6463-4f3e-8a62-51c38e66612d,KEYS,"Keysight Technologies, Inc.",Technology,Scientific & Technical Instruments,2024-10-26 10:59:48.067714
+3adc44c2-c8d9-42d1-b05d-9c3889912f29,KHC,The Kraft Heinz Company,Consumer Defensive,Packaged Foods,2024-10-26 10:59:48.067714
+75ce39ed-3d91-4daa-a665-b1e4007e43e5,KIM,Kimco Realty Corporation,Real Estate,REIT - Retail,2024-10-26 10:59:48.067714
+5556da3c-9ae9-4406-8df7-5e68b85044d4,KLAC,KLA Corporation,Technology,Semiconductor Equipment & Materials,2024-10-26 10:59:48.067714
+82ff3a0d-a847-4d34-a1cb-f9eb56866092,KMB,Kimberly-Clark Corporation,Consumer Defensive,Household & Personal Products,2024-10-26 10:59:48.067714
+607df93c-9bc0-4972-a04e-37b551c1d0ae,KMI,"Kinder Morgan, Inc.",Energy,Oil & Gas Midstream,2024-10-26 10:59:48.067714
+9584a3a7-eff7-4466-865d-ca3e1eb0f8cc,KO,The Coca-Cola Company,Consumer Defensive,Beverages - Non-Alcoholic,2024-10-26 10:59:48.067714
+67b74ab6-e0eb-4123-a2ff-91f6da680035,KR,The Kroger Co.,Consumer Defensive,Grocery Stores,2024-10-26 10:59:48.067714
+123858ad-909d-48f0-8b65-2614a98b6767,L,Loews Corporation,Financial Services,Insurance - Property & Casualty,2024-10-26 10:59:48.067714
+769eb8e8-fedb-4684-bbb1-882135861f6c,LDOS,"Leidos Holdings, Inc.",Technology,Information Technology Services,2024-10-26 10:59:48.067714
+37e8b46c-e7d7-4e51-b6c8-b3be988e701b,LEG,"Leggett & Platt, Incorporated",Consumer Cyclical,"Furnishings, Fixtures & Appliances",2024-10-26 10:59:48.067714
+16f4935b-d26b-4d7d-8c31-a315edd98a29,LEN,Lennar Corporation,Consumer Cyclical,Residential Construction,2024-10-26 10:59:48.067714
+ac45763c-5ac6-4a7c-ada6-9c0b3a215491,LH,Labcorp Holdings Inc.,Healthcare,Diagnostics & Research,2024-10-26 10:59:48.067714
+47b51c1e-6718-4562-9541-b2204f0e78c4,LHX,"L3Harris Technologies, Inc.",Industrials,Aerospace & Defense,2024-10-26 10:59:48.067714
+73aff3fd-01c1-4a11-90c7-04c98dc0e69d,LIN,Linde plc,Basic Materials,Specialty Chemicals,2024-10-26 10:59:48.067714
+36c17677-a098-4751-af2a-d11e8c350408,LKQ,LKQ Corporation,Consumer Cyclical,Auto Parts,2024-10-26 10:59:48.067714
+e53abd4d-5271-4332-8324-e2f7e05b9376,LMT,Lockheed Martin Corporation,Industrials,Aerospace & Defense,2024-10-26 10:59:48.067714
+b8d65698-4ce8-4ccc-bd7d-034cdf175ad8,LNC,Lincoln National Corporation,Financial Services,Insurance - Life,2024-10-26 10:59:48.067714
+c0209c65-ee6c-4444-9b44-7e0daf8d77f1,LNT,Alliant Energy Corporation,Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+0ec1d47f-9b30-43fb-921f-1e77a4edbad5,LOW,"Lowe's Companies, Inc.",Consumer Cyclical,Home Improvement Retail,2024-10-26 10:59:48.067714
+e769d564-4570-4c02-8ea7-da0a44071584,LRCX,Lam Research Corporation,Technology,Semiconductor Equipment & Materials,2024-10-26 10:59:48.067714
+5b4ee223-28fc-42a0-a9e4-753c0509cc45,LUMN,"Lumen Technologies, Inc.",Communication Services,Telecom Services,2024-10-26 10:59:48.067714
+7511e026-ec78-4f3c-b492-c22d31282a09,LUV,Southwest Airlines Co.,Industrials,Airlines,2024-10-26 10:59:48.067714
+e1cec0a3-52c4-407a-9eb0-e3b6f55d457e,LW,"Lamb Weston Holdings, Inc.",Consumer Defensive,Packaged Foods,2024-10-26 10:59:48.067714
+1c3147cd-8aab-4c6e-840a-52d90e30c99c,LYB,LyondellBasell Industries N.V.,Basic Materials,Specialty Chemicals,2024-10-26 10:59:48.067714
+05e6ae0c-6449-4919-bfd6-3b168830f691,LYV,"Live Nation Entertainment, Inc.",Communication Services,Entertainment,2024-10-26 10:59:48.067714
+cb82dc41-47d8-48f6-97ba-86951ca1f6e1,MA,Mastercard Incorporated,Financial Services,Credit Services,2024-10-26 10:59:48.067714
+15db9069-47f6-493e-9811-b3c1c5f531b0,MAA,"Mid-America Apartment Communities, Inc.",Real Estate,REIT - Residential,2024-10-26 10:59:48.067714
+4cdd8f85-4309-46df-98b9-b8417145cc8d,MAR,"Marriott International, Inc.",Consumer Cyclical,Lodging,2024-10-26 10:59:48.067714
+e70047cd-1ee7-41b7-ab14-57ce820540a5,MAS,Masco Corporation,Industrials,Building Products & Equipment,2024-10-26 10:59:48.067714
+09952ece-044c-4b32-a1e8-5e0e5f86c2b2,MCD,McDonald's Corporation,Consumer Cyclical,Restaurants,2024-10-26 10:59:48.067714
+49f63d38-d831-4e55-a157-b91997b22126,MCHP,Microchip Technology Incorporated,Technology,Semiconductors,2024-10-26 10:59:48.067714
+83b4058f-f292-49b2-912d-a4b20f6e841d,MCK,McKesson Corporation,Healthcare,Medical Distribution,2024-10-26 10:59:48.067714
+437f0ef1-6f5a-4f75-a3cc-88cc0f33c1c6,MCO,Moody's Corporation,Financial Services,Financial Data & Stock Exchanges,2024-10-26 10:59:48.067714
+bbf5932a-d1b2-4843-a101-2fdeb0d9f94f,MDLZ,"Mondelez International, Inc.",Consumer Defensive,Confectioners,2024-10-26 10:59:48.067714
+59daa54b-71df-4a0b-b93b-6dd66b10a739,MDT,Medtronic plc,Healthcare,Medical Devices,2024-10-26 10:59:48.067714
+1bf8e21b-c28b-4a42-a4d7-86d83bcba7c8,MET,"MetLife, Inc.",Financial Services,Insurance - Life,2024-10-26 10:59:48.067714
+a1713e1c-ef59-4613-bd37-0fbe551295d6,MGM,MGM Resorts International,Consumer Cyclical,Resorts & Casinos,2024-10-26 10:59:48.067714
+f9571a74-c5ca-4ef1-b2bc-9c70d1d3b25b,MHK,"Mohawk Industries, Inc.",Consumer Cyclical,"Furnishings, Fixtures & Appliances",2024-10-26 10:59:48.067714
+00904973-35bb-45ec-a332-ba9193ee65fd,MKC,"McCormick & Company, Incorporated",Consumer Defensive,Packaged Foods,2024-10-26 10:59:48.067714
+d385c195-06bf-40c5-bb0d-7821bbe4ebfc,MKTX,MarketAxess Holdings Inc.,Financial Services,Capital Markets,2024-10-26 10:59:48.067714
+e843c64d-b092-400b-be38-ea2d12dded67,MLM,"Martin Marietta Materials, Inc.",Basic Materials,Building Materials,2024-10-26 10:59:48.067714
+18e22d26-db25-4802-b02f-56e5fb04fd8f,MMC,"Marsh & McLennan Companies, Inc.",Financial Services,Insurance Brokers,2024-10-26 10:59:48.067714
+6eaa9474-daad-42fc-a469-1db7c432b1ff,MMM,3M Company,Industrials,Conglomerates,2024-10-26 10:59:48.067714
+4b43055d-b5ef-4f2f-8185-05632e2aa58a,MNST,Monster Beverage Corporation,Consumer Defensive,Beverages - Non-Alcoholic,2024-10-26 10:59:48.067714
+3a3e2720-55df-4c9f-a360-d6cc3e48a4cb,MO,"Altria Group, Inc.",Consumer Defensive,Tobacco,2024-10-26 10:59:48.067714
+49ae07e4-f2a1-463a-bb0a-28fbca40bf24,MOS,The Mosaic Company,Basic Materials,Agricultural Inputs,2024-10-26 10:59:48.067714
+6c5d08c3-fce9-4a3e-b50c-2644b08831f1,MPC,Marathon Petroleum Corporation,Energy,Oil & Gas Refining & Marketing,2024-10-26 10:59:48.067714
+bb77fe05-af24-4ed6-be28-a28a681e72e8,MPWR,"Monolithic Power Systems, Inc.",Technology,Semiconductors,2024-10-26 10:59:48.067714
+ca8d84a5-236e-47fe-b701-36a53a235983,MRK,"Merck & Co., Inc.",Healthcare,Drug Manufacturers - General,2024-10-26 10:59:48.067714
+1cdf897b-5782-47f6-b20f-89bdc36718b6,MRO,Marathon Oil Corporation,Energy,Oil & Gas E&P,2024-10-26 10:59:48.067714
+2756313c-aea1-46c6-bd5e-753602f5b40a,MS,Morgan Stanley,Financial Services,Capital Markets,2024-10-26 10:59:48.067714
+28cbf1e5-175b-44f4-b41f-56c656c08689,MSCI,MSCI Inc.,Financial Services,Financial Data & Stock Exchanges,2024-10-26 10:59:48.067714
+d1e188d1-49ab-4866-9b5d-eb5e83987079,MSFT,Microsoft Corporation,Technology,Software - Infrastructure,2024-10-26 10:59:48.067714
+e3307df6-eabe-48f0-bbea-243ec1db4020,MSI,"Motorola Solutions, Inc.",Technology,Communication Equipment,2024-10-26 10:59:48.067714
+70e59f3a-81e2-44dc-a999-b6d5d430afbb,MTB,M&T Bank Corporation,Financial Services,Banks - Regional,2024-10-26 10:59:48.067714
+3a5f0a7f-6a34-434e-99f2-8e36af4d068d,MTD,Mettler-Toledo International Inc.,Healthcare,Diagnostics & Research,2024-10-26 10:59:48.067714
+a5202172-4280-4d1a-b12a-3d7155b931da,MU,"Micron Technology, Inc.",Technology,Semiconductors,2024-10-26 10:59:48.067714
+6ca960df-8b8f-4202-9022-68a53a87e1d1,NCLH,Norwegian Cruise Line Holdings Ltd.,Consumer Cyclical,Travel Services,2024-10-26 10:59:48.067714
+d221cef0-1022-4160-b30f-d18d80b1a38a,NDAQ,"Nasdaq, Inc.",Financial Services,Financial Data & Stock Exchanges,2024-10-26 10:59:48.067714
+9acf8388-8c6a-402e-97c3-743304f41476,NDSN,Nordson Corporation,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+fcfaf020-ebc2-4a08-adb1-4ed87241c053,NEE,"NextEra Energy, Inc.",Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+88e88823-0ba1-41b0-831a-addedb465d88,NEM,Newmont Corporation,Basic Materials,Gold,2024-10-26 10:59:48.067714
+d5399cf8-f9af-4312-a17d-66bbe3dd8eb2,NFLX,"Netflix, Inc.",Communication Services,Entertainment,2024-10-26 10:59:48.067714
+0731f184-ac06-47e6-8dbc-1d079ee81039,NI,NiSource Inc.,Utilities,Utilities - Regulated Gas,2024-10-26 10:59:48.067714
+66443e01-77e1-4879-870c-9e5e79a40ea9,NKE,"NIKE, Inc.",Consumer Cyclical,Footwear & Accessories,2024-10-26 10:59:48.067714
+02c96f27-0047-4612-90f1-e2781b44e88b,NLOK,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+e1beb365-a9cc-4105-a5b5-8e128fe38240,NLSN,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+68ae1489-3a2d-4ce8-a1bc-21c6e0fdf986,NOC,Northrop Grumman Corporation,Industrials,Aerospace & Defense,2024-10-26 10:59:48.067714
+fa10d643-7bd8-4e84-89d6-a39bbca06a3c,NOV,NOV Inc.,Energy,Oil & Gas Equipment & Services,2024-10-26 10:59:48.067714
+75346a21-a067-471f-84c9-c8218894abcd,NOW,"ServiceNow, Inc.",Technology,Software - Application,2024-10-26 10:59:48.067714
+9a59088b-f252-4976-b94c-d84a48a44b4b,NRG,"NRG Energy, Inc.",Utilities,Utilities - Independent Power Producers,2024-10-26 10:59:48.067714
+fdf616b7-4b04-4966-92bc-4f10f70aea3f,NSC,Norfolk Southern Corporation,Industrials,Railroads,2024-10-26 10:59:48.067714
+b8360bd9-5dcf-4807-af1c-14337d69ec29,NTAP,"NetApp, Inc.",Technology,Computer Hardware,2024-10-26 10:59:48.067714
+2268f0aa-1178-4b5e-8961-0bf2ce3eac71,NTRS,Northern Trust Corporation,Financial Services,Asset Management,2024-10-26 10:59:48.067714
+be47edd3-b98e-4288-a555-67d1a61293d2,NUE,Nucor Corporation,Basic Materials,Steel,2024-10-26 10:59:48.067714
+9c7a8a5c-2fec-489d-90d8-6aa3216addaf,NVDA,NVIDIA Corporation,Technology,Semiconductors,2024-10-26 10:59:48.067714
+dabb2536-2125-44b8-bf8e-133b56c101db,NVR,"NVR, Inc.",Consumer Cyclical,Residential Construction,2024-10-26 10:59:48.067714
+5e971e87-113c-451c-82cc-672ed49cf81f,NWL,Newell Brands Inc.,Consumer Defensive,Household & Personal Products,2024-10-26 10:59:48.067714
+942765a3-a21d-4981-aa94-5240a72728e4,NWS,News Corporation,Communication Services,Entertainment,2024-10-26 10:59:48.067714
+ac81375e-9ca2-407d-b95f-e80ea24c588d,NWSA,News Corporation,Communication Services,Entertainment,2024-10-26 10:59:48.067714
+0534cf8e-4c08-4b19-b5e8-b0ce6c72b626,NXPI,NXP Semiconductors N.V.,Technology,Semiconductors,2024-10-26 10:59:48.067714
+f018e713-c071-42f5-a970-2f8c3fb5d74e,O,Realty Income Corporation,Real Estate,REIT - Retail,2024-10-26 10:59:48.067714
+9336c3cf-f503-4055-8552-f814d5cd0b3f,ODFL,"Old Dominion Freight Line, Inc.",Industrials,Trucking,2024-10-26 10:59:48.067714
+a6b3ed87-91ec-4973-9967-cc1900a2adfe,OKE,"ONEOK, Inc.",Energy,Oil & Gas Midstream,2024-10-26 10:59:48.067714
+1ccf37ad-aa45-4d73-8f39-d18584baaca2,OMC,Omnicom Group Inc.,Communication Services,Advertising Agencies,2024-10-26 10:59:48.067714
+ad71a0dc-ac5f-46ff-a18c-fe5b043d89d9,ORCL,Oracle Corporation,Technology,Software - Infrastructure,2024-10-26 10:59:48.067714
+443c23a7-fb5a-412b-879b-a1f1b1ac29a8,ORLY,"O'Reilly Automotive, Inc.",Consumer Cyclical,Specialty Retail,2024-10-26 10:59:48.067714
+e8a5109d-2dc9-41ab-a811-439673c53b85,OTIS,Otis Worldwide Corporation,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+19f9c016-c47c-41d0-a72d-cc1f00942358,OXY,Occidental Petroleum Corporation,Energy,Oil & Gas E&P,2024-10-26 10:59:48.067714
+5620825a-03b9-43be-a48e-07ca9d8977d2,PARA,Paramount Global,Communication Services,Entertainment,2024-10-26 10:59:48.067714
+53e33843-79bc-4fd8-b468-20dbac87fe1c,PAYC,"Paycom Software, Inc.",Technology,Software - Application,2024-10-26 10:59:48.067714
+9cee79de-6a6a-472b-ac61-cf4ee20a4d7e,PAYX,"Paychex, Inc.",Technology,Software - Application,2024-10-26 10:59:48.067714
+7662945e-b382-47b6-87f5-deee6c5ad0c1,PBCT,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+5df94dba-0373-485c-88d4-e355b8d9869f,PCAR,PACCAR Inc,Industrials,Farm & Heavy Construction Machinery,2024-10-26 10:59:48.067714
+c5358b2d-e515-4c04-96e1-3c8f54e55fb8,PEAK,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+81417acb-2978-4625-bae3-79df4640ea12,PEG,Public Service Enterprise Group Incorporated,Utilities,Utilities - Regulated Electric,2024-10-26 10:59:48.067714
+3d467d0d-093f-4c27-a384-967d320801bd,PENN,"PENN Entertainment, Inc.",Consumer Cyclical,Resorts & Casinos,2024-10-26 10:59:48.067714
+a2cf48a6-edd9-44e4-985b-e8b1fce6190c,PEP,"PepsiCo, Inc.",Consumer Defensive,Beverages - Non-Alcoholic,2024-10-26 10:59:48.067714
+92aa6695-470f-4705-a49f-981d150e439f,PFE,Pfizer Inc.,Healthcare,Drug Manufacturers - General,2024-10-26 10:59:48.067714
+c1d28401-363f-4438-925e-39f23ed0a529,PFG,"Principal Financial Group, Inc.",Financial Services,Asset Management,2024-10-26 10:59:48.067714
+cea03d83-0bf8-4b55-b368-bbda4d404848,PG,The Procter & Gamble Company,Consumer Defensive,Household & Personal Products,2024-10-26 10:59:48.067714
+fc7cb21f-d3e6-4ffd-980e-8a213f73be5c,PGR,The Progressive Corporation,Financial Services,Insurance—Property & Casualty,2024-10-26 10:59:48.067714
+63e18cc1-3f9c-4684-9570-a5b6b30b01d6,PH,Parker-Hannifin Corporation,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+063f9e01-8c7b-41c8-894f-bd5bc7480fd1,PHM,"PulteGroup, Inc.",Consumer Cyclical,Residential Construction,2024-10-26 10:59:48.067714
+c1604f44-f15a-46aa-a3d0-33b56c18e673,PKG,Packaging Corporation of America,Consumer Cyclical,Packaging & Containers,2024-10-26 10:59:48.067714
+823519da-7a67-4953-903f-57873b771ed7,PKI,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+d16f13f5-460b-4cd1-8306-2c303af0625f,PLD,"Prologis, Inc.",Real Estate,REIT—Industrial,2024-10-26 10:59:48.067714
+0099cbe1-0c83-4be2-abb9-292f6404f165,PM,Philip Morris International Inc.,Consumer Defensive,Tobacco,2024-10-26 10:59:48.067714
+e25ad91c-3d64-4a2b-bf04-b4e98be0a5ca,PNC,"The PNC Financial Services Group, Inc.",Financial Services,Banks—Regional,2024-10-26 10:59:48.067714
+a85efddc-9444-471c-958a-f4f224fde1f3,PNR,Pentair plc,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+50ec2472-61b5-4480-bd6d-d2e841c00347,PNW,Pinnacle West Capital Corporation,Utilities,Utilities—Regulated Electric,2024-10-26 10:59:48.067714
+b112cf8a-3903-4a75-ab2e-3a7fdc9b71c6,POOL,Pool Corporation,Industrials,Industrial Distribution,2024-10-26 10:59:48.067714
+aa1ccb42-718d-4286-bca5-92e35af138bc,PPG,"PPG Industries, Inc.",Basic Materials,Specialty Chemicals,2024-10-26 10:59:48.067714
+a42cc72d-7df7-4620-b829-d9259eb25348,PPL,PPL Corporation,Utilities,Utilities—Regulated Electric,2024-10-26 10:59:48.067714
+f4b287be-ef84-4b8b-b1f2-63949a715a77,PRGO,Perrigo Company plc,Healthcare,Drug Manufacturers—Specialty & Generic,2024-10-26 10:59:48.067714
+e34bf750-65c9-4eec-8702-ff56215e1254,PRU,"Prudential Financial, Inc.",Financial Services,Insurance—Life,2024-10-26 10:59:48.067714
+8c7b3772-9a72-418a-9195-241b1c333eb1,PSA,Public Storage,Real Estate,REIT—Industrial,2024-10-26 10:59:48.067714
+1195ea0c-6597-45a7-a8da-96c475fba08c,PSX,Phillips 66,Energy,Oil & Gas Refining & Marketing,2024-10-26 10:59:48.067714
+c0c41ecf-fd69-445d-b397-ad700518ac64,PVH,PVH Corp.,Consumer Cyclical,Apparel Manufacturing,2024-10-26 10:59:48.067714
+2771d288-768e-4544-8ef9-babf4a05156d,PWR,"Quanta Services, Inc.",Industrials,Engineering & Construction,2024-10-26 10:59:48.067714
+d65bf871-9f83-4775-86a6-88f1cf044ec2,PXD,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+480a3fc7-c9bc-4304-8bfa-bc270474c3ac,PYPL,"PayPal Holdings, Inc.",Financial Services,Credit Services,2024-10-26 10:59:48.067714
+a60b4533-5e6e-4d2e-a0e2-5b02191d8621,QCOM,QUALCOMM Incorporated,Technology,Semiconductors,2024-10-26 10:59:48.067714
+66bd2121-c1d4-4823-b00b-7d24bb72f20e,QRVO,"Qorvo, Inc.",Technology,Semiconductors,2024-10-26 10:59:48.067714
+b886c1de-d99c-4ced-97e0-c658f3a6e39a,RCL,Royal Caribbean Cruises Ltd.,Consumer Cyclical,Travel Services,2024-10-26 10:59:48.067714
+1c2cbe51-ff9b-464b-83b1-85073152d651,RE,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+cd3eaea3-bc09-4896-acab-b7bfc367121d,REG,Regency Centers Corporation,Real Estate,REIT—Retail,2024-10-26 10:59:48.067714
+b86c4024-556a-41c3-8bf2-2bb81208efb1,REGN,"Regeneron Pharmaceuticals, Inc.",Healthcare,Biotechnology,2024-10-26 10:59:48.067714
+a3adb239-9e51-4b0a-b39c-b4d6ce34766f,RF,Regions Financial Corporation,Financial Services,Banks—Regional,2024-10-26 10:59:48.067714
+53993db0-f381-4377-b85f-66edd78a099b,RHI,Robert Half Inc.,Industrials,Staffing & Employment Services,2024-10-26 10:59:48.067714
+b9d6d7f3-0bd8-4a9b-8f1b-634daa28c144,RJF,"Raymond James Financial, Inc.",Financial Services,Asset Management,2024-10-26 10:59:48.067714
+75adead8-6fdc-434d-bb72-0b458806bc92,RL,Ralph Lauren Corporation,Consumer Cyclical,Apparel Manufacturing,2024-10-26 10:59:48.067714
+ff0f2307-720a-4be7-b6fc-b51461211ea2,RMD,ResMed Inc.,Healthcare,Medical Instruments & Supplies,2024-10-26 10:59:48.067714
+cc39fae7-31fe-47d5-8ee7-231cb0ab0697,ROK,"Rockwell Automation, Inc.",Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+7bd678e6-7600-42ea-9019-1b16292de407,ROL,"Rollins, Inc.",Consumer Cyclical,Personal Services,2024-10-26 10:59:48.067714
+5b5d6889-5d71-4f70-a84d-4ec2099f89c0,ROP,"Roper Technologies, Inc.",Technology,Software—Application,2024-10-26 10:59:48.067714
+3826f27c-0321-463c-8c7a-510951e9ccf3,ROST,"Ross Stores, Inc.",Consumer Cyclical,Apparel Retail,2024-10-26 10:59:48.067714
+5bcd2d82-56fe-4da3-843d-93715e1c9fcc,RSG,"Republic Services, Inc.",Industrials,Waste Management,2024-10-26 10:59:48.067714
+5c617054-6ed2-4ac3-96d2-7376e3287ef9,RTX,RTX Corporation,Industrials,Aerospace & Defense,2024-10-26 10:59:48.067714
+b71a988f-9729-4433-b0db-98b2ba425379,SBAC,SBA Communications Corporation,Real Estate,REIT—Specialty,2024-10-26 10:59:48.067714
+4802bb93-5687-4880-9bda-a50bbe7d3bfe,SBNY,Signature Bank,Financial Services,Banks—Regional,2024-10-26 10:59:48.067714
+669c2c61-05f6-4049-814c-259621297b8c,SBUX,Starbucks Corporation,Consumer Cyclical,Restaurants,2024-10-26 10:59:48.067714
+750d9fbf-fcf9-4f5c-ade8-e3ca8a8eaaae,SCHW,The Charles Schwab Corporation,Financial Services,Capital Markets,2024-10-26 10:59:48.067714
+864d558c-3e7d-445b-8143-7d2b8fa5d0cb,SEE,Sealed Air Corporation,Consumer Cyclical,Packaging & Containers,2024-10-26 10:59:48.067714
+fe82abbe-9eaa-4697-b9db-e9be28d9243b,SHW,The Sherwin-Williams Company,Basic Materials,Specialty Chemicals,2024-10-26 10:59:48.067714
+cc46db8d-31c9-4182-ac97-b3bd5ef23a8c,SIVB,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+905fdfe9-0905-42f6-99bc-e72340b2b117,SJM,The J. M. Smucker Company,Consumer Defensive,Packaged Foods,2024-10-26 10:59:48.067714
+54f69ef1-9cac-4223-ad8c-0c5c1df51af0,SLB,Schlumberger Limited,Energy,Oil & Gas Equipment & Services,2024-10-26 10:59:48.067714
+8c5e23d1-8478-40d7-9775-6c88670376e7,SNA,Snap-on Incorporated,Industrials,Tools & Accessories,2024-10-26 10:59:48.067714
+e87b9feb-9a19-45e0-b6df-cbf6f0fb71c2,SNPS,"Synopsys, Inc.",Technology,Software—Infrastructure,2024-10-26 10:59:48.067714
+3ff04c55-f37e-4213-baea-231e7e6b45b5,SO,The Southern Company,Utilities,Utilities—Regulated Electric,2024-10-26 10:59:48.067714
+5196ed91-e7df-49e4-a1eb-608654d005f6,SPG,"Simon Property Group, Inc.",Real Estate,REIT—Retail,2024-10-26 10:59:48.067714
+501ed822-9755-46f8-bab3-8e01ffd885d7,SPGI,S&P Global Inc.,Financial Services,Financial Data & Stock Exchanges,2024-10-26 10:59:48.067714
+159ef31c-255e-4ed6-9718-1d54887d6a76,SRE,Sempra,Utilities,Utilities—Diversified,2024-10-26 10:59:48.067714
+17b87371-9144-4da4-b069-02b4700fc734,STE,STERIS plc,Healthcare,Medical Devices,2024-10-26 10:59:48.067714
+2ff08d42-b9ad-4abe-a749-f2159c0575bc,STT,State Street Corporation,Financial Services,Asset Management,2024-10-26 10:59:48.067714
+cf044f30-cf7a-462a-acd5-a769e0e08b4c,STX,Seagate Technology Holdings plc,Technology,Computer Hardware,2024-10-26 10:59:48.067714
+474d6d56-2a21-4362-8c4e-71f990b7aa31,STZ,"Constellation Brands, Inc.",Consumer Defensive,Beverages—Brewers,2024-10-26 10:59:48.067714
+8fd95804-20a9-4f48-ad15-72ba65e3a88f,SWK,"Stanley Black & Decker, Inc.",Industrials,Tools & Accessories,2024-10-26 10:59:48.067714
+8f6c510b-65d4-48e7-a52a-1698721945ce,SWKS,"Skyworks Solutions, Inc.",Technology,Semiconductors,2024-10-26 10:59:48.067714
+f4004b98-5dc1-41fc-901d-b6e471225343,SYF,Synchrony Financial,Financial Services,Credit Services,2024-10-26 10:59:48.067714
+0f324ca7-98e7-4781-8867-78f8f1422944,SYK,Stryker Corporation,Healthcare,Medical Devices,2024-10-26 10:59:48.067714
+c560f0f8-d065-4e60-9269-0e9b2b8632f5,SYY,Sysco Corporation,Consumer Defensive,Food Distribution,2024-10-26 10:59:48.067714
+90c9c5c9-8c78-45d2-979b-943ac3cb516f,T,AT&T Inc.,Communication Services,Telecom Services,2024-10-26 10:59:48.067714
+a68a9d01-e79a-4b69-bb10-31bc8c8c2fb2,TAP,Molson Coors Beverage Company,Consumer Defensive,Beverages—Brewers,2024-10-26 10:59:48.067714
+1aa54d10-f132-4ebf-8e00-063f4d0245c2,TDG,TransDigm Group Incorporated,Industrials,Aerospace & Defense,2024-10-26 10:59:48.067714
+93b66e01-08e3-4cbb-bff7-0bf8121ef887,TDY,Teledyne Technologies Incorporated,Technology,Scientific & Technical Instruments,2024-10-26 10:59:48.067714
+4a90f8c5-a089-466a-a8b2-613a1472a95c,TEL,TE Connectivity plc,Technology,Electronic Components,2024-10-26 10:59:48.067714
+edcdd6ef-5c80-4c41-b37e-833e2dbd259e,TER,"Teradyne, Inc.",Technology,Semiconductor Equipment & Materials,2024-10-26 10:59:48.067714
+d822001c-2c72-4143-a72a-4fcbaaae0034,TFC,Truist Financial Corporation,Financial Services,Banks—Regional,2024-10-26 10:59:48.067714
+04a680c9-0945-48ae-bb76-b645ce27b200,TFX,Teleflex Incorporated,Healthcare,Medical Instruments & Supplies,2024-10-26 10:59:48.067714
+304704b6-dae4-4e9a-b7eb-cfc40cb65c17,TGT,Target Corporation,Consumer Defensive,Discount Stores,2024-10-26 10:59:48.067714
+09eb2546-9e7a-497b-849e-b406b621a63f,TJX,"The TJX Companies, Inc.",Consumer Cyclical,Apparel Retail,2024-10-26 10:59:48.067714
+17924f30-d9a6-4501-a514-a45d5b16854a,TMO,Thermo Fisher Scientific Inc.,Healthcare,Diagnostics & Research,2024-10-26 10:59:48.067714
+9cf29f52-97e2-405f-9ba2-1ce5afa0ea20,TMUS,"T-Mobile US, Inc.",Communication Services,Telecom Services,2024-10-26 10:59:48.067714
+a1109d97-6786-4493-86ad-59ede243dc4c,TPR,"Tapestry, Inc.",Consumer Cyclical,Luxury Goods,2024-10-26 10:59:48.067714
+3043d0a0-ca9f-48c8-8fab-d58c11d8df7b,TRMB,Trimble Inc.,Technology,Scientific & Technical Instruments,2024-10-26 10:59:48.067714
+59369e59-8be4-4c11-83cc-0990f2512e24,TROW,"T. Rowe Price Group, Inc.",Financial Services,Asset Management,2024-10-26 10:59:48.067714
+bfa76096-f68e-4616-bf5b-f4c3a98b79d2,TRV,"The Travelers Companies, Inc.",Financial Services,Insurance—Property & Casualty,2024-10-26 10:59:48.067714
+ec405388-ac65-4419-be79-8ce0ac725a59,TSCO,Tractor Supply Company,Consumer Cyclical,Specialty Retail,2024-10-26 10:59:48.067714
+c4291df9-50a2-47ce-a81b-3f315a830daf,TSLA,"Tesla, Inc.",Consumer Cyclical,Auto Manufacturers,2024-10-26 10:59:48.067714
+4d262afd-d459-4b13-880a-f15facbb9312,TSN,"Tyson Foods, Inc.",Consumer Defensive,Farm Products,2024-10-26 10:59:48.067714
+9dc7d994-9904-4de5-8e4a-c6d56ea1c71f,TT,Trane Technologies plc,Industrials,Building Products & Equipment,2024-10-26 10:59:48.067714
+a2fe7975-ca02-4779-9d0f-b44da0e537ee,TTWO,"Take-Two Interactive Software, Inc.",Communication Services,Electronic Gaming & Multimedia,2024-10-26 10:59:48.067714
+34e6ef04-a39c-4604-935c-5b41e3472c5e,TWTR,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+67ec83b9-9762-47b9-a06e-2985991b8ca6,TXN,Texas Instruments Incorporated,Technology,Semiconductors,2024-10-26 10:59:48.067714
+f182d157-54b3-4d08-9005-8f1b647292d8,TXT,Textron Inc.,Industrials,Aerospace & Defense,2024-10-26 10:59:48.067714
+149a8a47-b145-4198-847d-705e7de976a3,TYL,"Tyler Technologies, Inc.",Technology,Software—Application,2024-10-26 10:59:48.067714
+bab45cb1-1488-4aba-ba75-aeb5087585a3,UAL,"United Airlines Holdings, Inc.",Industrials,Airlines,2024-10-26 10:59:48.067714
+448c3d00-a0b5-4942-92b8-878d431b6663,UDR,"UDR, Inc.",Real Estate,REIT—Residential,2024-10-26 10:59:48.067714
+7d95889d-b9a1-4040-a276-645c9bd6224d,UHS,"Universal Health Services, Inc.",Healthcare,Medical Care Facilities,2024-10-26 10:59:48.067714
+b9e821e1-b091-47b3-9805-ace1eeb91f02,ULTA,"Ulta Beauty, Inc.",Consumer Cyclical,Specialty Retail,2024-10-26 10:59:48.067714
+1257a87b-87c6-45c7-a2a2-03106437ee27,UNH,UnitedHealth Group Incorporated,Healthcare,Healthcare Plans,2024-10-26 10:59:48.067714
+ee15931b-5021-4c37-9d52-cab63670eb88,UNM,Unum Group,Financial Services,Insurance—Life,2024-10-26 10:59:48.067714
+5bd1f91b-e10c-4629-99bf-34125118b451,UNP,Union Pacific Corporation,Industrials,Railroads,2024-10-26 10:59:48.067714
+a6dedc58-09ff-45b3-9a75-402209a05ed5,UPS,"United Parcel Service, Inc.",Industrials,Integrated Freight & Logistics,2024-10-26 10:59:48.067714
+9cdd2cfa-f292-4baf-bfc3-66178339fa2a,URI,"United Rentals, Inc.",Industrials,Rental & Leasing Services,2024-10-26 10:59:48.067714
+c2124ae2-8b9e-46f2-a772-d423b75f9e96,USB,U.S. Bancorp,Financial Services,Banks—Regional,2024-10-26 10:59:48.067714
+ae0394db-f084-496b-871a-7961bd349536,V,Visa Inc.,Financial Services,Credit Services,2024-10-26 10:59:48.067714
+9bb33e55-1c4d-454e-a250-2a7354e6b6be,VFC,V.F. Corporation,Consumer Cyclical,Apparel Manufacturing,2024-10-26 10:59:48.067714
+ce2edaf4-bc54-42f6-9609-1c737244c92a,VIAC,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+ecb45dcb-e97c-441a-bc00-d84ae0544943,VLO,Valero Energy Corporation,Energy,Oil & Gas Refining & Marketing,2024-10-26 10:59:48.067714
+1d9181af-2298-47c8-a8cd-2245dc2661c4,VMC,Vulcan Materials Company,Basic Materials,Building Materials,2024-10-26 10:59:48.067714
+ea37d689-e24d-489d-aa7c-f796a58a462c,VNO,Vornado Realty Trust,Real Estate,REIT—Office,2024-10-26 10:59:48.067714
+2c599ad2-f340-4f85-9a28-7615e4d3bb62,VRSK,"Verisk Analytics, Inc.",Industrials,Consulting Services,2024-10-26 10:59:48.067714
+e634cbec-1ea4-4c53-9ddb-e5909438a5ab,VRSN,"VeriSign, Inc.",Technology,Software—Infrastructure,2024-10-26 10:59:48.067714
+74a8c9c2-7c48-49f8-8f02-a8c8fb67a1b6,VRTX,Vertex Pharmaceuticals Incorporated,Healthcare,Biotechnology,2024-10-26 10:59:48.067714
+93b5e350-0c47-4d05-8055-4e8824652232,VTR,"Ventas, Inc.",Real Estate,REIT—Healthcare Facilities,2024-10-26 10:59:48.067714
+9efded78-e17b-4463-a1ba-1cd3740d3d8d,VTRS,Viatris Inc.,Healthcare,Drug Manufacturers—Specialty & Generic,2024-10-26 10:59:48.067714
+6858acac-4faa-4bd6-b8a6-bba518377040,VZ,Verizon Communications Inc.,Communication Services,Telecom Services,2024-10-26 10:59:48.067714
+a1e7e449-c607-426d-a4ec-21c4c183f967,WAB,Westinghouse Air Brake Technologies Corporation,Industrials,Railroads,2024-10-26 10:59:48.067714
+3f3dd290-18b3-4087-aef7-b86fe70c7c84,WAT,Waters Corporation,Healthcare,Diagnostics & Research,2024-10-26 10:59:48.067714
+b599dd8e-b46a-4df3-b43b-90a74a201c1d,WBA,"Walgreens Boots Alliance, Inc.",Healthcare,Pharmaceutical Retailers,2024-10-26 10:59:48.067714
+ed2956eb-84be-4140-bfc0-af2b7b3f76d3,WDC,Western Digital Corporation,Technology,Computer Hardware,2024-10-26 10:59:48.067714
+b2d43990-e832-4be1-8121-09755ac82454,WEC,"WEC Energy Group, Inc.",Utilities,Utilities—Regulated Electric,2024-10-26 10:59:48.067714
+fa61ecfd-fd2c-4691-82cf-6bc2684f8ce0,WELL,Welltower Inc.,Real Estate,REIT—Healthcare Facilities,2024-10-26 10:59:48.067714
+8b8c8972-1cc0-4810-a254-56cf916f1ac6,WFC,Wells Fargo & Company,Financial Services,Banks—Diversified,2024-10-26 10:59:48.067714
+f849aba3-fb4c-4b43-a3f3-b332e0a0f66c,WHR,Whirlpool Corporation,Consumer Cyclical,"Furnishings, Fixtures & Appliances",2024-10-26 10:59:48.067714
+26ac1c1a-eba1-4c46-a919-013e59d0206b,WLTW,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+25664ef1-2322-4be3-8294-0418ac83e7e0,WM,"Waste Management, Inc.",Industrials,Waste Management,2024-10-26 10:59:48.067714
+8b97a47e-ba07-4754-bc50-6b0b50468a59,WMB,"The Williams Companies, Inc.",Energy,Oil & Gas Midstream,2024-10-26 10:59:48.067714
+8310af0b-a1d3-4d48-ab0b-e53f670e202b,WMT,Walmart Inc.,Consumer Defensive,Discount Stores,2024-10-26 10:59:48.067714
+be51eb47-2dc0-455c-b356-ca29d9442aa6,WRB,W. R. Berkley Corporation,Financial Services,Insurance—Property & Casualty,2024-10-26 10:59:48.067714
+facaa887-df15-4dd4-a911-5b2a4abf372a,WRK,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+5ccfc0af-d915-44e0-90a2-6a11e8c6e444,WST,"West Pharmaceutical Services, Inc.",Healthcare,Medical Instruments & Supplies,2024-10-26 10:59:48.067714
+c49ee224-1cf2-4fdb-b4e7-129e8daf2dbe,WU,The Western Union Company,Financial Services,Credit Services,2024-10-26 10:59:48.067714
+d6a823f0-0d9a-4027-831d-2dbf75349b41,WY,Weyerhaeuser Company,Real Estate,REIT—Specialty,2024-10-26 10:59:48.067714
+6fb5fcd1-47e9-4b99-b0ca-b63724ccbd62,WYNN,"Wynn Resorts, Limited",Consumer Cyclical,Resorts & Casinos,2024-10-26 10:59:48.067714
+b1486944-5818-4f80-b3be-bbf7db19e1af,XEL,Xcel Energy Inc.,Utilities,Utilities—Regulated Electric,2024-10-26 10:59:48.067714
+304b1908-c971-4986-818d-5d440e9f33b0,XLNX,Información No Disponible,Información No Disponible,Información No Disponible,2024-10-26 10:59:48.067714
+e526bbf9-2780-4682-b23b-4452fc31a6e2,XOM,Exxon Mobil Corporation,Energy,Oil & Gas Integrated,2024-10-26 10:59:48.067714
+a44aadc3-6799-4a73-b738-82829a792493,XRAY,DENTSPLY SIRONA Inc.,Healthcare,Medical Instruments & Supplies,2024-10-26 10:59:48.067714
+8d6cbb31-0c35-4e8e-9a5d-c79abda7a4a9,XYL,Xylem Inc.,Industrials,Specialty Industrial Machinery,2024-10-26 10:59:48.067714
+62ad5502-4ce1-435d-9c9e-ab2bb76cfaa1,YUM,"Yum! Brands, Inc.",Consumer Cyclical,Restaurants,2024-10-26 10:59:48.067714
+f8c62457-eeaa-4199-a1c9-28f4bed12df4,ZBH,"Zimmer Biomet Holdings, Inc.",Healthcare,Medical Devices,2024-10-26 10:59:48.067714
+83c218e9-5561-4f2a-8cfd-8177d8bd9e7e,ZBRA,Zebra Technologies Corporation,Technology,Communication Equipment,2024-10-26 10:59:48.067714
+88559956-033b-4e93-996c-1652f09ae798,ZION,"Zions Bancorporation, National Association",Financial Services,Banks—Regional,2024-10-26 10:59:48.067714
+accfc244-9f74-4b37-aaa2-875c1e2d5001,ZTS,Zoetis Inc.,Healthcare,Drug Manufacturers—Specialty & Generic,2024-10-26 10:59:48.067714
