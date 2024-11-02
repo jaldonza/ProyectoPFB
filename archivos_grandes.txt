@@ -1,0 +1,8 @@
+Este archivo es demasiado grande para almacenarlo directamente en el repositorio de Git.
+
+Puedes descargarlo desde el siguiente enlace de Google Drive:
+https://drive.google.com/file/d/1lKZ5mI7-LKBJE_bt6HmVQc3fqPDOCqUM/view?usp=sharing
+
+Instrucciones:
+1. Haz clic en el enlace para acceder a Google Drive.
+2. Descarga el archivo y colócalo en la carpeta adecuada en tu proyecto.
