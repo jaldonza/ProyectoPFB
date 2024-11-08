@@ -2,24 +2,10 @@
 
 import streamlit as st
 import pandas as pd
-from datetime import datetime
-from calculadora_roi import calcular_roi  # Importa la función desde calculadora_roi.py
+import numpy as np
 
-# Configuración de conexión a la base de datos
-def obtener_nombres_acciones():
-    db_connection = mysql.connector.connect(
-        host="127.0.0.1",
-        user="root",
-        password="11jablum11",
-        database="yfinance"
-    )
-    query = "SELECT simbolo FROM empresas_sp500 ORDER BY simbolo"
-    nombres_df = pd.read_sql(query, db_connection)
-    db_connection.close()
-    return nombres_df['simbolo'].tolist()
 
-# Configuración de la página de Streamlit
-st.set_page_config(page_title="Yahoo Finance app", layout="wide")
+st.set_page_config(page_title="Yahoo Finance app" , layout="wide")
 
 with st.container():
     st.title("Proyecto fin de bootcamp")
@@ -36,49 +22,35 @@ if pagina == "Landing Page":
     - Buscar y analizar información detallada sobre acciones específicas.
     """)
 
-    # Cargar y mostrar datos básicos de empresas
-    try:
-        db_connection = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            password="11jablum11",
-            database="yfinance"
-        )
-        df = pd.read_sql("SELECT * FROM empresas_sp500", db_connection)
-        st.dataframe(df)
-        db_connection.close()
-    except mysql.connector.Error as e:
-        st.error("Error al conectar con la base de datos: {}".format(e))
+# Display Data
+    df = pd.read_csv(filepath_or_buffer = "Streamlit/infoSP500.csv", sep = ",")
+    
+# Dinamic Data
+    st.dataframe(df)
+
+    df2 = pd.read_csv(filepath_or_buffer = "Streamlit/infoSP500_API.csv", sep = ",")
+    st.dataframe(df2)
 
 elif pagina == "Presentación de Datos":
     st.header("Presentación de Datos Financieros")
 
 elif pagina == "Búsqueda de Acción":
     st.header("Búsqueda de una Acción Específica")
-
-    # Obtener nombres de acciones para el desplegable
-    acciones = obtener_nombres_acciones()
-    accion_seleccionada = st.selectbox("Selecciona una acción:", acciones)
-
-    if accion_seleccionada:
-        st.write(f"Resultados para la acción: {accion_seleccionada}")
-
-        # Selección de rango de fechas usando un calendario
-        st.subheader("Cálculo del Retorno de la Inversión (ROI)")
-        fecha_inicio = st.date_input("Fecha de inicio", datetime(2023, 1, 1))
-        fecha_fin = st.date_input("Fecha de fin", datetime(2023, 12, 31))
-
-        # Validar fechas y calcular ROI
-        if fecha_inicio > fecha_fin:
-            st.error("La fecha de inicio debe ser anterior a la fecha de fin.")
-        elif st.button("Calcular ROI"):
-            roi, precios_df = calcular_roi(accion_seleccionada, fecha_inicio, fecha_fin)
-            if roi is not None:
-                st.write(f"**ROI Total para el periodo seleccionado:** {roi:.2f}%")
-                st.write("**Precios en el periodo:**")
-                st.dataframe(precios_df)
-            else:
-                st.warning("No se encontraron datos suficientes para calcular el ROI en el rango de fechas seleccionado.")
+    
+    # Crear una barra de búsqueda para encontrar una acción
+    accion = st.text_input("Buscar una acción", "")
+    
+    if accion:
+        st.write(f"Resultados para la acción: {accion}")
+        # Aquí puedes agregar la lógica para buscar y mostrar detalles de la acción en base a tu base de datos
+        st.write("Información detallada de la acción seleccionada...")
+        # Ejemplo de datos de muestra (reemplaza con datos reales)
+        st.write({
+            "Ticker": accion,
+            "Precio Actual": "$100",
+            "Cambio (%)": "+2%",
+            "Volumen": "1M"
+        })
 
 # Pie de página o cualquier otra información adicional
 st.sidebar.write("Aplicación creada con Streamlit")
