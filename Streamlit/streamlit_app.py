@@ -1,18 +1,16 @@
-
-
 import streamlit as st
 import pandas as pd
 import numpy as np
+from dashboard import mostrar_dashboard  # Importamos la función de dashboard.py
 
-
-st.set_page_config(page_title="Yahoo Finance app" , layout="wide")
+st.set_page_config(page_title="Yahoo Finance App", layout="wide")
 
 with st.container():
-    st.title("Proyecto fin de bootcamp")
+    st.title("Proyecto Fin de Bootcamp")
     st.image("Streamlit/Yahoo!_Finance_image.png", use_column_width=True)
 
 st.sidebar.title("Navegación")
-pagina = st.sidebar.radio("Ir a", ["Landing Page", "Presentación de Datos", "Búsqueda de Acción"])
+pagina = st.sidebar.radio("Ir a", ["Landing Page", "Presentación de Datos", "Búsqueda de Acción", "Análisis Técnico"])
 
 if pagina == "Landing Page":
     st.header("Información básica de las empresas del SP500")
@@ -22,13 +20,11 @@ if pagina == "Landing Page":
     - Buscar y analizar información detallada sobre acciones específicas.
     """)
 
-# Display Data
-    df = pd.read_csv(filepath_or_buffer = "Streamlit/infoSP500.csv", sep = ",")
-    
-# Dinamic Data
+    # Display Data
+    df = pd.read_csv(filepath_or_buffer="Streamlit/infoSP500.csv", sep=",")
     st.dataframe(df)
 
-    df2 = pd.read_csv(filepath_or_buffer = "Streamlit/infoSP500_API.csv", sep = ",")
+    df2 = pd.read_csv(filepath_or_buffer="Streamlit/infoSP500_API.csv", sep=",")
     st.dataframe(df2)
 
 elif pagina == "Presentación de Datos":
@@ -51,6 +47,13 @@ elif pagina == "Búsqueda de Acción":
             "Cambio (%)": "+2%",
             "Volumen": "1M"
         })
+
+elif pagina == "Análisis Técnico":
+    st.header("Análisis Técnico de una Empresa")
+    st.write("Selecciona una empresa para explorar sus datos de cotización y análisis técnico.")
+    
+    # Llamamos a la función de `mostrar_dashboard` para ejecutar el análisis técnico
+    mostrar_dashboard()
 
 # Pie de página o cualquier otra información adicional
 st.sidebar.write("Aplicación creada con Streamlit")
