@@ -1,21 +1,19 @@
 import streamlit as st
 import pandas as pd
-import pymysql
+import mysql.connector
 from datetime import datetime
-
-# Configuración de conexión a la base de datos
-host = 'pfb.cp2wsq8yih32.eu-north-1.rds.amazonaws.com'  # Cambia por tu endpoint de RDS
-user = 'admin'                       # Cambia por tu usuario de RDS
-password = '11jablum11'                   # Cambia por tu contraseña de RDS
-database = 'yfinance'              # Cambia por el nombre de tu base de datos
-port = 3306
 
 # Definir la función calcular_roi
 def calcular_roi(simbolo, fecha_inicio, fecha_fin):
     try:
-        # Conexión a la base de datos en RDS
-        connection = pymysql.connect(host=host, user=user, password=password, database=database, port=port)
-        cursor = connection.cursor()
+        # Conexión a la base de datos
+        db_connection = mysql.connector.connect(
+            host="127.0.0.1",
+            user="root",  # Cambia esto por tu usuario de MySQL
+            password="11jablum11",  # Cambia esto por tu contraseña de MySQL
+            database="yfinance"
+        )
+        cursor = db_connection.cursor()
 
         # Consulta SQL para obtener el precio inicial y final en el periodo
         query = """
@@ -29,13 +27,13 @@ def calcular_roi(simbolo, fecha_inicio, fecha_fin):
         cursor.execute(query, (simbolo, fecha_inicio, fecha_fin))
         precios = cursor.fetchall()
         
-    except pymysql.MySQLError as err:
+    except mysql.connector.Error as err:
         st.error(f"Error al conectar a la base de datos: {err}")
         return None, None
     finally:
         # Cerrar conexión
         cursor.close()
-        connection.close()
+        db_connection.close()
 
     # Verifica si se obtuvieron precios en el rango de fechas
     if len(precios) < 2:
@@ -127,4 +125,3 @@ elif pagina == "Calculadora ROI":
 
 # Pie de página o cualquier otra información adicional
 st.sidebar.write("Aplicación creada con Streamlit")
-
