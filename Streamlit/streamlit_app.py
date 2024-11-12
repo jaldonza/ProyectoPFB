@@ -3,7 +3,38 @@ import pandas as pd
 import pymysql
 from datetime import datetime
 
-# Definir la función calcular_roi con la nueva lógica
+# Función para obtener la lista de símbolos desde la base de datos
+def obtener_simbolos():
+    try:
+        # Conectar a la base de datos
+        connection = pymysql.connect(
+            host="pfb.cp2wsq8yih32.eu-north-1.rds.amazonaws.com",
+            user="admin",
+            password="11jablum11",
+            database="yfinance",
+            port=3306
+        )
+        cursor = connection.cursor()
+
+        # Consulta para obtener los símbolos de la tabla empresas_sp500
+        query = "SELECT simbolo FROM empresas_sp500"
+        cursor.execute(query)
+        simbolos = cursor.fetchall()
+        
+        # Convertir la lista de tuplas en una lista simple de strings
+        simbolos = [simbolo[0] for simbolo in simbolos]
+
+        # Cerrar conexión
+        cursor.close()
+        connection.close()
+
+        return simbolos
+
+    except pymysql.MySQLError as e:
+        st.error(f"Error al conectar a la base de datos para obtener símbolos: {e}")
+        return []
+
+# Función calcular ROI actualizada
 def calcular_roi(simbolo, fecha_compra, fecha_venta):
     try:
         # Conexión a la base de datos RDS
@@ -16,7 +47,7 @@ def calcular_roi(simbolo, fecha_compra, fecha_venta):
         )
         cursor = db_connection.cursor()
 
-        # Consulta para el precio de cierre en la fecha de compra
+        # Consulta para el precio de compra (precio de cierre en la fecha de compra)
         query_compra = """
         SELECT precio_cierre
         FROM precios_historicos
@@ -25,7 +56,7 @@ def calcular_roi(simbolo, fecha_compra, fecha_venta):
         cursor.execute(query_compra, (simbolo, fecha_compra))
         resultado_compra = cursor.fetchone()
 
-        # Consulta para el precio de cierre en la fecha de venta
+        # Consulta para el precio de venta (precio de cierre en la fecha de venta)
         query_venta = """
         SELECT precio_cierre
         FROM precios_historicos
@@ -118,8 +149,11 @@ elif pagina == "Búsqueda de Acción":
 elif pagina == "Calculadora ROI":
     st.header("Calculadora de ROI")
 
-    # Entradas para el cálculo de ROI
-    simbolo = st.text_input("Símbolo de la acción (ej. AAPL para Apple)")
+    # Obtener la lista de símbolos para el desplegable
+    simbolos = obtener_simbolos()
+    simbolo = st.selectbox("Seleccione el símbolo de la acción", simbolos)
+
+    # Entradas para las fechas
     fecha_inicio = st.date_input("Fecha de inicio", value=datetime(2000, 1, 1))
     fecha_fin = st.date_input("Fecha de fin", value=datetime(2020, 1, 1))
 
