@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
-import pymysql  # Cambiar a pymysql en lugar de mysql.connector
+import pymysql
 from datetime import datetime
 
-# Definir la función calcular_roi
-def calcular_roi(simbolo, fecha_inicio, fecha_fin):
+# Definir la función calcular_roi con la nueva lógica
+def calcular_roi(simbolo, fecha_compra, fecha_venta):
     try:
         # Conexión a la base de datos RDS
         db_connection = pymysql.connect(
@@ -16,39 +16,53 @@ def calcular_roi(simbolo, fecha_inicio, fecha_fin):
         )
         cursor = db_connection.cursor()
 
-        # Consulta SQL para obtener el precio inicial y final en el periodo
-        query = """
-        SELECT fecha, precio_cierre
+        # Consulta para el precio de cierre en la fecha de compra
+        query_compra = """
+        SELECT precio_cierre
         FROM precios_historicos
-        WHERE id_empresa = (SELECT id_empresa FROM empresas_sp500 WHERE simbolo = %s)
-          AND fecha BETWEEN %s AND %s
-        ORDER BY fecha ASC;
+        WHERE id_empresa = %s AND fecha = %s
         """
-        
-        cursor.execute(query, (simbolo, fecha_inicio, fecha_fin))
-        precios = cursor.fetchall()
-        
-    except pymysql.MySQLError as err:
-        st.error(f"Error al conectar a la base de datos: {err}")
-        return None, None
-    finally:
-        # Cerrar conexión
+        cursor.execute(query_compra, (simbolo, fecha_compra))
+        resultado_compra = cursor.fetchone()
+
+        # Consulta para el precio de cierre en la fecha de venta
+        query_venta = """
+        SELECT precio_cierre
+        FROM precios_historicos
+        WHERE id_empresa = %s AND fecha = %s
+        """
+        cursor.execute(query_venta, (simbolo, fecha_venta))
+        resultado_venta = cursor.fetchone()
+
+        # Cerrar el cursor y la conexión
         cursor.close()
         db_connection.close()
 
-    # Verifica si se obtuvieron precios en el rango de fechas
-    if len(precios) < 2:
-        st.warning("No se encontraron datos suficientes en el rango de fechas seleccionado.")
+        # Verificar que se encontraron precios en ambas fechas
+        if resultado_compra and resultado_venta:
+            precio_compra = resultado_compra[0]
+            precio_venta = resultado_venta[0]
+
+            # Calcular ROI
+            ganancia = precio_venta - precio_compra
+            roi = (ganancia / precio_compra) * 100
+
+            # Crear un DataFrame con los precios consultados
+            precios_df = pd.DataFrame(
+                {
+                    'Fecha': [fecha_compra, fecha_venta],
+                    'Precio Cierre': [precio_compra, precio_venta]
+                }
+            )
+            return roi, precios_df
+
+        else:
+            st.warning("No se encontraron precios de cierre para una o ambas fechas seleccionadas.")
+            return None, None
+
+    except pymysql.MySQLError as err:
+        st.error(f"Error al conectar a la base de datos: {err}")
         return None, None
-
-    # Precio inicial y final
-    precio_inicial = precios[0][1]
-    precio_final = precios[-1][1]
-    
-    # Calcular ROI
-    roi = (precio_final - precio_inicial) / precio_inicial * 100
-
-    return roi, pd.DataFrame(precios, columns=['Fecha', 'Precio Cierre'])
 
 # Configuración de la aplicación Streamlit
 st.set_page_config(page_title="Yahoo Finance app", layout="wide")
@@ -126,4 +140,5 @@ elif pagina == "Calculadora ROI":
 
 # Pie de página o cualquier otra información adicional
 st.sidebar.write("Aplicación creada con Streamlit")
+
 
