@@ -91,3 +91,49 @@ def calcular_roi(simbolo, fecha_compra, fecha_venta):
     except pymysql.MySQLError as err:
         st.error(f"Error al conectar a la base de datos: {err}")
         return None, None
+
+import pymysql
+import pandas as pd
+
+def obtener_cotizaciones():
+    try:
+        # Conectar a la base de datos
+        connection = pymysql.connect(
+            host="pfb.cp2wsq8yih32.eu-north-1.rds.amazonaws.com",
+            user="admin",
+            password="11jablum11",
+            database="yfinance",
+            port=3306
+        )
+
+        # Crear cursor para ejecutar la consulta
+        cursor = connection.cursor()
+
+        # Consulta SQL
+        query = """
+        SELECT ph.fecha AS Date, ph.precio_cierre AS Close, es.nombre_empresa AS Company
+        FROM precios_historicos ph
+        INNER JOIN empresas_sp500 es ON ph.id_empresa = es.id_empresa
+        ORDER BY es.nombre_empresa, ph.fecha
+        """
+
+        # Ejecutar la consulta y almacenar los resultados
+        cursor.execute(query)
+        rows = cursor.fetchall()
+
+        # Crear el DataFrame manualmente
+        cotizaciones_df = pd.DataFrame(rows, columns=["Date", "Close", "Company"])
+
+        # Cerrar la conexión
+        cursor.close()
+        connection.close()
+
+        return cotizaciones_df
+
+    except pymysql.MySQLError as e:
+        print(f"Error al conectar a la base de datos o ejecutar la consulta: {e}")
+        return pd.DataFrame()
+
+
+
+
