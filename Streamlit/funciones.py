@@ -32,72 +32,86 @@ def obtener_empresas():
         return {}
 
 # Función calcular ROI
-def calcular_roi(simbolo, fecha_inicio, fecha_fin):
+import pymysql
+import pandas as pd
+
+# Datos de conexión a la base de datos
+host = 'pfb.cp2wsq8yih32.eu-north-1.rds.amazonaws.com'
+user = 'admin'
+password = '11jablum11'
+database = 'yfinance'
+port = 3306
+
+def calcular_roi(simbolo, fecha_compra, fecha_venta):
     try:
         # Conexión a la base de datos RDS
         db_connection = pymysql.connect(
-            host="pfb.cp2wsq8yih32.eu-north-1.rds.amazonaws.com",
-            user="admin",
-            password="11jablum11",
-            database="yfinance",
-            port=3306
+            host=host,
+            user=user,
+            password=password,
+            database=database,
+            port=port
         )
         cursor = db_connection.cursor()
 
-     # Obtener id_empresa para el símbolo
+        # Obtener id_empresa para el símbolo
         query_id = "SELECT id_empresa FROM empresas_sp500 WHERE simbolo = %s"
         cursor.execute(query_id, (simbolo,))
         id_empresa = cursor.fetchone()
-        
+
         if not id_empresa:
-            print(f"[Depuración] No se encontró id_empresa para el símbolo: {simbolo}")
+            print(f"[Error] No se encontró id_empresa para el símbolo: {simbolo}")
             return None, None
         id_empresa = id_empresa[0]
-        print(f"[Depuración] id_empresa para {simbolo}: {id_empresa}")
 
-        # Asegurar que las fechas están en el formato correcto
-        fecha_inicio = pd.to_datetime(fecha_inicio).strftime('%Y-%m-%d')
-        fecha_fin = pd.to_datetime(fecha_fin).strftime('%Y-%m-%d')
-        print(f"[Depuración] Rango de fechas: {fecha_inicio} a {fecha_fin}")
-
-        # Consulta para obtener los precios de cierre en las fechas de inicio y fin
-        query_precios = """
-        SELECT fecha, precio_cierre
+        # Consulta para el precio de compra (precio de cierre en la fecha de compra)
+        query_compra = """
+        SELECT precio_cierre
         FROM precios_historicos
-        WHERE id_empresa = %s AND fecha BETWEEN %s AND %s
-        ORDER BY fecha ASC
+        WHERE id_empresa = %s AND fecha = %s
         """
-        cursor.execute(query_precios, (id_empresa, fecha_inicio, fecha_fin))
-        precios = cursor.fetchall()
-        print(f"[Depuración] Precios obtenidos: {precios}")
+        cursor.execute(query_compra, (id_empresa, fecha_compra))
+        resultado_compra = cursor.fetchone()
 
-        # Cerrar la conexión
+        # Consulta para el precio de venta (precio de cierre en la fecha de venta)
+        query_venta = """
+        SELECT precio_cierre
+        FROM precios_historicos
+        WHERE id_empresa = %s AND fecha = %s
+        """
+        cursor.execute(query_venta, (id_empresa, fecha_venta))
+        resultado_venta = cursor.fetchone()
+
+        # Cerrar el cursor y la conexión
         cursor.close()
-        connection.close()
+        db_connection.close()
 
-        # Verificar si se obtuvieron precios en el rango de fechas
-        if len(precios) < 2:
-            print("[Depuración] No se encontraron suficientes datos en el rango de fechas seleccionado.")
+        # Verificar que se encontraron precios en ambas fechas
+        if resultado_compra and resultado_venta:
+            precio_compra = resultado_compra[0]
+            precio_venta = resultado_venta[0]
+
+            # Calcular ROI
+            ganancia = precio_venta - precio_compra
+            roi = (ganancia / precio_compra) * 100
+
+            # Crear un DataFrame con los precios consultados
+            precios_df = pd.DataFrame(
+                {
+                    'Fecha': [fecha_compra, fecha_venta],
+                    'Precio Cierre': [precio_compra, precio_venta]
+                }
+            )
+            return roi, precios_df
+
+        else:
+            print("No se encontraron precios de cierre para una o ambas fechas seleccionadas.")
             return None, None
-
-        # Precio inicial y final para el cálculo de ROI
-        precio_inicial = precios[0][1]
-        precio_final = precios[-1][1]
-        print(f"[Depuración] Precio inicial: {precio_inicial}, Precio final: {precio_final}")
-        
-        # Calcular ROI
-        roi = (precio_final - precio_inicial) / precio_inicial * 100
-
-        # Crear un DataFrame con los precios consultados
-        precios_df = pd.DataFrame(precios, columns=['Fecha', 'Precio Cierre'])
-        return roi, precios_df
 
     except pymysql.MySQLError as err:
         print(f"Error al conectar a la base de datos: {err}")
         return None, None
-    except Exception as e:
-        print(f"Error general: {e}")
-        return None, None
+
 
 import pymysql
 import pandas as pd
