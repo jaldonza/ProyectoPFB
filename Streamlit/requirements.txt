@@ -5,3 +5,6 @@ pandas
 pymysql
 jupyter-dash
 dash
+plotly>=5.0.0
+dash-core-components
+dash-html-components
