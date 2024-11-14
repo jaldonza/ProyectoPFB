@@ -32,7 +32,7 @@ def obtener_empresas():
         return {}
 
 # Función calcular ROI
-def calcular_roi(simbolo, fecha_compra, fecha_venta):
+def calcular_roi(simbolo, fecha_inicio, fecha_fin):
     try:
         # Conexión a la base de datos RDS
         db_connection = pymysql.connect(
@@ -44,19 +44,21 @@ def calcular_roi(simbolo, fecha_compra, fecha_venta):
         )
         cursor = db_connection.cursor()
 
-          # Obtener id_empresa para el símbolo
+     # Obtener id_empresa para el símbolo
         query_id = "SELECT id_empresa FROM empresas_sp500 WHERE simbolo = %s"
         cursor.execute(query_id, (simbolo,))
         id_empresa = cursor.fetchone()
         
         if not id_empresa:
-            print(f"No se encontró id_empresa para el símbolo: {simbolo}")
+            print(f"[Depuración] No se encontró id_empresa para el símbolo: {simbolo}")
             return None, None
         id_empresa = id_empresa[0]
+        print(f"[Depuración] id_empresa para {simbolo}: {id_empresa}")
 
         # Asegurar que las fechas están en el formato correcto
         fecha_inicio = pd.to_datetime(fecha_inicio).strftime('%Y-%m-%d')
         fecha_fin = pd.to_datetime(fecha_fin).strftime('%Y-%m-%d')
+        print(f"[Depuración] Rango de fechas: {fecha_inicio} a {fecha_fin}")
 
         # Consulta para obtener los precios de cierre en las fechas de inicio y fin
         query_precios = """
@@ -67,6 +69,7 @@ def calcular_roi(simbolo, fecha_compra, fecha_venta):
         """
         cursor.execute(query_precios, (id_empresa, fecha_inicio, fecha_fin))
         precios = cursor.fetchall()
+        print(f"[Depuración] Precios obtenidos: {precios}")
 
         # Cerrar la conexión
         cursor.close()
@@ -74,12 +77,13 @@ def calcular_roi(simbolo, fecha_compra, fecha_venta):
 
         # Verificar si se obtuvieron precios en el rango de fechas
         if len(precios) < 2:
-            print("No se encontraron suficientes datos en el rango de fechas seleccionado.")
+            print("[Depuración] No se encontraron suficientes datos en el rango de fechas seleccionado.")
             return None, None
 
         # Precio inicial y final para el cálculo de ROI
         precio_inicial = precios[0][1]
         precio_final = precios[-1][1]
+        print(f"[Depuración] Precio inicial: {precio_inicial}, Precio final: {precio_final}")
         
         # Calcular ROI
         roi = (precio_final - precio_inicial) / precio_inicial * 100
