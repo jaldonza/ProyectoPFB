@@ -54,6 +54,7 @@ elif pagina == "Búsqueda de Acción":
         })
 
 # Página de calculadora de ROI
+# Página de calculadora de ROI en Streamlit
 elif pagina == "Calculadora ROI":
     st.header("Calculadora de ROI")
 
@@ -83,6 +84,7 @@ elif pagina == "Calculadora ROI":
             st.dataframe(precios_df)
         else:
             st.warning("No se pudo calcular el ROI debido a datos insuficientes o errores en la base de datos.")
+
 
 # Página del Dashboard Financiero
 elif pagina == "Dashboard Financiero":
