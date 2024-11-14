@@ -95,11 +95,17 @@ elif pagina == "Dashboard Financiero":
     empresas = cotizaciones_df['Company'].unique()
     empresa_seleccionada = st.selectbox("Seleccione la empresa", empresas)
 
+    # Seleccionar el rango de fechas
+    fecha_inicio = st.date_input("Fecha de inicio", value=cotizaciones_df['Date'].min())
+    fecha_fin = st.date_input("Fecha de fin", value=cotizaciones_df['Date'].max())
+    
+    # Filtrar los datos para el rango de fechas
+    df = cotizaciones_df[(cotizaciones_df['Company'] == empresa_seleccionada) & 
+                         (cotizaciones_df['Date'] >= fecha_inicio) & 
+                         (cotizaciones_df['Date'] <= fecha_fin)]
+
     # Seleccionar el tipo de gráfico
     tab = st.selectbox("Seleccione una visualización", ["Precios Históricos", "Medias Móviles", "RSI"])
-
-    # Filtrar datos para la empresa seleccionada
-    df = cotizaciones_df[cotizaciones_df['Company'] == empresa_seleccionada]
 
     # Funciones para gráficos
     def graficar_precios_historicos(df, empresa_seleccionada):
@@ -143,6 +149,7 @@ elif pagina == "Dashboard Financiero":
 
 # Pie de página o cualquier otra información adicional
 st.sidebar.write("Aplicación creada con Streamlit")
+
 
 
 
