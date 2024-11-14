@@ -44,7 +44,7 @@ def calcular_roi(simbolo, fecha_compra, fecha_venta):
         )
         cursor = db_connection.cursor()
 
-         # Obtener id_empresa para el símbolo
+          # Obtener id_empresa para el símbolo
         query_id = "SELECT id_empresa FROM empresas_sp500 WHERE simbolo = %s"
         cursor.execute(query_id, (simbolo,))
         id_empresa = cursor.fetchone()
@@ -53,6 +53,10 @@ def calcular_roi(simbolo, fecha_compra, fecha_venta):
             print(f"No se encontró id_empresa para el símbolo: {simbolo}")
             return None, None
         id_empresa = id_empresa[0]
+
+        # Asegurar que las fechas están en el formato correcto
+        fecha_inicio = pd.to_datetime(fecha_inicio).strftime('%Y-%m-%d')
+        fecha_fin = pd.to_datetime(fecha_fin).strftime('%Y-%m-%d')
 
         # Consulta para obtener los precios de cierre en las fechas de inicio y fin
         query_precios = """
@@ -86,6 +90,9 @@ def calcular_roi(simbolo, fecha_compra, fecha_venta):
 
     except pymysql.MySQLError as err:
         print(f"Error al conectar a la base de datos: {err}")
+        return None, None
+    except Exception as e:
+        print(f"Error general: {e}")
         return None, None
 
 import pymysql
