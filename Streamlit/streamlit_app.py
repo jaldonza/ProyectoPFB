@@ -149,6 +149,39 @@ elif pagina == "Dashboard Financiero":
     elif tab == "RSI":
         st.plotly_chart(graficar_rsi(df, empresa_seleccionada))
 
+# Página de análisis de correlación
+elif pagina == "Análisis de Correlación":
+    st.header("Análisis de Correlación entre Activos")
+    cotizaciones_df = obtener_cotizaciones()
+    empresas = cotizaciones_df['Company'].unique()
+
+    # Selección de activos
+    activo_principal = st.selectbox("Seleccione el activo principal", empresas)
+    activos_comparar = st.multiselect("Seleccione hasta 4 activos para comparar", empresas, default=empresas[:4])
+
+    if activo_principal and len(activos_comparar) > 0:
+        activos_seleccionados = [activo_principal] + activos_comparar
+        df_seleccionados = cotizaciones_df[cotizaciones_df['Company'].isin(activos_seleccionados)]
+        precios_df = df_seleccionados.pivot(index='Date', columns='Company', values='Close')
+        correlacion = precios_df.corr()
+        st.subheader("Matriz de Correlación")
+        st.dataframe(correlacion)
+
+        st.subheader("Evolución de Precios")
+        fig = go.Figure()
+        for activo in activos_seleccionados:
+            fig.add_trace(go.Scatter(x=precios_df.index, y=precios_df[activo], mode='lines', name=activo))
+        fig.update_layout(title="Evolución de los Precios de los Activos", xaxis_title="Fecha", yaxis_title="Precio de Cierre")
+        st.plotly_chart(fig)
+
+        st.subheader("Puntos de Mayor Desviación")
+        desvio = precios_df[activo_principal] - precios_df[activos_comparar].mean(axis=1)
+        puntos_desvio = desvio[np.abs(desvio) > desvio.std()]
+        fig_desvio = go.Figure()
+        fig_desvio.add_trace(go.Scatter(x=puntos_desvio.index, y=puntos_desvio, mode='markers', name="Desviaciones"))
+        fig_desvio.update_layout(title="Puntos de Mayor Desviación", xaxis_title="Fecha", yaxis_title="Desviación")
+        st.plotly_chart(fig_desvio)
+
 # Pie de página o cualquier otra información adicional
 st.sidebar.write("Aplicación creada con Streamlit")
 
