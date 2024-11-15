@@ -13,8 +13,14 @@ with st.container():
     st.image("Streamlit/Yahoo!_Finance_image.png", use_column_width=True)
 
 st.sidebar.title("Navegación")
-pagina = st.sidebar.radio("Ir a", ["Landing Page", "Presentación de Datos", "Búsqueda de Acción", "Calculadora ROI", "Dashboard Financiero"])
-
+pagina = st.sidebar.radio("Ir a", [
+    "Landing Page", 
+    "Presentación de Datos", 
+    "Búsqueda de Acción", 
+    "Calculadora ROI", 
+    "Dashboard Financiero", 
+    "Análisis de Correlación"
+])
 # Página de inicio
 if pagina == "Landing Page":
     st.header("Información básica de las empresas del SP500")
