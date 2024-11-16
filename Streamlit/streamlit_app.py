@@ -191,7 +191,6 @@ elif pagina == "Análisis de Métricas Financieras":
     else:
         st.warning("No se encontraron datos para el periodo seleccionado.")
 
-
 # Pie de página
 st.sidebar.write("Aplicación creada con Streamlit")
 
