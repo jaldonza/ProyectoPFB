@@ -20,7 +20,8 @@ pagina = st.sidebar.radio("Ir a", [
     "Búsqueda de Acción", 
     "Calculadora ROI", 
     "Dashboard Financiero", 
-    "Análisis de Correlación"
+    "Análisis de Correlación",
+    "Análisis de Métricas Financieras"
 ])
 
 # Página de inicio
