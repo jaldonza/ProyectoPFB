@@ -1,6 +1,8 @@
 import pymysql
 import pandas as pd
 import streamlit as st
+import plotly.graph_objects as go
+from datetime import datetime
 
 # Función para obtener la lista de nombres de empresa y símbolos desde la base de datos
 def obtener_empresas():
@@ -155,6 +157,35 @@ def obtener_cotizaciones():
         print(f"Error al conectar a la base de datos o ejecutar la consulta: {e}")
         return pd.DataFrame()
 
+def graficar_precios_historicos(df, empresa_seleccionada):
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'], mode='lines', name='Precio de Cierre'))
+        fig.update_layout(title=f"Precios Históricos - {empresa_seleccionada}", xaxis_title="Fecha", yaxis_title="Precio de Cierre")
+        return fig
 
+def graficar_medias_moviles(df, empresa_seleccionada):
+        df['SMA_50'] = df['Close'].rolling(window=50).mean()
+        df['SMA_200'] = df['Close'].rolling(window=200).mean()
+        
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'], mode='lines', name='Precio de Cierre'))
+        fig.add_trace(go.Scatter(x=df['Date'], y=df['SMA_50'], mode='lines', name='SMA 50'))
+        fig.add_trace(go.Scatter(x=df['Date'], y=df['SMA_200'], mode='lines', name='SMA 200'))
+        fig.update_layout(title=f"Medias Móviles - {empresa_seleccionada}", xaxis_title="Fecha", yaxis_title="Precio")
+        return fig
+
+def graficar_rsi(df, empresa_seleccionada):
+        delta = df['Close'].diff()
+        gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
+        loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
+        rs = gain / loss
+        df['RSI'] = 100 - (100 / (1 + rs))
+        
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=df['Date'], y=df['RSI'], mode='lines', name='RSI'))
+        fig.add_hline(y=70, line_dash="dash", line_color="red", annotation_text="Sobrecompra", annotation_position="top right")
+        fig.add_hline(y=30, line_dash="dash", line_color="green", annotation_text="Sobreventa", annotation_position="bottom right")
+        fig.update_layout(title=f"RSI (Relative Strength Index) - {empresa_seleccionada}", xaxis_title="Fecha", yaxis_title="RSI")
+        return fig
 
 
