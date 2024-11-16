@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
 from datetime import datetime
+import numpy as np
 
 # Función para obtener la lista de nombres de empresa y símbolos desde la base de datos
 def obtener_empresas():
@@ -189,3 +190,42 @@ def graficar_rsi(df, empresa_seleccionada):
         return fig
 
 
+
+
+def calcular_metricas(cotizaciones, tasa_libre_riesgo=0):
+    """
+    Calcula la volatilidad diaria, el Sharpe Ratio y el Sortino Ratio para una serie de cotizaciones.
+
+    Parámetros:
+    ----------
+    cotizaciones : pandas.Series
+        Serie de precios de cierre del activo.
+
+    tasa_libre_riesgo : float, opcional, default=0
+        Tasa libre de riesgo.
+
+    Retorno:
+    -------
+    dict
+        Diccionario con volatilidad diaria, Sharpe Ratio y Sortino Ratio.
+    """
+    # Calcular retornos diarios
+    retornos = cotizaciones.pct_change().dropna()
+
+    # Volatilidad diaria
+    volatilidad = np.std(retornos)
+
+    # Sharpe Ratio
+    exceso_retornos = retornos - tasa_libre_riesgo / 252  # Ajustar tasa a diario
+    sharpe = np.mean(exceso_retornos) / volatilidad if volatilidad > 0 else None
+
+    # Sortino Ratio (solo usa retornos negativos)
+    retornos_negativos = retornos[retornos < 0]
+    downside_deviation = np.std(retornos_negativos) if not retornos_negativos.empty else None
+    sortino = (np.mean(exceso_retornos) / downside_deviation) if downside_deviation else None
+
+    return {
+        "volatilidad_diaria": volatilidad,
+        "sharpe_ratio": sharpe,
+        "sortino_ratio": sortino
+    }

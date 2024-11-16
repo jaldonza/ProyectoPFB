@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 from datetime import datetime
-from funciones import obtener_empresas, calcular_roi, obtener_cotizaciones, graficar_precios_historicos, graficar_medias_moviles, graficar_rsi  # Importar funciones
+from funciones import obtener_empresas, calcular_roi, obtener_cotizaciones, graficar_precios_historicos, graficar_medias_moviles, graficar_rsi, calcular_metricas  # Importar funciones
 
 # Configuración de la aplicación Streamlit
 st.set_page_config(page_title="Yahoo Finance app", layout="wide")
@@ -148,6 +148,48 @@ elif pagina == "Análisis de Correlación":
             fig.add_trace(go.Scatter(x=precios_df.index, y=precios_df[activo], mode='lines', name=activo))
         fig.update_layout(title="Evolución de los Precios de los Activos", xaxis_title="Fecha", yaxis_title="Precio de Cierre")
         st.plotly_chart(fig)
+
+elif pagina == "Análisis de Métricas Financieras":
+    st.header("Análisis de Métricas Financieras")
+
+    # Cargar datos de cotización
+    cotizaciones_df = obtener_cotizaciones()
+
+    # Selección de activo
+    empresas = cotizaciones_df['Company'].unique()
+    empresa_seleccionada = st.selectbox("Seleccione la empresa", empresas)
+
+    # Selección de periodo
+    fecha_inicio = st.date_input("Fecha de inicio", value=cotizaciones_df['Date'].min())
+    fecha_fin = st.date_input("Fecha de fin", value=cotizaciones_df['Date'].max())
+
+    # Filtrar los datos para el activo y periodo seleccionados
+    df_filtrado = cotizaciones_df[
+        (cotizaciones_df['Company'] == empresa_seleccionada) &
+        (cotizaciones_df['Date'] >= fecha_inicio) &
+        (cotizaciones_df['Date'] <= fecha_fin)
+    ]
+
+    # Verificar si hay datos
+    if not df_filtrado.empty:
+        # Calcular métricas
+        cotizaciones = df_filtrado['Close']
+        metricas = calcular_metricas(cotizaciones)
+
+        # Mostrar resultados
+        st.subheader(f"Métricas para {empresa_seleccionada} del {fecha_inicio} al {fecha_fin}")
+        st.write(f"**Volatilidad diaria**: {metricas['volatilidad_diaria']:.4f}")
+        st.write(f"**Sharpe Ratio**: {metricas['sharpe_ratio']:.4f}" if metricas['sharpe_ratio'] else "Sharpe Ratio no calculable.")
+        st.write(f"**Sortino Ratio**: {metricas['sortino_ratio']:.4f}" if metricas['sortino_ratio'] else "Sortino Ratio no calculable.")
+
+        # Graficar retornos diarios
+        retornos_diarios = cotizaciones.pct_change().dropna()
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=retornos_diarios.index, y=retornos_diarios, mode='lines', name="Retornos Diarios"))
+        fig.update_layout(title="Evolución de Retornos Diarios", xaxis_title="Fecha", yaxis_title="Retornos Diarios")
+        st.plotly_chart(fig)
+    else:
+        st.warning("No se encontraron datos para el periodo seleccionado.")
 
 
 # Pie de página
