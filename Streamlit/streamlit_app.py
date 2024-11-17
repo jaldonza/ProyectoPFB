@@ -64,8 +64,8 @@ elif pagina == "Calculadora ROI":
     nombres_empresas = list(empresas.keys())
     nombre_empresa = st.selectbox("Seleccione la empresa", nombres_empresas)
     simbolo = empresas[nombre_empresa]
-    fecha_inicio = st.date_input("Fecha de inicio", value=datetime(2000, 1, 1))
-    fecha_fin = st.date_input("Fecha de fin", value=datetime(2020, 1, 1))
+    fecha_inicio = st.date_input("Fecha de inicio", value=datetime(2000, 1, 3))
+    fecha_fin = st.date_input("Fecha de fin", value=datetime(2020, 1, 3))
 
     if simbolo and fecha_inicio and fecha_fin:
         fecha_inicio_str = fecha_inicio.strftime('%Y-%m-%d')
