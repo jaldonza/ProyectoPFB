@@ -11,7 +11,7 @@ st.set_page_config(page_title="Yahoo Finance app", layout="wide")
 # Contenido principal
 with st.container():
     st.title("Proyecto fin de bootcamp")
-    st.image("Streamlit/Yahoo!_Finance_image.png", use_column_width=True)
+    st.image("Streamlit/Yahoo!_Finance_image.png", use_container_width=True)
 
 st.sidebar.title("Navegación")
 pagina = st.sidebar.radio("Ir a", [
