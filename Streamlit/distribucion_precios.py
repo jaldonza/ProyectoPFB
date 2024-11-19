@@ -118,11 +118,12 @@ elif pagina_seleccionada == "Clustering de Empresas del S&P 500":
         color=pca_df['Clúster'].astype(str),
         title=f'Clústeres (PCA) con {num_clusters} Clústeres',
         template='plotly_white')
-    
     st.plotly_chart(fig)
 
+    # Mostrar características y exportación
     st.subheader("Características de los Clústeres")
 
+    # Excluir columnas no numéricas
     cluster_stats = caracteristicas_combinadas.select_dtypes(include=['float64', 'int64']).groupby(caracteristicas_combinadas['cluster']).mean()
     st.write("Estadísticas promedio de cada clúster:")
     st.dataframe(cluster_stats)
@@ -148,3 +149,60 @@ elif pagina_seleccionada == "Clustering de Empresas del S&P 500":
         data=empresas_cluster_csv,
         file_name='empresas_por_cluster.csv',
         mime='text/csv')
+
+# Página de Análisis de Precios
+elif pagina_seleccionada == "Análisis de Precios":
+    st.header("Distribución de Precios de Cierre por Empresa")
+
+    
+    empresas_df = obtener_empresas(engine)
+    empresas = empresas_df['nombre_empresa'].tolist()
+    simbolos = empresas_df['simbolo'].tolist()
+    ids_empresa = empresas_df['id_empresa'].tolist()
+
+    
+    company_name = st.selectbox("Seleccione la empresa", empresas)
+    empresa_index = empresas.index(company_name)
+    simbolo = simbolos[empresa_index]
+    id_empresa = ids_empresa[empresa_index]
+
+    periodo_inicio = st.date_input("Fecha de inicio", value=pd.to_datetime("2023-01-01"))
+    periodo_fin = st.date_input("Fecha de fin", value=pd.to_datetime("2023-12-31"))
+
+# Obtener datos de precios para la empresa seleccionada
+
+def obtener_datos_empresa(_engine, id_empresa, periodo_inicio, periodo_fin):
+    query = f"""
+        SELECT ph.fecha, ph.precio_apertura, ph.precio_cierre, ph.maximo, ph.minimo, ph.volumen
+        FROM precios_historicos ph
+        WHERE ph.id_empresa = {id_empresa} 
+        AND ph.fecha BETWEEN '{periodo_inicio}' AND '{periodo_fin}'
+        ORDER BY ph.fecha
+    """
+    return pd.read_sql(query, _engine)
+
+datos_empresa = obtener_datos_empresa(engine, id_empresa, periodo_inicio, periodo_fin)
+
+# Mostrar gráfica o advertencia si no hay datos
+if datos_empresa.empty:
+    st.warning("No se encontraron datos para el rango de fechas seleccionado.")
+else:
+    # Crear gráfica
+    fig = go.Figure(
+        go.Box(
+            y=datos_empresa['precio_cierre'],
+            name=f'{simbolo} - {company_name}',
+            boxmean='sd',
+            line=dict(width=2, color='yellow'),
+            marker=dict(color='lightgreen'),
+            boxpoints='all'))
+    
+    fig.update_layout(
+        title=f'Distribución de Precios de Cierre de {simbolo} - {company_name}',
+        xaxis_title='Precio de Cierre',
+        yaxis_title='Frecuencia',
+        template='plotly',
+        height=600,
+        showlegend=False)
+    
+    st.plotly_chart(fig)
