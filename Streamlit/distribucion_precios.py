@@ -216,4 +216,34 @@ for cluster_id in caracteristicas_combinadas['cluster'].unique():
             caracteristicas_combinadas[caracteristicas_combinadas['cluster'] == cluster_id]['id_empresa']),
         ['simbolo', 'nombre_empresa']]
     st.write(acciones)
-    
+
+# Convertir estadísticas de clústeres a CSV
+cluster_stats_csv = cluster_stats.to_csv().encode('utf-8')
+std_dev_csv = caracteristicas_combinadas.groupby('cluster').std().to_csv().encode('utf-8')
+
+st.download_button(
+    label="Descargar Características Promedio (CSV)",
+    data=cluster_stats_csv,
+    file_name='cluster_stats.csv',
+    mime='text/csv',
+    key="descarga_promedio")
+
+st.download_button(
+    label="Descargar Desviaciones Estándar (CSV)",
+    data=std_dev_csv,
+    file_name='cluster_std_dev.csv',
+    mime='text/csv',
+    key="descarga_desviacion")
+
+empresas_por_cluster = caracteristicas_combinadas[['cluster', 'id_empresa']].merge(
+    empresas_df[['id_empresa', 'nombre_empresa', 'simbolo']],
+    on='id_empresa')
+
+empresas_cluster_csv = empresas_por_cluster.to_csv(index=False).encode('utf-8')
+
+st.download_button(
+    label="Descargar Empresas por Clúster (CSV)",
+    data=empresas_cluster_csv,
+    file_name='empresas_por_cluster.csv',
+    mime='text/csv',
+    key="descarga_empresas")
