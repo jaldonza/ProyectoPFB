@@ -55,17 +55,20 @@ elif pagina == "Búsqueda de Acción":
         # Obtener datos de cotización
         cotizaciones_df = obtener_cotizaciones()
 
+        # Asegurarse de que la columna 'Date' esté en formato datetime
+        cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'], errors='coerce')
+
         # Filtrar datos para el rango de fechas seleccionado
         df_filtrado = cotizaciones_df[
             (cotizaciones_df['Company'] == nombre_empresa) &
-            (cotizaciones_df['Date'] >= fecha_inicio_str) &
-            (cotizaciones_df['Date'] <= fecha_fin_str)
+            (cotizaciones_df['Date'] >= fecha_inicio) &
+            (cotizaciones_df['Date'] <= fecha_fin)
         ]
 
         if not df_filtrado.empty:
             # Datos de la fecha inicial y final
-            datos_fecha_inicio = df_filtrado[df_filtrado['Date'] == fecha_inicio_str]
-            datos_fecha_fin = df_filtrado[df_filtrado['Date'] == fecha_fin_str]
+            datos_fecha_inicio = df_filtrado[df_filtrado['Date'] == fecha_inicio]
+            datos_fecha_fin = df_filtrado[df_filtrado['Date'] == fecha_fin]
 
             # Mostrar datos como un DataFrame
             st.subheader(f"Precios para {nombre_empresa} entre {fecha_inicio_str} y {fecha_fin_str}")
@@ -108,6 +111,7 @@ elif pagina == "Búsqueda de Acción":
 
         else:
             st.warning(f"No se encontraron datos para {nombre_empresa} entre {fecha_inicio_str} y {fecha_fin_str}.")
+
 
 # Página de calculadora de ROI
 elif pagina == "Calculadora ROI":
