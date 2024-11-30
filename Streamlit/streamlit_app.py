@@ -70,11 +70,11 @@ elif pagina == "Exploratory Data Analysis":
 
             if not datos_fecha.empty:
                 st.write(f"Datos para {nombre_empresa} ({simbolo}) en la fecha {fecha_str}:")
-                st.write(datos_fecha[['Open', 'High', 'Low', 'Close']])
+                st.write(datos_fecha[['precio_apertura', 'maximo', 'minimo', 'precio_cierre']])
             else:
                 st.warning(f"No se encontraron datos para {nombre_empresa} en la fecha {fecha_str}.")
 
-        # Gráficos de velas
+               # Gráficos de velas
         st.subheader("Gráfico de Velas")
         fecha_inicio = st.date_input("Fecha de inicio")
         fecha_fin = st.date_input("Fecha de fin")
@@ -91,10 +91,10 @@ elif pagina == "Exploratory Data Analysis":
             if not df_filtrado.empty:
                 fig = go.Figure(data=[go.Candlestick(
                     x=df_filtrado['Date'],
-                    open=df_filtrado['Open'],
-                    high=df_filtrado['High'],
-                    low=df_filtrado['Low'],
-                    close=df_filtrado['Close']
+                    open=df_filtrado['precio_apertura'],
+                    high=df_filtrado['maximo'],
+                    low=df_filtrado['minimo'],
+                    close=df_filtrado['precio_cierre']
                 )])
                 fig.update_layout(
                     title=f"Gráfico de Velas para {nombre_empresa}",
@@ -104,6 +104,7 @@ elif pagina == "Exploratory Data Analysis":
                 st.plotly_chart(fig)
             else:
                 st.warning(f"No se encontraron datos entre {fecha_inicio_str} y {fecha_fin_str} para {nombre_empresa}.")
+
 
     # Análisis de Correlación
     elif funcionalidad == "Análisis de Correlación":
