@@ -55,8 +55,15 @@ elif pagina == "Búsqueda de Acción":
         # Obtener datos de cotización
         cotizaciones_df = obtener_cotizaciones()
 
-        # Asegurarse de que la columna 'Date' esté en formato datetime
+        # Convertir la columna 'Date' al formato datetime
         cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'], errors='coerce')
+
+        # Depuración: Mostrar tipos para verificar
+        st.write("Tipos de columnas en cotizaciones_df:")
+        st.write(cotizaciones_df.dtypes)
+
+        # Filtrar valores no válidos en la columna 'Date'
+        cotizaciones_df = cotizaciones_df.dropna(subset=['Date'])
 
         # Filtrar datos para el rango de fechas seleccionado
         df_filtrado = cotizaciones_df[
@@ -111,6 +118,7 @@ elif pagina == "Búsqueda de Acción":
 
         else:
             st.warning(f"No se encontraron datos para {nombre_empresa} entre {fecha_inicio_str} y {fecha_fin_str}.")
+
 
 
 # Página de calculadora de ROI
