@@ -105,11 +105,53 @@ elif pagina == "Exploratory Data Analysis":
             else:
                 st.warning(f"No se encontraron datos entre {fecha_inicio_str} y {fecha_fin_str} para {nombre_empresa}.")
 
-    # Otras funcionalidades (Correlación, Métricas Financieras)
+    # Análisis de Correlación
     elif funcionalidad == "Análisis de Correlación":
-        st.write("Funcionalidad de Análisis de Correlación en desarrollo...")
+        st.subheader("Análisis de Correlación entre Activos")
+
+        # Cargar cotizaciones
+        cotizaciones_df = obtener_cotizaciones()
+        empresas = cotizaciones_df['Company'].unique()
+
+        # Selección de activos
+        activo_principal = st.selectbox("Seleccione el activo principal", empresas)
+        activos_comparar = st.multiselect("Seleccione hasta 4 activos para comparar", empresas, default=empresas[:4])
+
+        if activo_principal and len(activos_comparar) > 0:
+            # Preparar los datos
+            activos_seleccionados = [activo_principal] + activos_comparar
+            df_seleccionados = cotizaciones_df[cotizaciones_df['Company'].isin(activos_seleccionados)]
+            precios_df = df_seleccionados.pivot(index='Date', columns='Company', values='Close')
+            correlacion = precios_df.corr()
+
+            # Mostrar la matriz de correlación
+            st.subheader("Matriz de Correlación")
+            st.dataframe(correlacion)
+
+            # Crear y mostrar el heatmap
+            st.subheader("Mapa de Calor de Correlación")
+            fig_heatmap = go.Figure(data=go.Heatmap(
+                z=correlacion.values,
+                x=correlacion.columns,
+                y=correlacion.index,
+                colorscale='Viridis',
+                colorbar=dict(title="Correlación")
+            ))
+            fig_heatmap.update_layout(title="Mapa de Calor de Correlación", xaxis_title="Activos", yaxis_title="Activos")
+            st.plotly_chart(fig_heatmap)
+
+            # Graficar las líneas de tiempo
+            st.subheader("Evolución de Precios")
+            fig = go.Figure()
+            for activo in activos_seleccionados:
+                fig.add_trace(go.Scatter(x=precios_df.index, y=precios_df[activo], mode='lines', name=activo))
+            fig.update_layout(title="Evolución de los Precios de los Activos", xaxis_title="Fecha", yaxis_title="Precio de Cierre")
+            st.plotly_chart(fig)
+
+    # Análisis de Métricas Financieras
     elif funcionalidad == "Análisis de Métricas Financieras":
-        st.write("Funcionalidad de Análisis de Métricas Financieras en desarrollo...")
+        st.subheader("Análisis de Métricas Financieras")
+        st.write("Funcionalidad en desarrollo...")
 
 # Dashboard en Power BI
 elif pagina == "Dashboard en Power BI":
