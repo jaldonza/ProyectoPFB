@@ -1,9 +1,7 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-import plotly.graph_objects as go
 from datetime import datetime
-from funciones import obtener_empresas, obtener_cotizaciones  # Importar las funciones necesarias
+from funciones import obtener_empresas, obtener_cotizaciones, crear_grafico_velas  # Importar las funciones necesarias
 
 # Configuración de la aplicación Streamlit
 st.set_page_config(page_title="Yahoo Finance app", layout="wide")
@@ -42,23 +40,17 @@ elif pagina == "Búsqueda de Acción":
     empresas = obtener_empresas()  # Esto devuelve un diccionario {nombre_empresa: simbolo}
     nombres_empresas = list(empresas.keys())
     nombre_empresa = st.selectbox("Seleccione la empresa", nombres_empresas)
-    simbolo = empresas[nombre_empresa]
 
     # Seleccionar fechas
     fecha_inicio = st.date_input("Seleccione la fecha inicial", value=datetime(2020, 1, 1))
     fecha_fin = st.date_input("Seleccione la fecha final", value=datetime(2022, 1, 1))
 
     if fecha_inicio and fecha_fin:
-        # Validar fechas
         if fecha_inicio > fecha_fin:
             st.error("La fecha inicial no puede ser posterior a la fecha final.")
         else:
             # Obtener datos de cotización
             cotizaciones_df = obtener_cotizaciones()
-
-            # Mostrar columnas disponibles para depuración
-            st.write("Columnas disponibles en cotizaciones_df:")
-            st.write(cotizaciones_df.columns.tolist())
 
             # Filtrar datos para las fechas seleccionadas
             df_filtrado = cotizaciones_df[
@@ -67,11 +59,11 @@ elif pagina == "Búsqueda de Acción":
                 (cotizaciones_df['Date'] <= fecha_fin)
             ]
 
-            # Verificar si hay datos
+            # Mostrar datos y gráficos si hay datos disponibles
             if not df_filtrado.empty:
                 st.subheader(f"Precios para {nombre_empresa} entre {fecha_inicio} y {fecha_fin}")
 
-                # Mostrar precios de las fechas inicial y final
+                # Mostrar precios inicial y final
                 precios_fecha_inicial = df_filtrado[df_filtrado['Date'] == fecha_inicio]
                 precios_fecha_final = df_filtrado[df_filtrado['Date'] == fecha_fin]
 
@@ -97,21 +89,11 @@ elif pagina == "Búsqueda de Acción":
                 st.dataframe(datos_resumen)
 
                 # Generar gráfico de velas
-                st.subheader("Gráfico de Velas")
-                fig = go.Figure(data=[go.Candlestick(
-                    x=df_filtrado['Date'],
-                    open=df_filtrado['Open'],
-                    high=df_filtrado['High'],
-                    low=df_filtrado['Low'],
-                    close=df_filtrado['Close']
-                )])
-                fig.update_layout(
-                    title=f"Gráfico de Velas para {nombre_empresa} ({simbolo})",
-                    xaxis_title="Fecha",
-                    yaxis_title="Precio"
-                )
-                st.plotly_chart(fig)
-
+                grafico_velas = crear_grafico_velas(df_filtrado, titulo=f"Gráfico de Velas para {nombre_empresa}")
+                if grafico_velas:
+                    st.plotly_chart(grafico_velas)
+                else:
+                    st.warning("No se pudo generar el gráfico de velas.")
             else:
                 st.warning(f"No se encontraron datos para {nombre_empresa} entre {fecha_inicio} y {fecha_fin}.")
 
