@@ -39,7 +39,7 @@ elif pagina == "Búsqueda de Acción":
     st.header("Búsqueda de una Acción Específica")
 
     # Seleccionar empresa
-    empresas = obtener_empresas()
+    empresas = obtener_empresas()  # Esto debe devolver un diccionario {nombre_empresa: simbolo}
     nombres_empresas = list(empresas.keys())
     nombre_empresa = st.selectbox("Seleccione la empresa", nombres_empresas)
     simbolo = empresas[nombre_empresa]
@@ -54,22 +54,27 @@ elif pagina == "Búsqueda de Acción":
             st.error("La fecha inicial no puede ser posterior a la fecha final.")
         else:
             # Obtener datos de cotización
-            cotizaciones_df = obtener_cotizaciones()
+            cotizaciones_df = obtener_cotizaciones()  # Asegúrate de que esta función devuelve los datos correctos
+
+            # Inspección de columnas
+            st.write("Columnas disponibles en cotizaciones_df:")
+            st.write(cotizaciones_df.columns.tolist())
 
             # Filtrar datos para las fechas seleccionadas
             df_filtrado = cotizaciones_df[
-                (cotizaciones_df['Company'] == nombre_empresa) &
-                (cotizaciones_df['Date'] >= fecha_inicio) &
-                (cotizaciones_df['Date'] <= fecha_fin)
+                (cotizaciones_df['Company'] == nombre_empresa) &  # Asegúrate de que la columna "Company" existe
+                (cotizaciones_df['fecha'] >= fecha_inicio) &      # Usar "fecha" en lugar de "Date"
+                (cotizaciones_df['fecha'] <= fecha_fin)
             ]
 
             # Verificar si hay datos
             if not df_filtrado.empty:
                 # Mostrar precios de las fechas seleccionadas
-                datos_fecha_inicio = df_filtrado[df_filtrado['Date'] == fecha_inicio]
-                datos_fecha_fin = df_filtrado[df_filtrado['Date'] == fecha_fin]
+                datos_fecha_inicio = df_filtrado[df_filtrado['fecha'] == fecha_inicio]
+                datos_fecha_fin = df_filtrado[df_filtrado['fecha'] == fecha_fin]
 
                 st.subheader(f"Precios para {nombre_empresa} entre {fecha_inicio} y {fecha_fin}")
+                
                 datos_resumen = pd.DataFrame({
                     "Fecha": [fecha_inicio, fecha_fin],
                     "Precio Apertura": [
@@ -94,7 +99,7 @@ elif pagina == "Búsqueda de Acción":
                 # Generar gráfico de velas
                 st.subheader("Gráfico de Velas")
                 fig = go.Figure(data=[go.Candlestick(
-                    x=df_filtrado['Date'],
+                    x=df_filtrado['fecha'],  # Cambiado a "fecha"
                     open=df_filtrado['precio_apertura'],
                     high=df_filtrado['maximo'],
                     low=df_filtrado['minimo'],
@@ -109,6 +114,7 @@ elif pagina == "Búsqueda de Acción":
 
             else:
                 st.warning(f"No se encontraron datos para {nombre_empresa} entre {fecha_inicio} y {fecha_fin}.")
+
 
 
 # Página de calculadora de ROI
