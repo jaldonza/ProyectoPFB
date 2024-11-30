@@ -56,42 +56,34 @@ elif pagina == "Búsqueda de Acción":
             # Obtener datos de cotización
             cotizaciones_df = obtener_cotizaciones()  # Asegúrate de que esta función devuelve los datos correctos
 
-            # Inspección de columnas
+            # Mostrar columnas disponibles para depuración
             st.write("Columnas disponibles en cotizaciones_df:")
             st.write(cotizaciones_df.columns.tolist())
 
+            # Convertir 'Date' a formato datetime si no lo está
+            if cotizaciones_df['Date'].dtype != 'datetime64[ns]':
+                cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'])
+
             # Filtrar datos para las fechas seleccionadas
             df_filtrado = cotizaciones_df[
-                (cotizaciones_df['Company'] == nombre_empresa) &  # Asegúrate de que la columna "Company" existe
-                (cotizaciones_df['fecha'] >= fecha_inicio) &      # Usar "fecha" en lugar de "Date"
-                (cotizaciones_df['fecha'] <= fecha_fin)
+                (cotizaciones_df['Company'] == nombre_empresa) &
+                (cotizaciones_df['Date'] >= fecha_inicio) &
+                (cotizaciones_df['Date'] <= fecha_fin)
             ]
 
             # Verificar si hay datos
             if not df_filtrado.empty:
-                # Mostrar precios de las fechas seleccionadas
-                datos_fecha_inicio = df_filtrado[df_filtrado['fecha'] == fecha_inicio]
-                datos_fecha_fin = df_filtrado[df_filtrado['fecha'] == fecha_fin]
-
                 st.subheader(f"Precios para {nombre_empresa} entre {fecha_inicio} y {fecha_fin}")
                 
+                # Mostrar precios de las fechas inicial y final
+                precios_fecha_inicial = df_filtrado[df_filtrado['Date'] == fecha_inicio]
+                precios_fecha_final = df_filtrado[df_filtrado['Date'] == fecha_fin]
+
                 datos_resumen = pd.DataFrame({
                     "Fecha": [fecha_inicio, fecha_fin],
-                    "Precio Apertura": [
-                        datos_fecha_inicio['precio_apertura'].values[0] if not datos_fecha_inicio.empty else None,
-                        datos_fecha_fin['precio_apertura'].values[0] if not datos_fecha_fin.empty else None,
-                    ],
                     "Precio Cierre": [
-                        datos_fecha_inicio['precio_cierre'].values[0] if not datos_fecha_inicio.empty else None,
-                        datos_fecha_fin['precio_cierre'].values[0] if not datos_fecha_fin.empty else None,
-                    ],
-                    "Máximo": [
-                        datos_fecha_inicio['maximo'].values[0] if not datos_fecha_inicio.empty else None,
-                        datos_fecha_fin['maximo'].values[0] if not datos_fecha_fin.empty else None,
-                    ],
-                    "Mínimo": [
-                        datos_fecha_inicio['minimo'].values[0] if not datos_fecha_inicio.empty else None,
-                        datos_fecha_fin['minimo'].values[0] if not datos_fecha_fin.empty else None,
+                        precios_fecha_inicial['Close'].values[0] if not precios_fecha_inicial.empty else None,
+                        precios_fecha_final['Close'].values[0] if not precios_fecha_final.empty else None,
                     ]
                 })
                 st.dataframe(datos_resumen)
@@ -99,11 +91,11 @@ elif pagina == "Búsqueda de Acción":
                 # Generar gráfico de velas
                 st.subheader("Gráfico de Velas")
                 fig = go.Figure(data=[go.Candlestick(
-                    x=df_filtrado['fecha'],  # Cambiado a "fecha"
-                    open=df_filtrado['precio_apertura'],
-                    high=df_filtrado['maximo'],
-                    low=df_filtrado['minimo'],
-                    close=df_filtrado['precio_cierre']
+                    x=df_filtrado['Date'],
+                    open=df_filtrado['Close'],  # Placeholder para precio_apertura
+                    high=df_filtrado['Close'],  # Placeholder para máximo
+                    low=df_filtrado['Close'],   # Placeholder para mínimo
+                    close=df_filtrado['Close']
                 )])
                 fig.update_layout(
                     title=f"Gráfico de Velas para {nombre_empresa} ({simbolo})",
