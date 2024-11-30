@@ -46,155 +46,110 @@ elif pagina == "Exploratory Data Analysis":
     st.header("Exploratory Data Analysis")
 
     # Selección de funcionalidad
-    funcionalidad = st.selectbox("Seleccione la funcionalidad", ["Búsqueda de Acción", "Análisis de Correlación", "Análisis de Métricas Financieras"])
+    funcionalidad = st.selectbox(
+        "Seleccione la funcionalidad", 
+        ["Búsqueda de Acción", "Análisis de Correlación", "Análisis de Métricas Financieras"]
+    )
 
-if funcionalidad == "Búsqueda de Acción":
-    st.subheader("Búsqueda de una Acción Específica")
+    if funcionalidad == "Búsqueda de Acción":
+        st.subheader("Búsqueda de una Acción Específica")
 
-    # Seleccionar empresa
-    empresas = obtener_empresas()
-    nombres_empresas = list(empresas.keys())
-    nombre_empresa = st.selectbox("Seleccione la empresa", nombres_empresas)
-    simbolo = empresas[nombre_empresa]
-
-    # Seleccionar fechas
-    fecha_inicio = st.date_input("Seleccione la fecha inicial")
-    fecha_fin = st.date_input("Seleccione la fecha final")
-
-    if fecha_inicio and fecha_fin:
-        fecha_inicio_str = fecha_inicio.strftime('%Y-%m-%d')
-        fecha_fin_str = fecha_fin.strftime('%Y-%m-%d')
-
-        # Obtener datos de cotización
-        cotizaciones_df = obtener_cotizaciones()
-
-        # Filtrar datos para las fechas seleccionadas
-        df_filtrado = cotizaciones_df[
-            (cotizaciones_df['Company'] == nombre_empresa) &
-            (cotizaciones_df['Date'] >= fecha_inicio_str) &
-            (cotizaciones_df['Date'] <= fecha_fin_str)
-        ]
-
-        # Mostrar precios de las fechas seleccionadas
-        if not df_filtrado.empty:
-            precios_fecha_inicial = df_filtrado[df_filtrado['Date'] == fecha_inicio_str]
-            precios_fecha_final = df_filtrado[df_filtrado['Date'] == fecha_fin_str]
-
-            st.write(f"**Datos para {nombre_empresa} ({simbolo})**")
-            if not precios_fecha_inicial.empty:
-                st.write(f"Precios para la fecha inicial ({fecha_inicio_str}):")
-                st.write(precios_fecha_inicial[['precio_apertura', 'maximo', 'minimo', 'precio_cierre']])
-            else:
-                st.warning(f"No se encontraron datos para {nombre_empresa} en la fecha inicial ({fecha_inicio_str}).")
-
-            if not precios_fecha_final.empty:
-                st.write(f"Precios para la fecha final ({fecha_fin_str}):")
-                st.write(precios_fecha_final[['precio_apertura', 'maximo', 'minimo', 'precio_cierre']])
-            else:
-                st.warning(f"No se encontraron datos para {nombre_empresa} en la fecha final ({fecha_fin_str}).")
-
-            # Generar gráfico de velas
-            st.subheader("Gráfico de Velas")
-            fig = go.Figure(data=[go.Candlestick(
-                x=df_filtrado['Date'],
-                open=df_filtrado['precio_apertura'],
-                high=df_filtrado['maximo'],
-                low=df_filtrado['minimo'],
-                close=df_filtrado['precio_cierre']
-            )])
-            fig.update_layout(
-                title=f"Gráfico de Velas para {nombre_empresa} ({simbolo})",
-                xaxis_title="Fecha",
-                yaxis_title="Precio"
-            )
-            st.plotly_chart(fig)
-
+        # Seleccionar empresa
+        empresas = obtener_empresas()
+        if not empresas:
+            st.error("Error al obtener las empresas. Verifica la conexión con la base de datos.")
         else:
-            st.warning(f"No se encontraron datos para {nombre_empresa} entre {fecha_inicio_str} y {fecha_fin_str}.")
+            nombres_empresas = list(empresas.keys())
+            nombre_empresa = st.selectbox("Seleccione la empresa", nombres_empresas)
+            simbolo = empresas[nombre_empresa]
 
+            # Seleccionar fechas
+            fecha_inicio = st.date_input("Seleccione la fecha inicial")
+            fecha_fin = st.date_input("Seleccione la fecha final")
 
+            if fecha_inicio and fecha_fin:
+                fecha_inicio_str = fecha_inicio.strftime('%Y-%m-%d')
+                fecha_fin_str = fecha_fin.strftime('%Y-%m-%d')
 
-    # Análisis de Correlación
+                # Obtener datos de cotización
+                cotizaciones_df = obtener_cotizaciones()
+                if cotizaciones_df is None or cotizaciones_df.empty:
+                    st.error("No se pudieron obtener datos de cotización. Verifica la conexión.")
+                else:
+                    # Filtrar datos para las fechas seleccionadas
+                    df_filtrado = cotizaciones_df[
+                        (cotizaciones_df['Company'] == nombre_empresa) &
+                        (cotizaciones_df['Date'] >= fecha_inicio_str) &
+                        (cotizaciones_df['Date'] <= fecha_fin_str)
+                    ]
+
+                    # Mostrar precios de las fechas seleccionadas
+                    if not df_filtrado.empty:
+                        precios_fecha_inicial = df_filtrado[df_filtrado['Date'] == fecha_inicio_str]
+                        precios_fecha_final = df_filtrado[df_filtrado['Date'] == fecha_fin_str]
+
+                        st.write(f"**Datos para {nombre_empresa} ({simbolo})**")
+                        if not precios_fecha_inicial.empty:
+                            st.write(f"Precios para la fecha inicial ({fecha_inicio_str}):")
+                            st.write(precios_fecha_inicial[['precio_apertura', 'maximo', 'minimo', 'precio_cierre']])
+                        else:
+                            st.warning(f"No se encontraron datos para {nombre_empresa} en la fecha inicial ({fecha_inicio_str}).")
+
+                        if not precios_fecha_final.empty:
+                            st.write(f"Precios para la fecha final ({fecha_fin_str}):")
+                            st.write(precios_fecha_final[['precio_apertura', 'maximo', 'minimo', 'precio_cierre']])
+                        else:
+                            st.warning(f"No se encontraron datos para {nombre_empresa} en la fecha final ({fecha_fin_str}).")
+
+                        # Generar gráfico de velas
+                        st.subheader("Gráfico de Velas")
+                        fig = go.Figure(data=[go.Candlestick(
+                            x=df_filtrado['Date'],
+                            open=df_filtrado['precio_apertura'],
+                            high=df_filtrado['maximo'],
+                            low=df_filtrado['minimo'],
+                            close=df_filtrado['precio_cierre']
+                        )])
+                        fig.update_layout(
+                            title=f"Gráfico de Velas para {nombre_empresa} ({simbolo})",
+                            xaxis_title="Fecha",
+                            yaxis_title="Precio"
+                        )
+                        st.plotly_chart(fig)
+                    else:
+                        st.warning(f"No se encontraron datos para {nombre_empresa} entre {fecha_inicio_str} y {fecha_fin_str}.")
+
     elif funcionalidad == "Análisis de Correlación":
         st.subheader("Análisis de Correlación entre Activos")
-
-        # Cargar cotizaciones
         cotizaciones_df = obtener_cotizaciones()
-        empresas = cotizaciones_df['Company'].unique()
+        if cotizaciones_df is None or cotizaciones_df.empty:
+            st.error("No se pudieron obtener datos de cotización. Verifica la conexión.")
+        else:
+            empresas = cotizaciones_df['Company'].unique()
+            activo_principal = st.selectbox("Seleccione el activo principal", empresas)
+            activos_comparar = st.multiselect("Seleccione hasta 4 activos para comparar", empresas, default=empresas[:4])
 
-        # Selección de activos
-        activo_principal = st.selectbox("Seleccione el activo principal", empresas)
-        activos_comparar = st.multiselect("Seleccione hasta 4 activos para comparar", empresas, default=empresas[:4])
+            if activo_principal and len(activos_comparar) > 0:
+                activos_seleccionados = [activo_principal] + activos_comparar
+                df_seleccionados = cotizaciones_df[cotizaciones_df['Company'].isin(activos_seleccionados)]
+                precios_df = df_seleccionados.pivot(index='Date', columns='Company', values='Close')
+                correlacion = precios_df.corr()
 
-        if activo_principal and len(activos_comparar) > 0:
-            # Preparar los datos
-            activos_seleccionados = [activo_principal] + activos_comparar
-            df_seleccionados = cotizaciones_df[cotizaciones_df['Company'].isin(activos_seleccionados)]
-            precios_df = df_seleccionados.pivot(index='Date', columns='Company', values='Close')
-            correlacion = precios_df.corr()
+                # Mostrar matriz de correlación
+                st.dataframe(correlacion)
 
-            # Mostrar la matriz de correlación
-            st.subheader("Matriz de Correlación")
-            st.dataframe(correlacion)
+                # Graficar heatmap
+                fig_heatmap = go.Figure(data=go.Heatmap(
+                    z=correlacion.values,
+                    x=correlacion.columns,
+                    y=correlacion.index,
+                    colorscale='Viridis'
+                ))
+                fig_heatmap.update_layout(title="Mapa de Correlación", xaxis_title="Activos", yaxis_title="Activos")
+                st.plotly_chart(fig_heatmap)
 
-            # Crear y mostrar el heatmap
-            st.subheader("Mapa de Calor de Correlación")
-            fig_heatmap = go.Figure(data=go.Heatmap(
-                z=correlacion.values,
-                x=correlacion.columns,
-                y=correlacion.index,
-                colorscale='Viridis',
-                colorbar=dict(title="Correlación")
-            ))
-            fig_heatmap.update_layout(title="Mapa de Calor de Correlación", xaxis_title="Activos", yaxis_title="Activos")
-            st.plotly_chart(fig_heatmap)
 
-            # Graficar las líneas de tiempo
-            st.subheader("Evolución de Precios")
-            fig = go.Figure()
-            for activo in activos_seleccionados:
-                fig.add_trace(go.Scatter(x=precios_df.index, y=precios_df[activo], mode='lines', name=activo))
-            fig.update_layout(title="Evolución de los Precios de los Activos", xaxis_title="Fecha", yaxis_title="Precio de Cierre")
-            st.plotly_chart(fig)
 
-    # Análisis de Métricas Financieras
-    elif funcionalidad == "Análisis de Métricas Financieras":
-        st.subheader("Análisis de Métricas Financieras")
-        st.write("Funcionalidad en desarrollo...")
-
-# Dashboard en Power BI
-elif pagina == "Dashboard en Power BI":
-    st.header("Dashboard en Power BI")
-    st.write("Integra tu dashboard de Power BI utilizando el siguiente iframe:")
-    st.write("**Nota:** Asegúrate de incluir el enlace al dashboard aquí.")
-
-# Clustering y Clasificación
-elif pagina == "Clustering y Clasificación":
-    st.header("Modelos de Clustering y Clasificación")
-    st.write("En desarrollo...")
-
-# Base de Datos
-elif pagina == "Base de Datos":
-    st.header("Arquitectura de la Base de Datos")
-    st.write("""
-    La base de datos utilizada en este proyecto consta de las siguientes tablas:
-    - **empresas_sp500**: Información de las empresas del S&P500.
-    - **precios_historicos**: Precios históricos de las acciones.
-    - **portafolios_usuarios**: Datos de portafolios creados por usuarios.
-    - **portafolio_empresas**: Relación entre portafolios y empresas.
-    - **indicadores_sp500**: Indicadores financieros como medias móviles y RSI.
-    """)
-    st.image("Streamlit/diagrama_bbdd.png", use_column_width=True)
-
-# About Us
-elif pagina == "About Us":
-    st.header("Sobre Nosotros")
-    st.write("""
-    Somos un equipo apasionado por el análisis financiero y el machine learning. 
-    Conéctate con nosotros:
-    - [LinkedIn](https://linkedin.com)
-    - [GitHub](https://github.com)
-    """)
 
 
 
