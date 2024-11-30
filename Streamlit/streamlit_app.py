@@ -39,7 +39,7 @@ elif pagina == "Búsqueda de Acción":
     st.header("Búsqueda de una Acción Específica")
 
     # Seleccionar empresa
-    empresas = obtener_empresas()  # Esto debe devolver un diccionario {nombre_empresa: simbolo}
+    empresas = obtener_empresas()  # Esto devuelve un diccionario {nombre_empresa: simbolo}
     nombres_empresas = list(empresas.keys())
     nombre_empresa = st.selectbox("Seleccione la empresa", nombres_empresas)
     simbolo = empresas[nombre_empresa]
@@ -54,15 +54,11 @@ elif pagina == "Búsqueda de Acción":
             st.error("La fecha inicial no puede ser posterior a la fecha final.")
         else:
             # Obtener datos de cotización
-            cotizaciones_df = obtener_cotizaciones()  # Asegúrate de que esta función devuelve los datos correctos
+            cotizaciones_df = obtener_cotizaciones()
 
             # Mostrar columnas disponibles para depuración
             st.write("Columnas disponibles en cotizaciones_df:")
             st.write(cotizaciones_df.columns.tolist())
-
-            # Convertir 'Date' a formato datetime si no lo está
-            if cotizaciones_df['Date'].dtype != 'datetime64[ns]':
-                cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'])
 
             # Filtrar datos para las fechas seleccionadas
             df_filtrado = cotizaciones_df[
@@ -74,16 +70,28 @@ elif pagina == "Búsqueda de Acción":
             # Verificar si hay datos
             if not df_filtrado.empty:
                 st.subheader(f"Precios para {nombre_empresa} entre {fecha_inicio} y {fecha_fin}")
-                
+
                 # Mostrar precios de las fechas inicial y final
                 precios_fecha_inicial = df_filtrado[df_filtrado['Date'] == fecha_inicio]
                 precios_fecha_final = df_filtrado[df_filtrado['Date'] == fecha_fin]
 
                 datos_resumen = pd.DataFrame({
                     "Fecha": [fecha_inicio, fecha_fin],
+                    "Precio Apertura": [
+                        precios_fecha_inicial['Open'].values[0] if not precios_fecha_inicial.empty else None,
+                        precios_fecha_final['Open'].values[0] if not precios_fecha_final.empty else None,
+                    ],
                     "Precio Cierre": [
                         precios_fecha_inicial['Close'].values[0] if not precios_fecha_inicial.empty else None,
                         precios_fecha_final['Close'].values[0] if not precios_fecha_final.empty else None,
+                    ],
+                    "Precio Máximo": [
+                        precios_fecha_inicial['High'].values[0] if not precios_fecha_inicial.empty else None,
+                        precios_fecha_final['High'].values[0] if not precios_fecha_final.empty else None,
+                    ],
+                    "Precio Mínimo": [
+                        precios_fecha_inicial['Low'].values[0] if not precios_fecha_inicial.empty else None,
+                        precios_fecha_final['Low'].values[0] if not precios_fecha_final.empty else None,
                     ]
                 })
                 st.dataframe(datos_resumen)
@@ -92,9 +100,9 @@ elif pagina == "Búsqueda de Acción":
                 st.subheader("Gráfico de Velas")
                 fig = go.Figure(data=[go.Candlestick(
                     x=df_filtrado['Date'],
-                    open=df_filtrado['Close'],  # Placeholder para precio_apertura
-                    high=df_filtrado['Close'],  # Placeholder para máximo
-                    low=df_filtrado['Close'],   # Placeholder para mínimo
+                    open=df_filtrado['Open'],
+                    high=df_filtrado['High'],
+                    low=df_filtrado['Low'],
                     close=df_filtrado['Close']
                 )])
                 fig.update_layout(
@@ -106,6 +114,7 @@ elif pagina == "Búsqueda de Acción":
 
             else:
                 st.warning(f"No se encontraron datos para {nombre_empresa} entre {fecha_inicio} y {fecha_fin}.")
+
 
 
 

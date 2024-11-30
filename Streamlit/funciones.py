@@ -133,9 +133,16 @@ def obtener_cotizaciones():
         # Crear cursor para ejecutar la consulta
         cursor = connection.cursor()
 
-        # Consulta SQL
+        # Consulta SQL con todas las columnas necesarias
         query = """
-        SELECT ph.fecha AS Date, ph.precio_cierre AS Close, es.nombre_empresa AS Company
+        SELECT 
+            ph.fecha AS Date,
+            ph.precio_apertura AS Open,
+            ph.precio_cierre AS Close,
+            ph.maximo AS High,
+            ph.minimo AS Low,
+            ph.volumen AS Volume,
+            es.nombre_empresa AS Company
         FROM precios_historicos ph
         INNER JOIN empresas_sp500 es ON ph.id_empresa = es.id_empresa
         ORDER BY es.nombre_empresa, ph.fecha
@@ -145,8 +152,11 @@ def obtener_cotizaciones():
         cursor.execute(query)
         rows = cursor.fetchall()
 
-        # Crear el DataFrame manualmente
-        cotizaciones_df = pd.DataFrame(rows, columns=["Date", "Close", "Company"])
+        # Crear el DataFrame manualmente con las columnas necesarias
+        cotizaciones_df = pd.DataFrame(rows, columns=["Date", "Open", "Close", "High", "Low", "Volume", "Company"])
+
+        # Convertir la columna 'Date' a tipo datetime para facilitar el manejo posterior
+        cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'])
 
         # Cerrar la conexión
         cursor.close()
@@ -157,6 +167,7 @@ def obtener_cotizaciones():
     except pymysql.MySQLError as e:
         print(f"Error al conectar a la base de datos o ejecutar la consulta: {e}")
         return pd.DataFrame()
+
 
 def graficar_precios_historicos(df, empresa_seleccionada):
         fig = go.Figure()
