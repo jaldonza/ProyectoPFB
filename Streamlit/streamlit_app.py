@@ -37,7 +37,7 @@ if pagina == "Landing Page":
 # Página de búsqueda de una acción específica
 elif pagina == "Búsqueda de Acción":
     st.header("Búsqueda de una Acción Específica")
-    
+
     # Seleccionar empresa
     empresas = obtener_empresas()
     nombres_empresas = list(empresas.keys())
@@ -45,80 +45,70 @@ elif pagina == "Búsqueda de Acción":
     simbolo = empresas[nombre_empresa]
 
     # Seleccionar fechas
-    fecha_inicio = st.date_input("Fecha de inicio", value=datetime(2020, 1, 1))
-    fecha_fin = st.date_input("Fecha de fin", value=datetime(2022, 1, 1))
+    fecha_inicio = st.date_input("Seleccione la fecha inicial", value=datetime(2020, 1, 1))
+    fecha_fin = st.date_input("Seleccione la fecha final", value=datetime(2022, 1, 1))
 
     if fecha_inicio and fecha_fin:
-        fecha_inicio_str = fecha_inicio.strftime('%Y-%m-%d')
-        fecha_fin_str = fecha_fin.strftime('%Y-%m-%d')
-
-        # Obtener datos de cotización
-        cotizaciones_df = obtener_cotizaciones()
-
-        # Convertir la columna 'Date' al formato datetime
-        cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'], errors='coerce')
-
-        # Depuración: Mostrar tipos para verificar
-        st.write("Tipos de columnas en cotizaciones_df:")
-        st.write(cotizaciones_df.dtypes)
-
-        # Filtrar valores no válidos en la columna 'Date'
-        cotizaciones_df = cotizaciones_df.dropna(subset=['Date'])
-
-        # Filtrar datos para el rango de fechas seleccionado
-        df_filtrado = cotizaciones_df[
-            (cotizaciones_df['Company'] == nombre_empresa) &
-            (cotizaciones_df['Date'] >= fecha_inicio) &
-            (cotizaciones_df['Date'] <= fecha_fin)
-        ]
-
-        if not df_filtrado.empty:
-            # Datos de la fecha inicial y final
-            datos_fecha_inicio = df_filtrado[df_filtrado['Date'] == fecha_inicio]
-            datos_fecha_fin = df_filtrado[df_filtrado['Date'] == fecha_fin]
-
-            # Mostrar datos como un DataFrame
-            st.subheader(f"Precios para {nombre_empresa} entre {fecha_inicio_str} y {fecha_fin_str}")
-            datos_resumen = pd.DataFrame({
-                "Fecha": [fecha_inicio_str, fecha_fin_str],
-                "Precio Apertura": [
-                    datos_fecha_inicio['precio_apertura'].values[0] if not datos_fecha_inicio.empty else None,
-                    datos_fecha_fin['precio_apertura'].values[0] if not datos_fecha_fin.empty else None,
-                ],
-                "Precio Cierre": [
-                    datos_fecha_inicio['precio_cierre'].values[0] if not datos_fecha_inicio.empty else None,
-                    datos_fecha_fin['precio_cierre'].values[0] if not datos_fecha_fin.empty else None,
-                ],
-                "Máximo": [
-                    datos_fecha_inicio['maximo'].values[0] if not datos_fecha_inicio.empty else None,
-                    datos_fecha_fin['maximo'].values[0] if not datos_fecha_fin.empty else None,
-                ],
-                "Mínimo": [
-                    datos_fecha_inicio['minimo'].values[0] if not datos_fecha_inicio.empty else None,
-                    datos_fecha_fin['minimo'].values[0] if not datos_fecha_fin.empty else None,
-                ]
-            })
-            st.dataframe(datos_resumen)
-
-            # Gráfico de velas
-            st.subheader("Gráfico de Velas")
-            fig = go.Figure(data=[go.Candlestick(
-                x=df_filtrado['Date'],
-                open=df_filtrado['precio_apertura'],
-                high=df_filtrado['maximo'],
-                low=df_filtrado['minimo'],
-                close=df_filtrado['precio_cierre']
-            )])
-            fig.update_layout(
-                title=f"Gráfico de Velas para {nombre_empresa} ({simbolo})",
-                xaxis_title="Fecha",
-                yaxis_title="Precio"
-            )
-            st.plotly_chart(fig)
-
+        # Validar fechas
+        if fecha_inicio > fecha_fin:
+            st.error("La fecha inicial no puede ser posterior a la fecha final.")
         else:
-            st.warning(f"No se encontraron datos para {nombre_empresa} entre {fecha_inicio_str} y {fecha_fin_str}.")
+            # Obtener datos de cotización
+            cotizaciones_df = obtener_cotizaciones()
 
+            # Filtrar datos para las fechas seleccionadas
+            df_filtrado = cotizaciones_df[
+                (cotizaciones_df['Company'] == nombre_empresa) &
+                (cotizaciones_df['Date'] >= fecha_inicio) &
+                (cotizaciones_df['Date'] <= fecha_fin)
+            ]
+
+            # Verificar si hay datos
+            if not df_filtrado.empty:
+                # Mostrar precios de las fechas seleccionadas
+                datos_fecha_inicio = df_filtrado[df_filtrado['Date'] == fecha_inicio]
+                datos_fecha_fin = df_filtrado[df_filtrado['Date'] == fecha_fin]
+
+                st.subheader(f"Precios para {nombre_empresa} entre {fecha_inicio} y {fecha_fin}")
+                datos_resumen = pd.DataFrame({
+                    "Fecha": [fecha_inicio, fecha_fin],
+                    "Precio Apertura": [
+                        datos_fecha_inicio['precio_apertura'].values[0] if not datos_fecha_inicio.empty else None,
+                        datos_fecha_fin['precio_apertura'].values[0] if not datos_fecha_fin.empty else None,
+                    ],
+                    "Precio Cierre": [
+                        datos_fecha_inicio['precio_cierre'].values[0] if not datos_fecha_inicio.empty else None,
+                        datos_fecha_fin['precio_cierre'].values[0] if not datos_fecha_fin.empty else None,
+                    ],
+                    "Máximo": [
+                        datos_fecha_inicio['maximo'].values[0] if not datos_fecha_inicio.empty else None,
+                        datos_fecha_fin['maximo'].values[0] if not datos_fecha_fin.empty else None,
+                    ],
+                    "Mínimo": [
+                        datos_fecha_inicio['minimo'].values[0] if not datos_fecha_inicio.empty else None,
+                        datos_fecha_fin['minimo'].values[0] if not datos_fecha_fin.empty else None,
+                    ]
+                })
+                st.dataframe(datos_resumen)
+
+                # Generar gráfico de velas
+                st.subheader("Gráfico de Velas")
+                fig = go.Figure(data=[go.Candlestick(
+                    x=df_filtrado['Date'],
+                    open=df_filtrado['precio_apertura'],
+                    high=df_filtrado['maximo'],
+                    low=df_filtrado['minimo'],
+                    close=df_filtrado['precio_cierre']
+                )])
+                fig.update_layout(
+                    title=f"Gráfico de Velas para {nombre_empresa} ({simbolo})",
+                    xaxis_title="Fecha",
+                    yaxis_title="Precio"
+                )
+                st.plotly_chart(fig)
+
+            else:
+                st.warning(f"No se encontraron datos para {nombre_empresa} entre {fecha_inicio} y {fecha_fin}.")
 
 
 # Página de calculadora de ROI
