@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 from datetime import datetime
-from funciones import obtener_empresas, calcular_roi, obtener_cotizaciones, graficar_precios_historicos, graficar_medias_moviles, graficar_rsi, calcular_metricas  # Importar funciones
+from funciones import obtener_empresas, obtener_cotizaciones  # Importar las funciones necesarias
 
 # Configuración de la aplicación Streamlit
 st.set_page_config(page_title="Yahoo Finance app", layout="wide")
@@ -12,7 +12,6 @@ st.set_page_config(page_title="Yahoo Finance app", layout="wide")
 st.sidebar.title("Navegación")
 pagina = st.sidebar.radio("Ir a", [
     "Landing Page", 
-    "Presentación de Datos", 
     "Búsqueda de Acción", 
     "Calculadora ROI", 
     "Dashboard Financiero", 
@@ -28,7 +27,6 @@ if pagina == "Landing Page":
     st.write("""
     Bienvenido a la aplicación de análisis financiero del S&P500. Aquí podrás explorar diferentes funcionalidades:
     
-    - **Presentación de Datos:** Visualización de información básica de las empresas del S&P500.
     - **Búsqueda de Acción:** Consulta los precios históricos de una acción específica y visualiza gráficos de velas.
     - **Calculadora ROI:** Calcula el retorno de la inversión para un periodo seleccionado (disponible en Power BI).
     - **Dashboard Financiero:** Gráficos dinámicos para analizar el rendimiento de las acciones.
@@ -36,22 +34,80 @@ if pagina == "Landing Page":
     - **Análisis de Métricas Financieras:** Consulta métricas como volatilidad diaria, Sharpe Ratio, y más.
     """)
 
-# Página de presentación de datos
-elif pagina == "Presentación de Datos":
-    st.header("Presentación de Datos Financieros")
-
 # Página de búsqueda de una acción específica
 elif pagina == "Búsqueda de Acción":
     st.header("Búsqueda de una Acción Específica")
-    accion = st.text_input("Buscar una acción", "")
-    if accion:
-        st.write(f"Resultados para la acción: {accion}")
-        st.write({
-            "Ticker": accion,
-            "Precio Actual": "$100",
-            "Cambio (%)": "+2%",
-            "Volumen": "1M"
-        })
+    
+    # Seleccionar empresa
+    empresas = obtener_empresas()
+    nombres_empresas = list(empresas.keys())
+    nombre_empresa = st.selectbox("Seleccione la empresa", nombres_empresas)
+    simbolo = empresas[nombre_empresa]
+
+    # Seleccionar fechas
+    fecha_inicio = st.date_input("Fecha de inicio", value=datetime(2020, 1, 1))
+    fecha_fin = st.date_input("Fecha de fin", value=datetime(2022, 1, 1))
+
+    if fecha_inicio and fecha_fin:
+        fecha_inicio_str = fecha_inicio.strftime('%Y-%m-%d')
+        fecha_fin_str = fecha_fin.strftime('%Y-%m-%d')
+
+        # Obtener datos de cotización
+        cotizaciones_df = obtener_cotizaciones()
+
+        # Filtrar datos para el rango de fechas seleccionado
+        df_filtrado = cotizaciones_df[
+            (cotizaciones_df['Company'] == nombre_empresa) &
+            (cotizaciones_df['Date'] >= fecha_inicio_str) &
+            (cotizaciones_df['Date'] <= fecha_fin_str)
+        ]
+
+        if not df_filtrado.empty:
+            # Datos de la fecha inicial y final
+            datos_fecha_inicio = df_filtrado[df_filtrado['Date'] == fecha_inicio_str]
+            datos_fecha_fin = df_filtrado[df_filtrado['Date'] == fecha_fin_str]
+
+            # Mostrar datos como un DataFrame
+            st.subheader(f"Precios para {nombre_empresa} entre {fecha_inicio_str} y {fecha_fin_str}")
+            datos_resumen = pd.DataFrame({
+                "Fecha": [fecha_inicio_str, fecha_fin_str],
+                "Precio Apertura": [
+                    datos_fecha_inicio['precio_apertura'].values[0] if not datos_fecha_inicio.empty else None,
+                    datos_fecha_fin['precio_apertura'].values[0] if not datos_fecha_fin.empty else None,
+                ],
+                "Precio Cierre": [
+                    datos_fecha_inicio['precio_cierre'].values[0] if not datos_fecha_inicio.empty else None,
+                    datos_fecha_fin['precio_cierre'].values[0] if not datos_fecha_fin.empty else None,
+                ],
+                "Máximo": [
+                    datos_fecha_inicio['maximo'].values[0] if not datos_fecha_inicio.empty else None,
+                    datos_fecha_fin['maximo'].values[0] if not datos_fecha_fin.empty else None,
+                ],
+                "Mínimo": [
+                    datos_fecha_inicio['minimo'].values[0] if not datos_fecha_inicio.empty else None,
+                    datos_fecha_fin['minimo'].values[0] if not datos_fecha_fin.empty else None,
+                ]
+            })
+            st.dataframe(datos_resumen)
+
+            # Gráfico de velas
+            st.subheader("Gráfico de Velas")
+            fig = go.Figure(data=[go.Candlestick(
+                x=df_filtrado['Date'],
+                open=df_filtrado['precio_apertura'],
+                high=df_filtrado['maximo'],
+                low=df_filtrado['minimo'],
+                close=df_filtrado['precio_cierre']
+            )])
+            fig.update_layout(
+                title=f"Gráfico de Velas para {nombre_empresa} ({simbolo})",
+                xaxis_title="Fecha",
+                yaxis_title="Precio"
+            )
+            st.plotly_chart(fig)
+
+        else:
+            st.warning(f"No se encontraron datos para {nombre_empresa} entre {fecha_inicio_str} y {fecha_fin_str}.")
 
 # Página de calculadora de ROI
 elif pagina == "Calculadora ROI":
