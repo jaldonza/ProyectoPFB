@@ -116,44 +116,60 @@ elif pagina == "Dashboard Financiero":
 # Análisis de Métricas Financieras
 elif pagina == "Análisis de Métricas Financieras":
     st.header("Análisis de Métricas Financieras")
-       # Cargar datos de cotización
+
+    # Cargar datos de cotización
     cotizaciones_df = obtener_cotizaciones()
+
+    # Asegurar que la columna 'Date' sea del tipo datetime
+    if cotizaciones_df['Date'].dtype != 'datetime64[ns]':
+        cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'])
 
     # Selección de activo
     empresas = cotizaciones_df['Company'].unique()
     empresa_seleccionada = st.selectbox("Seleccione la empresa", empresas)
 
     # Selección de periodo
-    fecha_inicio = st.date_input("Fecha de inicio", value=cotizaciones_df['Date'].min())
-    fecha_fin = st.date_input("Fecha de fin", value=cotizaciones_df['Date'].max())
+    min_date = cotizaciones_df['Date'].min()
+    max_date = cotizaciones_df['Date'].max()
+    fecha_inicio = st.date_input("Fecha de inicio", value=min_date, min_value=min_date, max_value=max_date)
+    fecha_fin = st.date_input("Fecha de fin", value=max_date, min_value=min_date, max_value=max_date)
 
-    # Filtrar los datos para el activo y periodo seleccionados
-    df_filtrado = cotizaciones_df[
-        (cotizaciones_df['Company'] == empresa_seleccionada) &
-        (cotizaciones_df['Date'] >= fecha_inicio) &
-        (cotizaciones_df['Date'] <= fecha_fin)
-    ]
+    # Convertir fechas seleccionadas a datetime
+    fecha_inicio = pd.to_datetime(fecha_inicio)
+    fecha_fin = pd.to_datetime(fecha_fin)
 
-    # Verificar si hay datos
-    if not df_filtrado.empty:
-        # Calcular métricas
-        cotizaciones = df_filtrado['Close']
-        metricas = calcular_metricas(cotizaciones)
-
-        # Mostrar resultados
-        st.subheader(f"Métricas para {empresa_seleccionada} del {fecha_inicio} al {fecha_fin}")
-        st.write(f"**Volatilidad diaria**: {metricas['volatilidad_diaria']:.4f}")
-        st.write(f"**Sharpe Ratio**: {metricas['sharpe_ratio']:.4f}" if metricas['sharpe_ratio'] else "Sharpe Ratio no calculable.")
-        st.write(f"**Sortino Ratio**: {metricas['sortino_ratio']:.4f}" if metricas['sortino_ratio'] else "Sortino Ratio no calculable.")
-
-        # Graficar retornos diarios
-        retornos_diarios = cotizaciones.pct_change().dropna()
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=retornos_diarios.index, y=retornos_diarios, mode='lines', name="Retornos Diarios"))
-        fig.update_layout(title="Evolución de Retornos Diarios", xaxis_title="Fecha", yaxis_title="Retornos Diarios")
-        st.plotly_chart(fig)
+    # Validar el rango de fechas
+    if fecha_inicio > fecha_fin:
+        st.error("La fecha de inicio no puede ser posterior a la fecha de fin.")
     else:
-        st.warning("No se encontraron datos para el periodo seleccionado.")
+        # Filtrar los datos para el rango de fechas seleccionado
+        df_filtrado = cotizaciones_df[
+            (cotizaciones_df['Company'] == empresa_seleccionada) &
+            (cotizaciones_df['Date'] >= fecha_inicio) &
+            (cotizaciones_df['Date'] <= fecha_fin)
+        ]
+
+        # Verificar si hay datos después del filtrado
+        if not df_filtrado.empty:
+            # Calcular métricas
+            cotizaciones = df_filtrado['Close']
+            metricas = calcular_metricas(cotizaciones)
+
+            # Mostrar resultados
+            st.subheader(f"Métricas para {empresa_seleccionada} del {fecha_inicio.date()} al {fecha_fin.date()}")
+            st.write(f"**Volatilidad diaria**: {metricas['volatilidad_diaria']:.4f}")
+            st.write(f"**Sharpe Ratio**: {metricas['sharpe_ratio']:.4f}" if metricas['sharpe_ratio'] else "Sharpe Ratio no calculable.")
+            st.write(f"**Sortino Ratio**: {metricas['sortino_ratio']:.4f}" if metricas['sortino_ratio'] else "Sortino Ratio no calculable.")
+
+            # Graficar retornos diarios
+            retornos_diarios = cotizaciones.pct_change().dropna()
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=retornos_diarios.index, y=retornos_diarios, mode='lines', name="Retornos Diarios"))
+            fig.update_layout(title="Evolución de Retornos Diarios", xaxis_title="Fecha", yaxis_title="Retornos Diarios")
+            st.plotly_chart(fig)
+        else:
+            st.warning(f"No se encontraron datos para {empresa_seleccionada} entre {fecha_inicio.date()} y {fecha_fin.date()}.")
+
 # About Us
 elif pagina == "About Us":
     st.header("About Us")
@@ -173,8 +189,8 @@ elif pagina == "About Us":
     4. Integración de Power BI para análisis avanzado.
     
     **Equipo:**
-    - [Nombre del Integrante 1](https://linkedin.com)
-    - [Nombre del Integrante 2](https://linkedin.com)
+    - [Javier Aldonza](https://linkedin.com/javier-aldonza/)
+    - [Roberto Gonzalez Álvarez](https://www.linkedin.com/in/roberto-gonz%C3%A1lez-%C3%A1lvarez-959552140/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)
     - [Nombre del Integrante 3](https://linkedin.com)
 
     ¡Gracias por explorar nuestra aplicación!
