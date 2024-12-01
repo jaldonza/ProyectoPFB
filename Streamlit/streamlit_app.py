@@ -149,7 +149,23 @@ elif pagina == "Análisis Exploratorio":
         ))
         fig_heatmap.update_layout(title="Mapa de Calor de Correlación", xaxis_title="Activos", yaxis_title="Activos")
         st.plotly_chart(fig_heatmap)
+    # Explicaciones al final
+    st.subheader("Explicaciones")
+    st.write("""
+    ### Medias Móviles (SMA)
+    Las medias móviles suavizan las fluctuaciones de precios para identificar tendencias más fácilmente. 
+    - **Interpretación:** Cuando el precio actual está por encima de una media móvil, puede indicar una tendencia alcista.
+    - **SMA-50:** Utilizada para analizar tendencias de corto plazo.
+    - **SMA-200:** Ayuda a identificar tendencias de largo plazo.
 
+    ### RSI (Índice de Fuerza Relativa)
+    El RSI mide la fuerza de las recientes ganancias frente a las recientes pérdidas en un rango de tiempo.
+    - **Interpretación:** Un RSI superior a 70 puede indicar una acción sobrecomprada, mientras que un RSI inferior a 30 puede señalar una acción sobrevendida.
+    
+    ### Análisis de Correlación
+    Evalúa cómo los movimientos de diferentes activos están relacionados.
+    - **Interpretación:** Una correlación cercana a 1 indica una relación directa fuerte, mientras que una correlación cercana a -1 indica una relación inversa fuerte.
+    """)
 # Dashboard Financiero
 elif pagina == "Dashboard Financiero":
     st.header("Dashboard Financiero")
