@@ -14,8 +14,9 @@ pagina = st.sidebar.radio("Ir a", [
     "Análisis Exploratorio",
     "Dashboard Financiero",
     "Análisis de Métricas Financieras",
-    "About Us",
-    "Base de Datos"
+    "Modelo de CLustering",
+    "Base de Datos",
+    "About Us"
 ])
 
 # Página de inicio
@@ -200,6 +201,10 @@ elif pagina == "Base de Datos":
     """)
 
     st.write("Este diseño asegura flexibilidad y escalabilidad, permitiendo almacenar grandes volúmenes de datos y realizar consultas eficientes para el análisis.")
+# Modelo de CLusterig
+elif pagina == "Modelo de Clustering":
+    st.header("Modelo de Clustering")
+
 
 # About Us
 elif pagina == "About Us":
