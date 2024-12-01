@@ -114,29 +114,45 @@ elif pagina == "Dashboard Financiero":
     st.write("**Nota:** Una vez que tengas el enlace del tablero, actualiza esta sección.")
 
 # Análisis de Métricas Financieras
-elif pagina == "Análisis de Métricas Financieras":
-    st.header("Análisis de Métricas Financieras")
+# Cargar datos de cotización
     cotizaciones_df = obtener_cotizaciones()
 
+    # Selección de activo
     empresas = cotizaciones_df['Company'].unique()
     empresa_seleccionada = st.selectbox("Seleccione la empresa", empresas)
+
+    # Selección de periodo
     fecha_inicio = st.date_input("Fecha de inicio", value=cotizaciones_df['Date'].min())
     fecha_fin = st.date_input("Fecha de fin", value=cotizaciones_df['Date'].max())
 
+    # Filtrar los datos para el activo y periodo seleccionados
     df_filtrado = cotizaciones_df[
         (cotizaciones_df['Company'] == empresa_seleccionada) &
         (cotizaciones_df['Date'] >= fecha_inicio) &
         (cotizaciones_df['Date'] <= fecha_fin)
     ]
 
+    # Verificar si hay datos
     if not df_filtrado.empty:
+        # Calcular métricas
         cotizaciones = df_filtrado['Close']
         metricas = calcular_metricas(cotizaciones)
 
+        # Mostrar resultados
         st.subheader(f"Métricas para {empresa_seleccionada} del {fecha_inicio} al {fecha_fin}")
         st.write(f"**Volatilidad diaria**: {metricas['volatilidad_diaria']:.4f}")
-        st.write(f"**Sharpe Ratio**: {metricas['sharpe_ratio']:.4f}")
-        st.write(f"**Sortino Ratio**: {metricas['sortino_ratio']:.4f}")
+        st.write(f"**Sharpe Ratio**: {metricas['sharpe_ratio']:.4f}" if metricas['sharpe_ratio'] else "Sharpe Ratio no calculable.")
+        st.write(f"**Sortino Ratio**: {metricas['sortino_ratio']:.4f}" if metricas['sortino_ratio'] else "Sortino Ratio no calculable.")
+
+        # Graficar retornos diarios
+        retornos_diarios = cotizaciones.pct_change().dropna()
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=retornos_diarios.index, y=retornos_diarios, mode='lines', name="Retornos Diarios"))
+        fig.update_layout(title="Evolución de Retornos Diarios", xaxis_title="Fecha", yaxis_title="Retornos Diarios")
+        st.plotly_chart(fig)
+    else:
+        st.warning("No se encontraron datos para el periodo seleccionado.")
+
 
 # About Us
 elif pagina == "About Us":
