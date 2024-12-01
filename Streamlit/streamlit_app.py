@@ -14,7 +14,7 @@ pagina = st.sidebar.radio("Ir a", [
     "Análisis Exploratorio",
     "Dashboard Financiero",
     "Análisis de Métricas Financieras",
-    "Modelo de CLustering",
+    "Modelo de Clustering",
     "Base de Datos",
     "About Us"
 ])
@@ -159,6 +159,11 @@ elif pagina == "Dashboard Financiero":
 # Análisis de Métricas Financieras
 elif pagina == "Análisis de Métricas Financieras":
     st.header("Análisis de Métricas Financieras")
+# Introducción a la sección
+    st.write("""
+    En esta sección puedes calcular y analizar métricas financieras clave, como volatilidad diaria, ratio de Sharpe y ratio de Sortino. 
+    Estas métricas ayudan a evaluar el rendimiento y el riesgo de un activo financiero.
+    """)
 
     # Cargar datos de cotización
     cotizaciones_df = obtener_cotizaciones()
@@ -203,7 +208,20 @@ elif pagina == "Análisis de Métricas Financieras":
             st.write(f"**Volatilidad diaria**: {metricas['volatilidad_diaria']:.4f}")
             st.write(f"**Sharpe Ratio**: {metricas['sharpe_ratio']:.4f}" if metricas['sharpe_ratio'] else "Sharpe Ratio no calculable.")
             st.write(f"**Sortino Ratio**: {metricas['sortino_ratio']:.4f}" if metricas['sortino_ratio'] else "Sortino Ratio no calculable.")
-
+ # Explicaciones de las métricas
+            st.write("""
+            ### Explicaciones de las métricas:
+            - **Volatilidad diaria:** Mide cuánto fluctúan los precios del activo diariamente. Una alta volatilidad indica mayor riesgo, pero también mayores oportunidades de retorno.
+            - **Sharpe Ratio:** Evalúa el rendimiento ajustado al riesgo del activo. 
+              - Un Sharpe Ratio positivo indica que el activo ofrece un retorno superior a la tasa libre de riesgo ajustado por su volatilidad.
+              - Valores típicos: 
+                - > 1.0: Bueno.
+                - > 2.0: Muy bueno.
+                - > 3.0: Excelente.
+            - **Sortino Ratio:** Similar al Sharpe Ratio, pero considera únicamente el riesgo asociado a retornos negativos.
+              - Es más adecuado para evaluar activos en los que los inversores quieren evitar pérdidas en lugar de volatilidad general.
+              - Un Sortino Ratio alto indica que el activo ofrece un buen retorno por unidad de riesgo de pérdida.
+            """)
             # Graficar retornos diarios
             retornos_diarios = cotizaciones.pct_change().dropna()
             fig = go.Figure()
@@ -268,7 +286,7 @@ elif pagina == "About Us":
     **Equipo:**
     - [Javier Aldonza](https://linkedin.com/javier-aldonza/)
     - [Roberto Gonzalez Álvarez](https://www.linkedin.com/in/roberto-gonz%C3%A1lez-%C3%A1lvarez-959552140/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)
-    - [Nombre del Integrante 3](https://linkedin.com)
+    - [Khalid el Afi Guerban](https://www.linkedin.com/in/khalid-el-afi-guerban-95212a270)
 
     ¡Gracias por explorar nuestra aplicación!
     """)
