@@ -36,6 +36,11 @@ if pagina == "Landing Page":
 # Análisis Exploratorio
 elif pagina == "Análisis Exploratorio":
     st.header("Análisis Exploratorio")
+    # Introducción a la sección
+    st.write("""
+    En esta sección puedes explorar visualizaciones clave y relaciones entre activos del S&P500. 
+    Estas herramientas permiten analizar tendencias, correlaciones y comportamientos históricos para una mejor toma de decisiones financieras.
+    """)
     cotizaciones_df = obtener_cotizaciones()
 
     # Cargar datos de cotización
@@ -77,15 +82,45 @@ elif pagina == "Análisis Exploratorio":
         if not df.empty:
             if tab == "Precios Históricos":
                 st.plotly_chart(graficar_precios_historicos(df, empresa_seleccionada))
+                st.write("""
+                **Precios Históricos:**
+                Este gráfico muestra la evolución histórica de los precios de cierre del activo seleccionado.
+                Es útil para identificar tendencias generales y períodos de alta o baja volatilidad.
+                """)
             elif tab == "Medias Móviles":
                 st.plotly_chart(graficar_medias_moviles(df, empresa_seleccionada))
+                st.write("""
+                **Medias Móviles Simples (SMA):**
+                - La SMA50 (50 días) es una medida de corto plazo que suaviza los movimientos diarios del precio para identificar tendencias inmediatas.
+                - La SMA200 (200 días) es una medida de largo plazo que muestra la tendencia general de un activo.
+                
+                **Cómo Interpretar:**
+                - Cuando la SMA50 cruza por encima de la SMA200, puede ser una señal de compra (cambio a tendencia alcista).
+                - Cuando la SMA50 cruza por debajo de la SMA200, puede ser una señal de venta (cambio a tendencia bajista).
+                """)
             elif tab == "RSI":
                 st.plotly_chart(graficar_rsi(df, empresa_seleccionada))
+                st.write("""
+                **Índice de Fuerza Relativa (RSI):**
+                - El RSI mide la velocidad y el cambio de los movimientos de precios.
+                - Escala de 0 a 100.
+                
+                **Cómo Interpretar:**
+                - Un RSI por encima de 70 indica un activo sobrecomprado (potencial corrección o reversión a la baja).
+                - Un RSI por debajo de 30 indica un activo sobrevendido (potencial rebote o recuperación).
+                
+                **Uso Práctico:**
+                Ayuda a identificar condiciones extremas del mercado y posibles puntos de entrada/salida.
+                """)
         else:
             st.warning(f"No hay datos disponibles para {empresa_seleccionada} en el rango de fechas seleccionado.")
 
     # Subsección: Análisis de correlación
     st.subheader("Análisis de Correlación entre Activos")
+    st.write("""
+    Este análisis muestra cómo se relacionan los precios de diferentes activos. 
+    Una alta correlación positiva indica que los activos tienden a moverse en la misma dirección, mientras que una correlación negativa indica movimientos opuestos.
+    """)
     activo_principal = st.selectbox("Seleccione el activo principal", empresas)
     activos_comparar = st.multiselect("Seleccione hasta 4 activos para comparar", empresas, default=empresas[:4])
 
@@ -97,6 +132,12 @@ elif pagina == "Análisis Exploratorio":
 
         st.subheader("Matriz de Correlación")
         st.dataframe(correlacion)
+        st.write("""
+        **Interpretación:**
+        - Valores cercanos a 1 indican una relación positiva fuerte entre los activos.
+        - Valores cercanos a -1 indican una relación negativa fuerte.
+        - Valores cercanos a 0 indican una relación débil o inexistente.
+        """)
 
         st.subheader("Mapa de Calor de Correlación")
         fig_heatmap = go.Figure(data=go.Heatmap(
