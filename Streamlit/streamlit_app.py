@@ -114,7 +114,9 @@ elif pagina == "Dashboard Financiero":
     st.write("**Nota:** Una vez que tengas el enlace del tablero, actualiza esta sección.")
 
 # Análisis de Métricas Financieras
-# Cargar datos de cotización
+elif pagina == "Análisis de Métricas Financieras":
+    st.header("Análisis de Métricas Financieras")
+       # Cargar datos de cotización
     cotizaciones_df = obtener_cotizaciones()
 
     # Selección de activo
@@ -152,8 +154,6 @@ elif pagina == "Dashboard Financiero":
         st.plotly_chart(fig)
     else:
         st.warning("No se encontraron datos para el periodo seleccionado.")
-
-
 # About Us
 elif pagina == "About Us":
     st.header("About Us")
