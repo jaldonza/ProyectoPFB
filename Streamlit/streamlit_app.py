@@ -9,11 +9,9 @@ st.set_page_config(page_title="Yahoo Finance app", layout="wide")
 # Barra lateral de navegación
 st.sidebar.title("Navegación")
 pagina = st.sidebar.radio("Ir a", [
-    "Landing Page", 
-    "Búsqueda de Acción", 
-    "Calculadora ROI", 
-    "Dashboard Financiero", 
-    "Análisis de Correlación",
+    "Landing Page",
+    "Análisis Exploratorio",
+    "Calculadora ROI",
     "Análisis de Métricas Financieras"
 ])
 
@@ -25,82 +23,74 @@ if pagina == "Landing Page":
     st.write("""
     Bienvenido a la aplicación de análisis financiero del S&P500. Aquí podrás explorar diferentes funcionalidades:
     
-    - **Búsqueda de Acción:** Consulta los precios históricos de una acción específica y visualiza gráficos de velas.
+    - **Análisis Exploratorio:** Consulta gráficos financieros y análisis de correlación.
     - **Calculadora ROI:** Calcula el retorno de la inversión para un periodo seleccionado (disponible en Power BI).
-    - **Dashboard Financiero:** Gráficos dinámicos para analizar el rendimiento de las acciones.
-    - **Análisis de Correlación:** Estudia las relaciones entre diferentes activos financieros.
     - **Análisis de Métricas Financieras:** Consulta métricas como volatilidad diaria, Sharpe Ratio, y más.
     """)
 
-# Página de búsqueda de una acción específica
-elif pagina == "Búsqueda de Acción":
-    st.header("Búsqueda de una Acción Específica")
+# Análisis Exploratorio
+elif pagina == "Análisis Exploratorio":
+    st.header("Análisis Exploratorio")
+    cotizaciones_df = obtener_cotizaciones()
 
-    # Seleccionar empresa
-    empresas = obtener_empresas()  # Esto devuelve un diccionario {nombre_empresa: simbolo}
-    nombres_empresas = list(empresas.keys())
-    nombre_empresa = st.selectbox("Seleccione la empresa", nombres_empresas)
-
-    # Seleccionar fechas
-    fecha_inicio = st.date_input("Seleccione la fecha inicial", value=datetime(2020, 1, 1))
-    fecha_fin = st.date_input("Seleccione la fecha final", value=datetime(2022, 1, 1))
+    # Subsección: Dashboard Financiero
+    st.subheader("Dashboard Financiero - Datos de Cotización")
+    empresas = cotizaciones_df['Company'].unique()
+    empresa_seleccionada = st.selectbox("Seleccione la empresa", empresas)
+    fecha_inicio = st.date_input("Fecha de inicio", value=cotizaciones_df['Date'].min())
+    fecha_fin = st.date_input("Fecha de fin", value=cotizaciones_df['Date'].max())
 
     if fecha_inicio and fecha_fin:
-        if fecha_inicio > fecha_fin:
-            st.error("La fecha inicial no puede ser posterior a la fecha final.")
-        else:
-            # Obtener datos de cotización
-            cotizaciones_df = obtener_cotizaciones()
+        df_filtrado = cotizaciones_df[
+            (cotizaciones_df['Company'] == empresa_seleccionada) &
+            (cotizaciones_df['Date'] >= fecha_inicio) &
+            (cotizaciones_df['Date'] <= fecha_fin)
+        ]
+        tab = st.selectbox("Seleccione una visualización", ["Precios Históricos", "Medias Móviles", "RSI"])
 
-            # Filtrar datos para las fechas seleccionadas
-            df_filtrado = cotizaciones_df[
-                (cotizaciones_df['Company'] == nombre_empresa) &
-                (cotizaciones_df['Date'] >= fecha_inicio) &
-                (cotizaciones_df['Date'] <= fecha_fin)
-            ]
+        if tab == "Precios Históricos":
+            st.plotly_chart(graficar_precios_historicos(df_filtrado, empresa_seleccionada))
+        elif tab == "Medias Móviles":
+            st.plotly_chart(graficar_medias_moviles(df_filtrado, empresa_seleccionada))
+        elif tab == "RSI":
+            st.plotly_chart(graficar_rsi(df_filtrado, empresa_seleccionada))
 
-            # Mostrar datos y gráficos si hay datos disponibles
-            if not df_filtrado.empty:
-                st.subheader(f"Precios para {nombre_empresa} entre {fecha_inicio} y {fecha_fin}")
+    # Subsección: Análisis de Correlación
+    st.subheader("Análisis de Correlación entre Activos")
+    activo_principal = st.selectbox("Seleccione el activo principal", empresas)
+    activos_comparar = st.multiselect("Seleccione hasta 4 activos para comparar", empresas, default=empresas[:4])
 
-                # Mostrar precios inicial y final
-                precios_fecha_inicial = df_filtrado[df_filtrado['Date'] == fecha_inicio]
-                precios_fecha_final = df_filtrado[df_filtrado['Date'] == fecha_fin]
+    if activo_principal and len(activos_comparar) > 0:
+        activos_seleccionados = [activo_principal] + activos_comparar
+        df_seleccionados = cotizaciones_df[cotizaciones_df['Company'].isin(activos_seleccionados)]
+        precios_df = df_seleccionados.pivot(index='Date', columns='Company', values='Close')
+        correlacion = precios_df.corr()
 
-                datos_resumen = pd.DataFrame({
-                    "Fecha": [fecha_inicio, fecha_fin],
-                    "Precio Apertura": [
-                        precios_fecha_inicial['Open'].values[0] if not precios_fecha_inicial.empty else None,
-                        precios_fecha_final['Open'].values[0] if not precios_fecha_final.empty else None,
-                    ],
-                    "Precio Cierre": [
-                        precios_fecha_inicial['Close'].values[0] if not precios_fecha_inicial.empty else None,
-                        precios_fecha_final['Close'].values[0] if not precios_fecha_final.empty else None,
-                    ],
-                    "Precio Máximo": [
-                        precios_fecha_inicial['High'].values[0] if not precios_fecha_inicial.empty else None,
-                        precios_fecha_final['High'].values[0] if not precios_fecha_final.empty else None,
-                    ],
-                    "Precio Mínimo": [
-                        precios_fecha_inicial['Low'].values[0] if not precios_fecha_inicial.empty else None,
-                        precios_fecha_final['Low'].values[0] if not precios_fecha_final.empty else None,
-                    ]
-                })
-                st.dataframe(datos_resumen)
+        # Matriz de correlación
+        st.subheader("Matriz de Correlación")
+        st.dataframe(correlacion)
 
-                # Generar gráfico de velas
-                grafico_velas = crear_grafico_velas(df_filtrado, titulo=f"Gráfico de Velas para {nombre_empresa}")
-                if grafico_velas:
-                    st.plotly_chart(grafico_velas)
-                else:
-                    st.warning("No se pudo generar el gráfico de velas.")
-            else:
-                st.warning(f"No se encontraron datos para {nombre_empresa} entre {fecha_inicio} y {fecha_fin}.")
+        # Heatmap
+        st.subheader("Mapa de Calor de Correlación")
+        fig_heatmap = go.Figure(data=go.Heatmap(
+            z=correlacion.values,
+            x=correlacion.columns,
+            y=correlacion.index,
+            colorscale='Viridis',
+            colorbar=dict(title="Correlación")
+        ))
+        fig_heatmap.update_layout(title="Mapa de Calor de Correlación", xaxis_title="Activos", yaxis_title="Activos")
+        st.plotly_chart(fig_heatmap)
 
+        # Gráfico de líneas
+        st.subheader("Evolución de Precios")
+        fig = go.Figure()
+        for activo in activos_seleccionados:
+            fig.add_trace(go.Scatter(x=precios_df.index, y=precios_df[activo], mode='lines', name=activo))
+        fig.update_layout(title="Evolución de los Precios de los Activos", xaxis_title="Fecha", yaxis_title="Precio de Cierre")
+        st.plotly_chart(fig)
 
-
-
-# Página de calculadora de ROI
+# Calculadora ROI
 elif pagina == "Calculadora ROI":
     st.header("Calculadora de ROI")
     empresas = obtener_empresas()
@@ -121,124 +111,30 @@ elif pagina == "Calculadora ROI":
         else:
             st.warning("No se pudo calcular el ROI debido a datos insuficientes o errores en la base de datos.")
 
-# Página del Dashboard Financiero
-elif pagina == "Dashboard Financiero":
-    st.header("Dashboard Financiero - Datos de Cotización")
-    
-    # Cargar datos de cotización
-    cotizaciones_df = obtener_cotizaciones()
-
-    # Dropdown para seleccionar la empresa
-    empresas = cotizaciones_df['Company'].unique()
-    empresa_seleccionada = st.selectbox("Seleccione la empresa", empresas)
-
-    # Seleccionar el rango de fechas
-    fecha_inicio = st.date_input("Fecha de inicio", value=cotizaciones_df['Date'].min())
-    fecha_fin = st.date_input("Fecha de fin", value=cotizaciones_df['Date'].max())
-    
-    # Filtrar los datos para el rango de fechas
-    df = cotizaciones_df[(cotizaciones_df['Company'] == empresa_seleccionada) & 
-                         (cotizaciones_df['Date'] >= fecha_inicio) & 
-                         (cotizaciones_df['Date'] <= fecha_fin)]
-
-    # Seleccionar el tipo de gráfico
-    tab = st.selectbox("Seleccione una visualización", ["Precios Históricos", "Medias Móviles", "RSI"])
-   
-    # Mostrar gráfico según la pestaña seleccionada
-    if tab == "Precios Históricos":
-        st.plotly_chart(graficar_precios_historicos(df, empresa_seleccionada))
-    elif tab == "Medias Móviles":
-        st.plotly_chart(graficar_medias_moviles(df, empresa_seleccionada))
-    elif tab == "RSI":
-        st.plotly_chart(graficar_rsi(df, empresa_seleccionada))
-
-# Página de análisis de correlación
-elif pagina == "Análisis de Correlación":
-    st.header("Análisis de Correlación entre Activos")
-    cotizaciones_df = obtener_cotizaciones()
-    empresas = cotizaciones_df['Company'].unique()
-
-    # Selección de activos
-    activo_principal = st.selectbox("Seleccione el activo principal", empresas)
-    activos_comparar = st.multiselect("Seleccione hasta 4 activos para comparar", empresas, default=empresas[:4])
-
-    if activo_principal and len(activos_comparar) > 0:
-        # Preparar los datos
-        activos_seleccionados = [activo_principal] + activos_comparar
-        df_seleccionados = cotizaciones_df[cotizaciones_df['Company'].isin(activos_seleccionados)]
-        precios_df = df_seleccionados.pivot(index='Date', columns='Company', values='Close')
-        correlacion = precios_df.corr()
-
-        # Mostrar la matriz de correlación
-        st.subheader("Matriz de Correlación")
-        st.dataframe(correlacion)
-
-        # Crear y mostrar el heatmap
-        st.subheader("Mapa de Calor de Correlación")
-        fig_heatmap = go.Figure(data=go.Heatmap(
-            z=correlacion.values,
-            x=correlacion.columns,
-            y=correlacion.index,
-            colorscale='Viridis',
-            colorbar=dict(title="Correlación")
-        ))
-        fig_heatmap.update_layout(title="Mapa de Calor de Correlación", xaxis_title="Activos", yaxis_title="Activos")
-        st.plotly_chart(fig_heatmap)
-
-        # Graficar las líneas de tiempo
-        st.subheader("Evolución de Precios")
-        fig = go.Figure()
-        for activo in activos_seleccionados:
-            fig.add_trace(go.Scatter(x=precios_df.index, y=precios_df[activo], mode='lines', name=activo))
-        fig.update_layout(title="Evolución de los Precios de los Activos", xaxis_title="Fecha", yaxis_title="Precio de Cierre")
-        st.plotly_chart(fig)
-
+# Análisis de Métricas Financieras
 elif pagina == "Análisis de Métricas Financieras":
     st.header("Análisis de Métricas Financieras")
-
-    # Cargar datos de cotización
     cotizaciones_df = obtener_cotizaciones()
 
-    # Selección de activo
     empresas = cotizaciones_df['Company'].unique()
     empresa_seleccionada = st.selectbox("Seleccione la empresa", empresas)
-
-    # Selección de periodo
     fecha_inicio = st.date_input("Fecha de inicio", value=cotizaciones_df['Date'].min())
     fecha_fin = st.date_input("Fecha de fin", value=cotizaciones_df['Date'].max())
 
-    # Filtrar los datos para el activo y periodo seleccionados
     df_filtrado = cotizaciones_df[
         (cotizaciones_df['Company'] == empresa_seleccionada) &
         (cotizaciones_df['Date'] >= fecha_inicio) &
         (cotizaciones_df['Date'] <= fecha_fin)
     ]
 
-    # Verificar si hay datos
     if not df_filtrado.empty:
-        # Calcular métricas
         cotizaciones = df_filtrado['Close']
         metricas = calcular_metricas(cotizaciones)
 
-        # Mostrar resultados
         st.subheader(f"Métricas para {empresa_seleccionada} del {fecha_inicio} al {fecha_fin}")
         st.write(f"**Volatilidad diaria**: {metricas['volatilidad_diaria']:.4f}")
-        st.write(f"**Sharpe Ratio**: {metricas['sharpe_ratio']:.4f}" if metricas['sharpe_ratio'] else "Sharpe Ratio no calculable.")
-        st.write(f"**Sortino Ratio**: {metricas['sortino_ratio']:.4f}" if metricas['sortino_ratio'] else "Sortino Ratio no calculable.")
-
-        # Graficar retornos diarios
-        retornos_diarios = cotizaciones.pct_change().dropna()
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=retornos_diarios.index, y=retornos_diarios, mode='lines', name="Retornos Diarios"))
-        fig.update_layout(title="Evolución de Retornos Diarios", xaxis_title="Fecha", yaxis_title="Retornos Diarios")
-        st.plotly_chart(fig)
-    else:
-        st.warning("No se encontraron datos para el periodo seleccionado.")
+        st.write(f"**Sharpe Ratio**: {metricas['sharpe_ratio']:.4f}")
+        st.write(f"**Sortino Ratio**: {metricas['sortino_ratio']:.4f}")
 
 # Pie de página
 st.sidebar.write("Aplicación creada con Streamlit")
-
-
-
-
-
