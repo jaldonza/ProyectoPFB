@@ -35,27 +35,51 @@ elif pagina == "Análisis Exploratorio":
     st.header("Análisis Exploratorio")
     cotizaciones_df = obtener_cotizaciones()
 
-    # Subsección: Gráficos financieros
-    st.subheader("Gráficos Financieros")
+    # Cargar datos de cotización
+    cotizaciones_df = obtener_cotizaciones()
+
+    # Verificar y convertir la columna 'Date' a datetime si no lo es
+    if cotizaciones_df['Date'].dtype != 'datetime64[ns]':
+        cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'])
+
+    # Dropdown para seleccionar la empresa
     empresas = cotizaciones_df['Company'].unique()
     empresa_seleccionada = st.selectbox("Seleccione la empresa", empresas)
-    fecha_inicio = st.date_input("Fecha de inicio", value=cotizaciones_df['Date'].min())
-    fecha_fin = st.date_input("Fecha de fin", value=cotizaciones_df['Date'].max())
 
-    if fecha_inicio and fecha_fin:
-        df_filtrado = cotizaciones_df[
-            (cotizaciones_df['Company'] == empresa_seleccionada) &
-            (cotizaciones_df['Date'] >= fecha_inicio) &
+    # Seleccionar el rango de fechas
+    min_date = cotizaciones_df['Date'].min()
+    max_date = cotizaciones_df['Date'].max()
+    fecha_inicio = st.date_input("Fecha de inicio", value=min_date, min_value=min_date, max_value=max_date)
+    fecha_fin = st.date_input("Fecha de fin", value=max_date, min_value=min_date, max_value=max_date)
+
+    # Convertir fechas seleccionadas a datetime si no lo están
+    fecha_inicio = pd.to_datetime(fecha_inicio)
+    fecha_fin = pd.to_datetime(fecha_fin)
+
+    # Validar que fecha_inicio no sea posterior a fecha_fin
+    if fecha_inicio > fecha_fin:
+        st.error("La fecha de inicio no puede ser posterior a la fecha de fin.")
+    else:
+        # Filtrar los datos para el rango de fechas
+        df = cotizaciones_df[
+            (cotizaciones_df['Company'] == empresa_seleccionada) & 
+            (cotizaciones_df['Date'] >= fecha_inicio) & 
             (cotizaciones_df['Date'] <= fecha_fin)
         ]
-        tab = st.selectbox("Seleccione una visualización", ["Precios Históricos", "Medias Móviles", "RSI"])
 
-        if tab == "Precios Históricos":
-            st.plotly_chart(graficar_precios_historicos(df_filtrado, empresa_seleccionada))
-        elif tab == "Medias Móviles":
-            st.plotly_chart(graficar_medias_moviles(df_filtrado, empresa_seleccionada))
-        elif tab == "RSI":
-            st.plotly_chart(graficar_rsi(df_filtrado, empresa_seleccionada))
+        # Seleccionar el tipo de gráfico
+        tab = st.selectbox("Seleccione una visualización", ["Precios Históricos", "Medias Móviles", "RSI"])
+    
+        # Mostrar gráfico según la pestaña seleccionada
+        if not df.empty:
+            if tab == "Precios Históricos":
+                st.plotly_chart(graficar_precios_historicos(df, empresa_seleccionada))
+            elif tab == "Medias Móviles":
+                st.plotly_chart(graficar_medias_moviles(df, empresa_seleccionada))
+            elif tab == "RSI":
+                st.plotly_chart(graficar_rsi(df, empresa_seleccionada))
+        else:
+            st.warning(f"No hay datos disponibles para {empresa_seleccionada} en el rango de fechas seleccionado.")
 
     # Subsección: Análisis de correlación
     st.subheader("Análisis de Correlación entre Activos")
