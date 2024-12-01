@@ -14,7 +14,8 @@ pagina = st.sidebar.radio("Ir a", [
     "Análisis Exploratorio",
     "Dashboard Financiero",
     "Análisis de Métricas Financieras",
-    "About Us"
+    "About Us",
+    "Base de Datos"
 ])
 
 # Página de inicio
@@ -169,6 +170,36 @@ elif pagina == "Análisis de Métricas Financieras":
             st.plotly_chart(fig)
         else:
             st.warning(f"No se encontraron datos para {empresa_seleccionada} entre {fecha_inicio.date()} y {fecha_fin.date()}.")
+# Base de Datos
+elif pagina == "Base de Datos":
+    st.header("Arquitectura de la Base de Datos")
+
+    # Mostrar la imagen del diagrama de la base de datos
+    st.image("Streamlit/diagrama_bbdd.png", use_column_width=True, caption="Diagrama de la Base de Datos")
+
+    # Explicación del diseño de la base de datos
+    st.subheader("Estructura y Creación")
+    st.write("""
+    La base de datos utilizada en este proyecto fue diseñada para almacenar información financiera del S&P500 y proporcionar soporte para los análisis presentados en esta aplicación.
+    
+    **Tablas principales:**
+    - **empresas_sp500**: Contiene información básica de las empresas, como su símbolo, nombre, sector, industria y capitalización de mercado.
+    - **precios_historicos**: Almacena los precios históricos de las acciones, incluyendo la fecha, precios de apertura y cierre, máximos y mínimos diarios, así como el volumen negociado.
+    - **portafolios_usuarios**: Permite a los usuarios crear portafolios personalizados y almacenar información relevante.
+    - **portafolio_empresas**: Relaciona los portafolios de los usuarios con las empresas, incluyendo la cantidad de acciones y precios de compra.
+    - **indicadores_sp500**: Almacena cálculos de indicadores financieros como medias móviles, RSI, y volatilidad.
+
+    **Proceso de creación:**
+    1. **Diseño del esquema:** El diagrama presentado arriba fue diseñado utilizando una herramienta de modelado de bases de datos.
+    2. **Creación de la base de datos:** Se utilizó MySQL para implementar el esquema en un servidor RDS de AWS.
+    3. **Población de datos:** Los datos fueron recolectados de fuentes como Yahoo Finance, y almacenados en las tablas correspondientes.
+
+    **Relaciones entre tablas:**
+    - La tabla `precios_historicos` se relaciona con `empresas_sp500` a través de la clave primaria `id_empresa`.
+    - La tabla `portafolio_empresas` relaciona los portafolios de usuarios con las empresas correspondientes.
+    """)
+
+    st.write("Este diseño asegura flexibilidad y escalabilidad, permitiendo almacenar grandes volúmenes de datos y realizar consultas eficientes para el análisis.")
 
 # About Us
 elif pagina == "About Us":
