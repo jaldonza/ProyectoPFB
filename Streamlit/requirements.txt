@@ -8,7 +8,4 @@ dash
 plotly>=5.0.0
 dash-core-components
 dash-html-components
-scikit-learn==1.3.0
-plotly==5.16.1
-pymysql==1.0.3
-joblib==1.3.0
+
