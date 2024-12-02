@@ -1,4 +1,7 @@
 import streamlit as st
+import pickle
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.inspection import permutation_importance
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
@@ -373,6 +376,65 @@ elif pagina == "Base de Datos":
 # Modelo de CLusterig
 elif pagina == "Modelo de Clustering":
     st.header("Modelo de Clustering")
+# Cargar el modelo desde el archivo .pkl
+    def cargar_modelo(ruta_modelo):
+        with open(ruta_modelo, "rb") as file:
+            modelo = pickle.load(file)
+        return modelo
+
+    # Simulación con el modelo cargado
+    def simulacion_clasificacion(modelo, input_datos):
+        prediccion = modelo.predict([input_datos])
+        probabilidad = modelo.predict_proba([input_datos])
+        return prediccion[0], probabilidad[0]
+
+    # Página de Clustering y Clasificación
+    st.title("Clustering y Clasificación")
+
+    # Cargar el modelo
+    modelo = cargar_modelo("modelo_entrenado.pkl")
+
+    st.header("Simulación de Clasificación")
+    st.write("""
+    En esta sección, puedes ingresar características de una empresa para simular su clasificación utilizando el modelo Random Forest.
+    """)
+
+    # Crear entradas dinámicas basadas en las características del modelo
+    features = modelo.feature_names_in_  # Extraer los nombres de las características del modelo
+    input_datos = []
+    for feature in features:
+        valor = st.number_input(f"Introduce el valor para {feature}", value=0.0)
+        input_datos.append(valor)
+
+    # Botón para realizar la predicción
+    if st.button("Clasificar"):
+        prediccion, probabilidad = simulacion_clasificacion(modelo, input_datos)
+        st.subheader(f"Predicción: {prediccion}")
+        st.write(f"Probabilidades: {probabilidad}")
+
+        # Visualización de probabilidades
+        fig, ax = plt.subplots()
+        ax.bar(range(len(probabilidad)), probabilidad)
+        ax.set_xticks(range(len(probabilidad)))
+        ax.set_xticklabels(modelo.classes_)
+        ax.set_title("Probabilidades por Clase")
+        ax.set_ylabel("Probabilidad")
+        st.pyplot(fig)
+
+    # Visualización de importancia de características
+    st.header("Importancia de Características")
+    importancias = modelo.feature_importances_
+    fig, ax = plt.subplots()
+    ax.barh(features, importancias)
+    ax.set_title("Importancia de las Características")
+    ax.set_xlabel("Importancia")
+    ax.set_ylabel("Características")
+    st.pyplot(fig)
+
+    st.write("""
+    **Nota:** Las características más importantes en este modelo ayudan a identificar patrones clave para la clasificación.
+    """)
+
 
 
 # About Us
