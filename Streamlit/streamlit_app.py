@@ -373,7 +373,6 @@ elif pagina == "Base de Datos":
 # Modelo de CLusterig
 elif pagina == "Modelo de Clustering":
     st.header("Modelo de Clustering")
-
     st.write("""
     En esta sección, puedes ingresar características de una empresa para simular su clasificación utilizando el modelo Random Forest.
     """)
