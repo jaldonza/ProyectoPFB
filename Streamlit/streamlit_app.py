@@ -1,7 +1,4 @@
 import streamlit as st
-import pickle
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.inspection import permutation_importance
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
@@ -376,25 +373,7 @@ elif pagina == "Base de Datos":
 # Modelo de CLusterig
 elif pagina == "Modelo de Clustering":
     st.header("Modelo de Clustering")
-# Cargar el modelo desde el archivo .pkl
-    def cargar_modelo(ruta_modelo):
-        with open(ruta_modelo, "rb") as file:
-            modelo = pickle.load(file)
-        return modelo
 
-    # Simulación con el modelo cargado
-    def simulacion_clasificacion(modelo, input_datos):
-        prediccion = modelo.predict([input_datos])
-        probabilidad = modelo.predict_proba([input_datos])
-        return prediccion[0], probabilidad[0]
-
-    # Página de Clustering y Clasificación
-    st.title("Clustering y Clasificación")
-
-    # Cargar el modelo
-    modelo = cargar_modelo("modelo_entrenado.pkl")
-
-    st.header("Simulación de Clasificación")
     st.write("""
     En esta sección, puedes ingresar características de una empresa para simular su clasificación utilizando el modelo Random Forest.
     """)
