@@ -8,6 +8,6 @@ dash
 plotly>=5.0.0
 dash-core-components
 dash-html-components
-import pickle
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.inspection import permutation_importance
+pickle
+scikit-learn
+joblib
