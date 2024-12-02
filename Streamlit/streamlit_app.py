@@ -184,6 +184,87 @@ elif pagina == "Dashboard Financiero":
 
     # Renderizar el iframe en Streamlit
     st.components.v1.html(powerbi_iframe, height=powerbi_height, width=powerbi_width)   
+    # Explicaciones del tablero
+    st.header("Descripción del Tablero Power BI")
+    st.write("""
+    Este tablero interactivo en Power BI permite analizar el desempeño del índice S&P500 y las empresas que lo conforman mediante varias páginas:
+    """)
+
+    st.subheader("**1. Portada - Análisis General del Índice**")
+    st.write("""
+    La portada ofrece un análisis general del índice S&P500, destacando:
+    - **Número de empresas y sectores** presentes en el análisis.
+    - **Volumen de transacciones** durante los años analizados.
+    - **Número de años** incluidos en el análisis.
+    - **Gráfico de evolución del S&P500** para observar tendencias generales.
+    - **Valoración por sectores** para identificar los sectores más destacados en términos de crecimiento y rendimiento.
+    """)
+
+    st.subheader("**2. Dashboard Financiero por Empresa**")
+    st.write("""
+    En esta página puedes analizar:
+    - **Evolución de un valor específico** seleccionado por el usuario.
+    - **Indicadores técnicos:**
+    - **RSI (Índice de Fuerza Relativa):** Indica si un valor está sobrecomprado (por encima de 70) o sobrevendido (por debajo de 30).
+    - **SMA (Media Móvil Simple):** 
+        - **SMA 50:** Indica la tendencia a corto plazo.
+        - **SMA 200:** Muestra la tendencia a largo plazo.
+    - **Interpretación:**
+        - Si el precio está por encima del SMA 200, generalmente se considera que el valor está en una tendencia alcista.
+        - El cruce de SMA 50 por encima o por debajo de SMA 200 puede indicar señales de compra o venta.
+    """)
+
+    st.subheader("**3. Análisis de Rentabilidad por Empresa**")
+    st.write("""
+    Esta página permite analizar la rentabilidad de una empresa entre dos fechas seleccionadas por el usuario:
+    - **Precio de apertura y cierre** para las fechas seleccionadas.
+    - **ROI (Retorno de la Inversión):** Calcula el rendimiento porcentual en el periodo seleccionado.
+    - **Evolución del rendimiento:**
+    - **Diario:** Cambios porcentuales diarios en el precio.
+    - **Mensual:** Rendimientos promedio mensuales.
+    - **Anual:** Tendencias de rendimiento anual.
+    
+    **Conceptos Clave:**
+    - **ROI (Retorno de la Inversión):** Una métrica importante para evaluar la eficiencia de una inversión.
+    - **Interpretación:** Un ROI positivo indica ganancias; un ROI negativo refleja pérdidas en el periodo analizado.
+    """)
+
+    st.subheader("**4. Análisis de Rentabilidad Sectorial**")
+    st.write("""
+    Permite analizar la rentabilidad a nivel de sector:
+    - Selección de un **sector** y un rango de fechas.
+    - Desglose por:
+    - **Sector.**
+    - **Industria.**
+    - **Empresas.**
+    - Visualización de las métricas:
+    - **Precio de apertura y cierre.**
+    - **ROI del sector, industria y empresas.**
+    - **Rendimientos anuales, mensuales y diarios.**
+    """)
+
+    st.subheader("**5. Análisis de Momentum**")
+    st.write("""
+    El análisis de momentum mide la aceleración o desaceleración del precio de un activo en el tiempo.
+    - Un momentum positivo indica una tendencia alcista.
+    - Un momentum negativo refleja una tendencia bajista.
+    - **Interpretación:** Permite anticipar posibles cambios de tendencia y oportunidades de compra o venta.
+    """)
+
+    st.subheader("**6. Análisis de Ratios de Riesgo y Rendimiento**")
+    st.write("""
+    En esta página se analizan las siguientes métricas:
+    - **Drawdown Máximo:** Muestra la pérdida máxima desde un pico hasta un valle.
+    - **Calmar Ratio:** Relación entre el rendimiento y el drawdown máximo.
+    - **Sharpe Ratio:** Indica la relación entre la rentabilidad y la volatilidad. Un Sharpe Ratio positivo y alto sugiere una inversión eficiente.
+    - **Sortino Ratio:** Similar al Sharpe Ratio, pero ajustado para medir el rendimiento frente a riesgos negativos.
+    """)
+
+    st.subheader("**7. Comparador de Calmar Ratio por Empresa**")
+    st.write("""
+    Permite comparar el Calmar Ratio para todas las empresas en el análisis.
+    - Ayuda a identificar qué empresas tienen un mejor rendimiento ajustado por el riesgo máximo asumido.
+    """)
 
 # Análisis de Métricas Financieras
 elif pagina == "Análisis de Métricas Financieras":
