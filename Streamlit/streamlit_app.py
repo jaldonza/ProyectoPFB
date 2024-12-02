@@ -394,7 +394,7 @@ elif pagina == "About Us":
     4. Integración de Power BI para análisis avanzado.
     
     **Equipo:**
-    - [Javier Aldonza](https://linkedin.com/javier-aldonza/)
+    - [Javier Aldonza](https://www.linkedin.com/javier-aldonza/)
     - [Roberto Gonzalez Álvarez](https://www.linkedin.com/in/roberto-gonz%C3%A1lez-%C3%A1lvarez-959552140/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)
     - [Khalid el Afi Guerban](https://www.linkedin.com/in/khalid-el-afi-guerban-95212a270)
 
