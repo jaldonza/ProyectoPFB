@@ -169,8 +169,21 @@ elif pagina == "Análisis Exploratorio":
 # Dashboard Financiero
 elif pagina == "Dashboard Financiero":
     st.header("Dashboard Financiero")
-    st.write("Aquí se integrará el tablero de Power BI.")
-    st.write("**Nota:** Una vez que tengas el enlace del tablero, actualiza esta sección.")
+    # Configuración del iframe de Power BI
+    powerbi_width = 800  # Ajusta según tu preferencia
+    powerbi_height = 600  # Ajusta según tu preferencia
+
+    powerbi_iframe = f"""
+        <iframe title="TableroYfinance - grupo c" 
+            width="{powerbi_width}" 
+            height="{powerbi_height}" 
+            src="https://app.powerbi.com/view?r=eyJrIjoiZTA0ODYwODgtNmQyMC00MzZlLWJiNDYtMTQ3YmM0MTYzODQ2IiwidCI6IjVlNzNkZTM1LWU4MjUtNGVkNS1iZTIyLTg4NTYzNTI3MDkxZSIsImMiOjl9&pageName=9cd2d53aa30bd0c09883" 
+            frameborder="0" 
+            allowFullScreen="true"></iframe>
+        """
+
+    # Renderizar el iframe en Streamlit
+    st.components.v1.html(powerbi_iframe, height=powerbi_height, width=powerbi_width)   
 
 # Análisis de Métricas Financieras
 elif pagina == "Análisis de Métricas Financieras":
