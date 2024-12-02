@@ -377,43 +377,6 @@ elif pagina == "Modelo de Clustering":
     En esta sección, puedes ingresar características de una empresa para simular su clasificación utilizando el modelo Random Forest.
     """)
 
-    # Crear entradas dinámicas basadas en las características del modelo
-    features = modelo.feature_names_in_  # Extraer los nombres de las características del modelo
-    input_datos = []
-    for feature in features:
-        valor = st.number_input(f"Introduce el valor para {feature}", value=0.0)
-        input_datos.append(valor)
-
-    # Botón para realizar la predicción
-    if st.button("Clasificar"):
-        prediccion, probabilidad = simulacion_clasificacion(modelo, input_datos)
-        st.subheader(f"Predicción: {prediccion}")
-        st.write(f"Probabilidades: {probabilidad}")
-
-        # Visualización de probabilidades
-        fig, ax = plt.subplots()
-        ax.bar(range(len(probabilidad)), probabilidad)
-        ax.set_xticks(range(len(probabilidad)))
-        ax.set_xticklabels(modelo.classes_)
-        ax.set_title("Probabilidades por Clase")
-        ax.set_ylabel("Probabilidad")
-        st.pyplot(fig)
-
-    # Visualización de importancia de características
-    st.header("Importancia de Características")
-    importancias = modelo.feature_importances_
-    fig, ax = plt.subplots()
-    ax.barh(features, importancias)
-    ax.set_title("Importancia de las Características")
-    ax.set_xlabel("Importancia")
-    ax.set_ylabel("Características")
-    st.pyplot(fig)
-
-    st.write("""
-    **Nota:** Las características más importantes en este modelo ayudan a identificar patrones clave para la clasificación.
-    """)
-
-
 
 # About Us
 elif pagina == "About Us":
