@@ -170,8 +170,8 @@ elif pagina == "Análisis Exploratorio":
 elif pagina == "Dashboard Financiero":
     st.header("Dashboard Financiero")
     # Configuración del iframe de Power BI
-    powerbi_width = 1400
-    powerbi_height = 900  # Ajusta según tu preferencia
+    powerbi_width = 1200
+    powerbi_height = 800  # Ajusta según tu preferencia
 
     powerbi_iframe = f"""
         <iframe title="TableroYfinance - grupo c" 
