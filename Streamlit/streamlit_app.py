@@ -3,6 +3,9 @@ import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
 from funciones import obtener_cotizaciones, graficar_precios_historicos, graficar_medias_moviles, graficar_rsi, calcular_metricas, graficar_velas
+from sklearn.cluster import KMeans
+from sklearn.ensemble import RandomForestClassifier
+import mysql.connector
 
 # Configuración de la aplicación Streamlit
 st.set_page_config(page_title="Yahoo Finance App", layout="wide")
@@ -87,9 +90,8 @@ if pagina == "Landing Page":
     </script>
     """, unsafe_allow_html=True)
 
-    # Imagen principal más pequeña
+    # Imagen principal
     st.image("Streamlit/Yahoo!_Finance_image.png", use_container_width=True)
-
 
     # Descripción general del proyecto
     st.markdown("""
@@ -146,77 +148,86 @@ if pagina == "Landing Page":
     """, unsafe_allow_html=True)
 
 
-
-# Análisis Exploratorio
+# Análisis Exploratorio Mejorado
 elif pagina == "Análisis Exploratorio":
-    st.header("Análisis Exploratorio")
-    
-    # Introducción a la sección
-    st.write("""
-    En esta sección puedes explorar visualizaciones clave y relaciones entre activos del S&P500. 
-    Estas herramientas permiten analizar tendencias, correlaciones y comportamientos históricos para una mejor toma de decisiones financieras.
-    """)
-    # Título y aclaración antes del gráfico de velas
-    st.subheader("Gráfico de Velas: Análisis de Datos Financieros")
-    st.write("""
-    El gráfico de velas permite visualizar:
-    - **Precios de apertura, cierre, máximo y mínimo** de un activo en un periodo de tiempo.
-    - Ayuda a identificar tendencias y patrones en los datos históricos.
+    # Introducción estilizada
+    st.markdown("""
+    <div style="text-align: center; padding: 20px; background-color: #f4f4f4; border-radius: 10px; margin-bottom: 20px;">
+        <h1 style="color: #2c3e50;">📈 Análisis Exploratorio</h1>
+        <p style="font-size: 16px; color: #7f8c8d;">
+            Explora visualizaciones clave y relaciones entre los activos del S&P500. 
+            Estas herramientas te permiten analizar tendencias, correlaciones y patrones históricos para tomar decisiones financieras informadas.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    Selecciona una empresa, un rango de fechas y presiona el botón **Mostrar gráfico** para generar la visualización.
-    """)
+    # Gráfico de Velas
+    st.markdown("""
+    <div style="margin-top: 20px;">
+        <h2 style="color: #3498db;">📊 Gráfico de Velas: Análisis de Datos Financieros</h2>
+        <p style="font-size: 15px; color: #7f8c8d;">
+            Visualiza los <strong>precios de apertura, cierre, máximo y mínimo</strong> de un activo durante un periodo seleccionado. 
+            Este gráfico es ideal para identificar tendencias y patrones en los datos históricos.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
     # Cargar datos de cotización
     cotizaciones_df = obtener_cotizaciones()
 
-    # Verificar y convertir la columna 'Date' a datetime si no lo es
+    # Asegurar formato datetime en 'Date'
     if cotizaciones_df['Date'].dtype != 'datetime64[ns]':
         cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'])
 
-    # Seleccionar empresa y rango de fechas
+    # Selección de empresa y rango de fechas
     empresas = cotizaciones_df['Company'].unique()
-    empresa_seleccionada = st.selectbox("Seleccione la empresa", empresas)
+    st.markdown("<h3 style='color: #2c3e50;'>Seleccione la Empresa</h3>", unsafe_allow_html=True)
+    empresa_seleccionada = st.selectbox("Empresa", empresas)
+
+    st.markdown("<h3 style='color: #2c3e50;'>Seleccione el Periodo</h3>", unsafe_allow_html=True)
     min_date = cotizaciones_df['Date'].min()
     max_date = cotizaciones_df['Date'].max()
     fecha_inicio = st.date_input("Fecha de inicio", value=min_date, min_value=min_date, max_value=max_date)
     fecha_fin = st.date_input("Fecha de fin", value=max_date, min_value=min_date, max_value=max_date)
 
-   
     # Botón para mostrar gráfico de velas
     if st.button("Mostrar Gráfico de Velas"):
-    # Convertir la columna 'Date' a datetime si no lo está
-        if cotizaciones_df['Date'].dtype != 'datetime64[ns]':
-            cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'])
+        with st.spinner("Generando el gráfico de velas..."):
+            # Convertir fechas seleccionadas a datetime64[ns]
+            fecha_inicio = pd.to_datetime(fecha_inicio)
+            fecha_fin = pd.to_datetime(fecha_fin)
 
-        # Convertir fechas seleccionadas a datetime si no lo están
-        fecha_inicio = pd.to_datetime(fecha_inicio)
-        fecha_fin = pd.to_datetime(fecha_fin)
-
-        # Validar rango de fechas
-        if fecha_inicio > fecha_fin:
-            st.error("La fecha de inicio no puede ser posterior a la fecha de fin.")
-        else:
-            # Filtrar datos para el rango de fechas y empresa seleccionada
-            df_filtrado = cotizaciones_df[
-                (cotizaciones_df['Company'] == empresa_seleccionada) &
-                (cotizaciones_df['Date'] >= fecha_inicio) &
-                (cotizaciones_df['Date'] <= fecha_fin)
-            ]
-
-            if not df_filtrado.empty:
-                # Mostrar gráfico de velas
-                fig = graficar_velas(df_filtrado, empresa_seleccionada)
-                st.plotly_chart(fig)
+            # Validar rango de fechas
+            if fecha_inicio > fecha_fin:
+                st.error("❌ La fecha de inicio no puede ser posterior a la fecha de fin.")
             else:
-                st.warning(f"No hay datos disponibles para {empresa_seleccionada} en el rango de fechas seleccionado.")
+                # Filtrar datos para el rango de fechas y empresa seleccionada
+                df_filtrado = cotizaciones_df[
+                    (cotizaciones_df['Company'] == empresa_seleccionada) &
+                    (cotizaciones_df['Date'] >= fecha_inicio) &
+                    (cotizaciones_df['Date'] <= fecha_fin)
+                ]
 
-    # Subsección: Análisis de correlación
-    st.subheader("Análisis de Correlación entre Activos")
-    st.write("""
-    Este análisis muestra cómo se relacionan los precios de diferentes activos. 
-    Una alta correlación positiva indica que los activos tienden a moverse en la misma dirección, mientras que una correlación negativa indica movimientos opuestos.
-    """)
-    activo_principal = st.selectbox("Seleccione el activo principal", empresas, key="activo_principal")
-    activos_comparar = st.multiselect("Seleccione hasta 4 activos para comparar", empresas, default=empresas[:4])
+                if not df_filtrado.empty:
+                    # Mostrar gráfico de velas
+                    fig = graficar_velas(df_filtrado, empresa_seleccionada)
+                    st.plotly_chart(fig)
+                else:
+                    st.warning(f"⚠️ No hay datos disponibles para {empresa_seleccionada} en el rango de fechas seleccionado.")
+
+    # Análisis de Correlación
+    st.markdown("""
+    <div style="margin-top: 40px;">
+        <h2 style="color: #3498db;">🔗 Análisis de Correlación entre Activos</h2>
+        <p style="font-size: 15px; color: #7f8c8d;">
+            Descubre las relaciones entre los activos financieros del S&P500. Una correlación positiva alta indica que los activos se mueven en la misma dirección, mientras que una correlación negativa alta indica movimientos opuestos.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Selección para correlación
+    activo_principal = st.selectbox("Activo principal", empresas, key="activo_principal")
+    activos_comparar = st.multiselect("Activos para comparar (máximo 4)", empresas, default=empresas[:4])
 
     if activo_principal and len(activos_comparar) > 0:
         activos_seleccionados = [activo_principal] + activos_comparar
@@ -224,16 +235,11 @@ elif pagina == "Análisis Exploratorio":
         precios_df = df_seleccionados.pivot(index='Date', columns='Company', values='Close')
         correlacion = precios_df.corr()
 
-        st.subheader("Matriz de Correlación")
+        # Mostrar matriz y mapa de calor
+        st.markdown("<h3 style='color: #2c3e50;'>Matriz de Correlación</h3>", unsafe_allow_html=True)
         st.dataframe(correlacion)
-        st.write("""
-        **Interpretación:**
-        - Valores cercanos a 1 indican una relación positiva fuerte entre los activos.
-        - Valores cercanos a -1 indican una relación negativa fuerte.
-        - Valores cercanos a 0 indican una relación débil o inexistente.
-        """)
 
-        st.subheader("Mapa de Calor de Correlación")
+        st.markdown("<h3 style='color: #2c3e50;'>Mapa de Calor de Correlación</h3>", unsafe_allow_html=True)
         fig_heatmap = go.Figure(data=go.Heatmap(
             z=correlacion.values,
             x=correlacion.columns,
@@ -244,26 +250,22 @@ elif pagina == "Análisis Exploratorio":
         fig_heatmap.update_layout(title="Mapa de Calor de Correlación", xaxis_title="Activos", yaxis_title="Activos")
         st.plotly_chart(fig_heatmap)
 
-    # Caja desplegable para explicaciones
-    with st.expander("Ver explicaciones sobre gráficos de velas y correlaciones"):
-        st.write("""
+    # Explicaciones en un expander
+    with st.expander("ℹ️ Ver Explicaciones"):
+        st.markdown("""
         ### Gráfico de Velas
         - **Qué muestra:** Precios de apertura, cierre, máximo y mínimo.
         - **Cómo interpretar:**
-            - Las velas verdes indican un precio de cierre superior al de apertura (tendencia alcista).
-            - Las velas rojas indican un precio de cierre inferior al de apertura (tendencia bajista).
-
-        ### Gráfico de Líneas
-        - **Cuándo se usa:** Para periodos largos, donde las velas pueden no ser legibles.
-        - **Qué muestra:** Solo el precio de cierre a lo largo del tiempo.
+            - Velas verdes: El precio de cierre es superior al de apertura (tendencia alcista).
+            - Velas rojas: El precio de cierre es inferior al de apertura (tendencia bajista).
 
         ### Análisis de Correlación
         - **Qué muestra:** Relaciones entre activos financieros.
         - **Cómo interpretar:** 
-            - Valores cercanos a 1 indican que los activos tienden a moverse en la misma dirección.
-            - Valores cercanos a -1 indican que los activos tienden a moverse en direcciones opuestas.
-        """)
-
+            - Valores cercanos a 1 indican una relación positiva fuerte.
+            - Valores cercanos a -1 indican una relación negativa fuerte.
+            - Valores cercanos a 0 indican una relación débil o inexistente.
+        """, unsafe_allow_html=True)
 
 # Dashboard Financiero
 elif pagina == "Dashboard Financiero":
@@ -293,6 +295,9 @@ elif pagina == "Dashboard Financiero":
         <strong>Descubre insights valiosos con una experiencia dinámica y personalizada.</strong>
     </div>
     """, unsafe_allow_html=True)
+   
+    # Espaciado antes
+    st.markdown("<div style='height:50px;'></div>", unsafe_allow_html=True)
 
     # Configuración del iframe de Power BI
     powerbi_width = 1100
@@ -309,97 +314,164 @@ elif pagina == "Dashboard Financiero":
 
     # Renderizar el iframe en Streamlit
     st.components.v1.html(powerbi_iframe, height=powerbi_height, width=powerbi_width)   
-    # Explicaciones del tablero
-    with st.expander("Descripción del Tablero Power BI"):
-        st.header("Descripción del Tablero Power BI")
-        st.write("""
-        Este tablero interactivo en Power BI permite analizar el desempeño del índice S&P500 y las empresas que lo conforman mediante varias páginas:
-        """)
+    
+# Explicaciones del tablero
+    with st.expander("📊 Descripción del Tablero Power BI"):
+        st.markdown("""
+        <div style="padding:20px;">
+            <h2 style="color:#2c3e50; text-align:center; font-weight:bold; margin-bottom:20px;">
+                🌟 Descripción del Tablero Power BI
+            </h2>
+            <p style="font-size:16px; color:#34495e; text-align:center; margin-bottom:40px;">
+                Este tablero interactivo en Power BI permite analizar el desempeño del índice S&P500 y las empresas que lo conforman mediante varias páginas. ¡Explora cada una de ellas para obtener valiosa información financiera!
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
-        st.subheader("**1. Portada - Análisis General del Índice**")
-        st.write("""
-        La portada ofrece un análisis general del índice S&P500, destacando:
-        - **Número de empresas y sectores** presentes en el análisis.
-        - **Volumen de transacciones** durante los años analizados.
-        - **Número de años** incluidos en el análisis.
-        - **Gráfico de evolución del S&P500** para observar tendencias generales.
-        - **Valoración por sectores** para identificar los sectores más destacados en términos de crecimiento y rendimiento.
-        """)
+        st.markdown("""
+        <div style="background-color:#f9f9f9; border-radius:10px; padding:20px; margin-bottom:20px;">
+            <h3 style="color:#3498db;">1. Portada - Análisis General del Índice</h3>
+            <p style="font-size:15px;">
+                La portada ofrece un análisis general del índice S&P500, destacando:
+                <ul>
+                    <li><strong>Número de empresas y sectores</strong> presentes en el análisis.</li>
+                    <li><strong>Volumen de transacciones</strong> durante los años analizados.</li>
+                    <li><strong>Número de años</strong> incluidos en el análisis.</li>
+                    <li><strong>Gráfico de evolución del S&P500</strong> para observar tendencias generales.</li>
+                    <li><strong>Valoración por sectores</strong> para identificar los sectores más destacados en términos de crecimiento y rendimiento.</li>
+                </ul>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
-        st.subheader("**2. Dashboard Financiero por Empresa**")
-        st.write("""
-        En esta página puedes analizar:
-        - **Evolución de un valor específico** seleccionado por el usuario.
-        - **Indicadores técnicos:**
-        - **RSI (Índice de Fuerza Relativa):** Indica si un valor está sobrecomprado (por encima de 70) o sobrevendido (por debajo de 30).
-        - **SMA (Media Móvil Simple):** 
-            - **SMA 50:** Indica la tendencia a corto plazo.
-            - **SMA 200:** Muestra la tendencia a largo plazo.
-        - **Interpretación:**
-            - Si el precio está por encima del SMA 200, generalmente se considera que el valor está en una tendencia alcista.
-            - El cruce de SMA 50 por encima o por debajo de SMA 200 puede indicar señales de compra o venta.
-        """)
+        st.markdown("""
+        <div style="background-color:#f9f9f9; border-radius:10px; padding:20px; margin-bottom:20px;">
+            <h3 style="color:#3498db;">2. Dashboard Financiero por Empresa</h3>
+            <p style="font-size:15px;">
+                En esta página puedes analizar:
+                <ul>
+                    <li><strong>Evolución de un valor específico</strong> seleccionado por el usuario.</li>
+                    <li>
+                        <strong>Indicadores técnicos:</strong>
+                        <ul>
+                            <li><strong>RSI (Índice de Fuerza Relativa):</strong> Indica si un valor está sobrecomprado (por encima de 70) o sobrevendido (por debajo de 30).</li>
+                            <li><strong>SMA (Media Móvil Simple):</strong></li>
+                            <ul>
+                                <li><strong>SMA 50:</strong> Indica la tendencia a corto plazo.</li>
+                                <li><strong>SMA 200:</strong> Muestra la tendencia a largo plazo.</li>
+                            </ul>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Interpretación:</strong>
+                        <ul>
+                            <li>Si el precio está por encima del SMA 200, generalmente se considera que el valor está en una tendencia alcista.</li>
+                            <li>El cruce de SMA 50 por encima o por debajo de SMA 200 puede indicar señales de compra o venta.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
-        st.subheader("**3. Análisis de Rentabilidad por Empresa**")
-        st.write("""
-        Esta página permite analizar la rentabilidad de una empresa entre dos fechas seleccionadas por el usuario:
-        - **Precio de apertura y cierre** para las fechas seleccionadas.
-        - **ROI (Retorno de la Inversión):** Calcula el rendimiento porcentual en el periodo seleccionado.
-        - **Evolución del rendimiento:**
-        - **Diario:** Cambios porcentuales diarios en el precio.
-        - **Mensual:** Rendimientos promedio mensuales.
-        - **Anual:** Tendencias de rendimiento anual.
-        
-        **Conceptos Clave:**
-        - **ROI (Retorno de la Inversión):** Una métrica importante para evaluar la eficiencia de una inversión.
-        - **Interpretación:** Un ROI positivo indica ganancias; un ROI negativo refleja pérdidas en el periodo analizado.
-        """)
+        st.markdown("""
+        <div style="background-color:#f9f9f9; border-radius:10px; padding:20px; margin-bottom:20px;">
+            <h3 style="color:#3498db;">3. Análisis de Rentabilidad por Empresa</h3>
+            <p style="font-size:15px;">
+                Esta página permite analizar la rentabilidad de una empresa entre dos fechas seleccionadas por el usuario:
+                <ul>
+                    <li><strong>Precio de apertura y cierre</strong> para las fechas seleccionadas.</li>
+                    <li><strong>ROI (Retorno de la Inversión):</strong> Calcula el rendimiento porcentual en el periodo seleccionado.</li>
+                    <li>
+                        <strong>Evolución del rendimiento:</strong>
+                        <ul>
+                            <li><strong>Diario:</strong> Cambios porcentuales diarios en el precio.</li>
+                            <li><strong>Mensual:</strong> Rendimientos promedio mensuales.</li>
+                            <li><strong>Anual:</strong> Tendencias de rendimiento anual.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
-        st.subheader("**4. Análisis de Rentabilidad Sectorial**")
-        st.write("""
-        Permite analizar la rentabilidad a nivel de sector:
-        - Selección de un **sector** y un rango de fechas.
-        - Desglose por:
-        - **Sector.**
-        - **Industria.**
-        - **Empresas.**
-        - Visualización de las métricas:
-        - **Precio de apertura y cierre.**
-        - **ROI del sector, industria y empresas.**
-        - **Rendimientos anuales, mensuales y diarios.**
-        """)
+        st.markdown("""
+        <div style="background-color:#f9f9f9; border-radius:10px; padding:20px; margin-bottom:20px;">
+            <h3 style="color:#3498db;">4. Análisis de Rentabilidad Sectorial</h3>
+            <p style="font-size:15px;">
+                Permite analizar la rentabilidad a nivel de sector:
+                <ul>
+                    <li>Selección de un <strong>sector</strong> y un rango de fechas.</li>
+                    <li>Desglose por:</li>
+                    <ul>
+                        <li><strong>Sector.</strong></li>
+                        <li><strong>Industria.</strong></li>
+                        <li><strong>Empresas.</strong></li>
+                    </ul>
+                    <li>Visualización de las métricas:</li>
+                    <ul>
+                        <li><strong>Precio de apertura y cierre.</strong></li>
+                        <li><strong>ROI del sector, industria y empresas.</strong></li>
+                        <li><strong>Rendimientos anuales, mensuales y diarios.</strong></li>
+                    </ul>
+                </ul>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
-        st.subheader("**5. Análisis de Momentum**")
-        st.write("""
-        El análisis de momentum mide la aceleración o desaceleración del precio de un activo en el tiempo.
-        - Un momentum positivo indica una tendencia alcista.
-        - Un momentum negativo refleja una tendencia bajista.
-        - **Interpretación:** Permite anticipar posibles cambios de tendencia y oportunidades de compra o venta.
-        """)
+        st.markdown("""
+        <div style="background-color:#f9f9f9; border-radius:10px; padding:20px; margin-bottom:20px;">
+            <h3 style="color:#3498db;">5. Análisis de Momentum</h3>
+            <p style="font-size:15px;">
+                El análisis de momentum mide la aceleración o desaceleración del precio de un activo en el tiempo.
+                <ul>
+                    <li>Un momentum positivo indica una tendencia alcista.</li>
+                    <li>Un momentum negativo refleja una tendencia bajista.</li>
+                    <li><strong>Interpretación:</strong> Permite anticipar posibles cambios de tendencia y oportunidades de compra o venta.</li>
+                </ul>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
-        st.subheader("**6. Análisis de Ratios de Riesgo y Rendimiento**")
-        st.write("""
-        En esta página se analizan las siguientes métricas:
-        - **Drawdown Máximo:** Muestra la pérdida máxima desde un pico hasta un valle.
-        - **Calmar Ratio:** Relación entre el rendimiento y el drawdown máximo.
-        - **Sharpe Ratio:** Indica la relación entre la rentabilidad y la volatilidad. Un Sharpe Ratio positivo y alto sugiere una inversión eficiente.
-        - **Sortino Ratio:** Similar al Sharpe Ratio, pero ajustado para medir el rendimiento frente a riesgos negativos.
-        """)
+        st.markdown("""
+        <div style="background-color:#f9f9f9; border-radius:10px; padding:20px; margin-bottom:20px;">
+            <h3 style="color:#3498db;">6. Análisis de Ratios de Riesgo y Rendimiento</h3>
+            <p style="font-size:15px;">
+                En esta página se analizan las siguientes métricas:
+                <ul>
+                    <li><strong>Drawdown Máximo:</strong> Muestra la pérdida máxima desde un pico hasta un valle.</li>
+                    <li><strong>Calmar Ratio:</strong> Relación entre el rendimiento y el drawdown máximo.</li>
+                    <li><strong>Sharpe Ratio:</strong> Indica la relación entre la rentabilidad y la volatilidad. Un Sharpe Ratio positivo y alto sugiere una inversión eficiente.</li>
+                    <li><strong>Sortino Ratio:</strong> Similar al Sharpe Ratio, pero ajustado para medir el rendimiento frente a riesgos negativos.</li>
+                </ul>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
-        st.subheader("**7. Comparador de Calmar Ratio por Empresa**")
-        st.write("""
-        Permite comparar el Calmar Ratio para todas las empresas en el análisis.
-        - Ayuda a identificar qué empresas tienen un mejor rendimiento ajustado por el riesgo máximo asumido.
-        """)
+        st.markdown("""
+        <div style="background-color:#f9f9f9; border-radius:10px; padding:20px;">
+            <h3 style="color:#3498db;">7. Comparador de Calmar Ratio por Empresa</h3>
+            <p style="font-size:15px;">
+                Permite comparar el Calmar Ratio para todas las empresas en el análisis.
+                <ul>
+                    <li>Ayuda a identificar qué empresas tienen un mejor rendimiento ajustado por el riesgo máximo asumido.</li>
+                </ul>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
-# Análisis de Métricas Financieras
+
+# Análisis de Métricas Financieras 
 elif pagina == "Análisis de Métricas Financieras":
-    st.header("Análisis de Métricas Financieras")
-# Introducción a la sección
-    st.write("""
-    En esta sección puedes calcular y analizar métricas financieras clave, como volatilidad diaria, ratio de Sharpe y ratio de Sortino. 
-    Estas métricas ayudan a evaluar el rendimiento y el riesgo de un activo financiero.
-    """)
+    st.markdown("""
+    <div style="text-align: center; padding: 20px; background-color: #f4f4f4; border-radius: 10px; margin-bottom: 20px;">
+        <h1 style="color: #2c3e50;">📊 Análisis de Métricas Financieras</h1>
+        <p style="font-size: 16px; color: #7f8c8d;">
+            Evalúa el rendimiento y el riesgo de los activos financieros mediante métricas clave como la <strong>volatilidad diaria</strong>, el <strong>Sharpe Ratio</strong> y el <strong>Sortino Ratio</strong>.
+            Estas métricas son fundamentales para entender el comportamiento de un activo en relación con su retorno y su exposición al riesgo.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
     # Cargar datos de cotización
     cotizaciones_df = obtener_cotizaciones()
@@ -409,10 +481,12 @@ elif pagina == "Análisis de Métricas Financieras":
         cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'])
 
     # Selección de activo
+    st.markdown("<h3 style='color: #3498db;'>Seleccione el Activo</h3>", unsafe_allow_html=True)
     empresas = cotizaciones_df['Company'].unique()
     empresa_seleccionada = st.selectbox("Seleccione la empresa", empresas)
 
     # Selección de periodo
+    st.markdown("<h3 style='color: #3498db;'>Seleccione el Periodo de Análisis</h3>", unsafe_allow_html=True)
     min_date = cotizaciones_df['Date'].min()
     max_date = cotizaciones_df['Date'].max()
     fecha_inicio = st.date_input("Fecha de inicio", value=min_date, min_value=min_date, max_value=max_date)
@@ -424,7 +498,7 @@ elif pagina == "Análisis de Métricas Financieras":
 
     # Validar el rango de fechas
     if fecha_inicio > fecha_fin:
-        st.error("La fecha de inicio no puede ser posterior a la fecha de fin.")
+        st.error("❌ La fecha de inicio no puede ser posterior a la fecha de fin.")
     else:
         # Filtrar los datos para el rango de fechas seleccionado
         df_filtrado = cotizaciones_df[
@@ -439,33 +513,73 @@ elif pagina == "Análisis de Métricas Financieras":
             cotizaciones = df_filtrado['Close']
             metricas = calcular_metricas(cotizaciones)
 
-            # Mostrar resultados
-            st.subheader(f"Métricas para {empresa_seleccionada} del {fecha_inicio.date()} al {fecha_fin.date()}")
-            st.write(f"**Volatilidad diaria**: {metricas['volatilidad_diaria']:.4f}")
-            st.write(f"**Sharpe Ratio**: {metricas['sharpe_ratio']:.4f}" if metricas['sharpe_ratio'] else "Sharpe Ratio no calculable.")
-            st.write(f"**Sortino Ratio**: {metricas['sortino_ratio']:.4f}" if metricas['sortino_ratio'] else "Sortino Ratio no calculable.")
-            # Explicaciones de las métricas
-            st.write("""
-            ### Explicaciones de las métricas:
-            - **Volatilidad diaria:** Mide cuánto fluctúan los precios del activo diariamente. Una alta volatilidad indica mayor riesgo, pero también mayores oportunidades de retorno.
-            - **Sharpe Ratio:** Evalúa el rendimiento ajustado al riesgo del activo. 
-              - Un Sharpe Ratio positivo indica que el activo ofrece un retorno superior a la tasa libre de riesgo ajustado por su volatilidad.
-              - Valores típicos: 
-                - > 1.0: Bueno.
-                - > 2.0: Muy bueno.
-                - > 3.0: Excelente.
-            - **Sortino Ratio:** Similar al Sharpe Ratio, pero considera únicamente el riesgo asociado a retornos negativos.
-              - Es más adecuado para evaluar activos en los que los inversores quieren evitar pérdidas en lugar de volatilidad general.
-              - Un Sortino Ratio alto indica que el activo ofrece un buen retorno por unidad de riesgo de pérdida.
-            """)
+            # Mostrar resultados en tarjetas
+            st.markdown("<h3 style='color: #2c3e50;'>📈 Métricas Calculadas</h3>", unsafe_allow_html=True)
+            st.markdown("""
+            <div style="display: flex; justify-content: space-around; margin-top: 20px; margin-bottom: 40px;">
+                <div style="background-color: #ecf0f1; border-radius: 10px; padding: 20px; text-align: center; width: 30%;">
+                    <h4 style="color: #3498db;">Volatilidad Diaria</h4>
+                    <p style="font-size: 20px; font-weight: bold; color: #2c3e50;">{:.4f}</p>
+                </div>
+                <div style="background-color: #ecf0f1; border-radius: 10px; padding: 20px; text-align: center; width: 30%;">
+                    <h4 style="color: #3498db;">Sharpe Ratio</h4>
+                    <p style="font-size: 20px; font-weight: bold; color: #2c3e50;">{:.4f}</p>
+                </div>
+                <div style="background-color: #ecf0f1; border-radius: 10px; padding: 20px; text-align: center; width: 30%;">
+                    <h4 style="color: #3498db;">Sortino Ratio</h4>
+                    <p style="font-size: 20px; font-weight: bold; color: #2c3e50;">{:.4f}</p>
+                </div>
+            </div>
+            """.format(
+                metricas['volatilidad_diaria'],
+                metricas['sharpe_ratio'] if metricas['sharpe_ratio'] else 0.0000,
+                metricas['sortino_ratio'] if metricas['sortino_ratio'] else 0.0000
+            ), unsafe_allow_html=True)
+
+            # Espacio antes del desplegable
+            st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
+
+            # Explicaciones en una sección desplegable
+            with st.expander("ℹ️ Explicaciones de las Métricas"):
+                st.markdown("""
+                <ul>
+                    <li><strong>Volatilidad diaria:</strong> Mide cuánto fluctúan los precios del activo diariamente. Una alta volatilidad indica mayor riesgo, pero también mayores oportunidades de retorno.</li>
+                    <li><strong>Sharpe Ratio:</strong> Evalúa el rendimiento ajustado al riesgo del activo.
+                        <ul>
+                            <li>Un Sharpe Ratio positivo indica que el activo ofrece un retorno superior a la tasa libre de riesgo ajustado por su volatilidad.</li>
+                            <li>Valores típicos:
+                                <ul>
+                                    <li>> 1.0: Bueno.</li>
+                                    <li>> 2.0: Muy bueno.</li>
+                                    <li>> 3.0: Excelente.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Sortino Ratio:</strong> Similar al Sharpe Ratio, pero considera únicamente el riesgo asociado a retornos negativos.
+                        <ul>
+                            <li>Es más adecuado para evaluar activos en los que los inversores quieren evitar pérdidas en lugar de volatilidad general.</li>
+                            <li>Un Sortino Ratio alto indica que el activo ofrece un buen retorno por unidad de riesgo de pérdida.</li>
+                        </ul>
+                    </li>
+                </ul>
+                """, unsafe_allow_html=True)
+
             # Graficar retornos diarios
             retornos_diarios = cotizaciones.pct_change().dropna()
+            st.markdown("<h3 style='color: #2c3e50;'>📉 Gráfico de Retornos Diarios</h3>", unsafe_allow_html=True)
             fig = go.Figure()
             fig.add_trace(go.Scatter(x=retornos_diarios.index, y=retornos_diarios, mode='lines', name="Retornos Diarios"))
-            fig.update_layout(title="Evolución de Retornos Diarios", xaxis_title="Fecha", yaxis_title="Retornos Diarios")
+            fig.update_layout(
+                title="Evolución de Retornos Diarios",
+                xaxis_title="Fecha",
+                yaxis_title="Retornos Diarios",
+                template="plotly_white"
+            )
             st.plotly_chart(fig)
         else:
-            st.warning(f"No se encontraron datos para {empresa_seleccionada} entre {fecha_inicio.date()} y {fecha_fin.date()}.")
+            st.warning(f"⚠️ No se encontraron datos para {empresa_seleccionada} entre {fecha_inicio.date()} y {fecha_fin.date()}.")
+
 
 # Base de Datos
 elif pagina == "Base de Datos":
@@ -516,7 +630,6 @@ elif pagina == "Modelo de Clustering":
     st.write("""
     en desarrollo...
     """)
-
 
 # About Us
 elif pagina == "About Us":
