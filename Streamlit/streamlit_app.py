@@ -58,24 +58,35 @@ elif pagina == "Análisis Exploratorio":
     fecha_inicio = st.date_input("Fecha de inicio", value=min_date, min_value=min_date, max_value=max_date)
     fecha_fin = st.date_input("Fecha de fin", value=max_date, min_value=min_date, max_value=max_date)
 
+   
     # Botón para mostrar gráfico de velas
-    if st.button("Mostrar Gráfico de Velas"):
-        # Validar rango de fechas
-        if fecha_inicio > fecha_fin:
-            st.error("La fecha de inicio no puede ser posterior a la fecha de fin.")
+if st.button("Mostrar Gráfico de Velas"):
+    # Convertir la columna 'Date' a datetime si no lo está
+    if cotizaciones_df['Date'].dtype != 'datetime64[ns]':
+        cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'])
+
+    # Convertir fechas seleccionadas a datetime si no lo están
+    fecha_inicio = pd.to_datetime(fecha_inicio)
+    fecha_fin = pd.to_datetime(fecha_fin)
+
+    # Validar rango de fechas
+    if fecha_inicio > fecha_fin:
+        st.error("La fecha de inicio no puede ser posterior a la fecha de fin.")
+    else:
+        # Filtrar datos para el rango de fechas y empresa seleccionada
+        df_filtrado = cotizaciones_df[
+            (cotizaciones_df['Company'] == empresa_seleccionada) &
+            (cotizaciones_df['Date'] >= fecha_inicio) &
+            (cotizaciones_df['Date'] <= fecha_fin)
+        ]
+
+        if not df_filtrado.empty:
+            # Mostrar gráfico de velas
+            fig = graficar_velas(df_filtrado, empresa_seleccionada)
+            st.plotly_chart(fig)
         else:
-            # Filtrar datos para el rango de fechas y empresa seleccionada
-            df_filtrado = cotizaciones_df[
-                (cotizaciones_df['Company'] == empresa_seleccionada) &
-                (cotizaciones_df['Date'] >= fecha_inicio) &
-                (cotizaciones_df['Date'] <= fecha_fin)
-            ]
-            if not df_filtrado.empty:
-                # Mostrar gráfico de velas
-                fig = graficar_velas(df_filtrado, empresa_seleccionada)
-                st.plotly_chart(fig)
-            else:
-                st.warning(f"No hay datos disponibles para {empresa_seleccionada} en el rango de fechas seleccionado.")
+            st.warning(f"No hay datos disponibles para {empresa_seleccionada} en el rango de fechas seleccionado.")
+
 
     # Subsección: Análisis de correlación
     st.subheader("Análisis de Correlación entre Activos")
