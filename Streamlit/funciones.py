@@ -244,48 +244,34 @@ def calcular_metricas(cotizaciones, tasa_libre_riesgo=0):
 
 import plotly.graph_objects as go
 
-def crear_grafico_velas(dataframe, titulo="Gráfico de Velas"):
+def graficar_velas(df, empresa_seleccionada):
     """
-    Genera un gráfico de velas utilizando Plotly.
+    Genera un gráfico de velas basado en los datos proporcionados.
     
     Parámetros:
-        - dataframe: pandas.DataFrame que contiene las columnas necesarias para el gráfico.
-        - titulo: Título del gráfico (opcional).
-        
-    Columnas requeridas en el DataFrame:
-        - Date: Fecha (datetime64)
-        - Open: Precio de apertura
-        - High: Precio máximo
-        - Low: Precio mínimo
-        - Close: Precio de cierre
+    ----------
+    df : pandas.DataFrame
+        DataFrame con columnas 'Date', 'Open', 'High', 'Low', 'Close'.
+    empresa_seleccionada : str
+        Nombre de la empresa para el título del gráfico.
     
-    Retorna:
-        - fig: Objeto Plotly Figure con el gráfico de velas.
+    Retorno:
+    -------
+    plotly.graph_objects.Figure
+        Gráfico de velas.
     """
-    try:
-        # Verificar si las columnas necesarias están en el DataFrame
-        columnas_requeridas = ["Date", "Open", "High", "Low", "Close"]
-        for columna in columnas_requeridas:
-            if columna not in dataframe.columns:
-                raise ValueError(f"La columna '{columna}' no está presente en el DataFrame.")
+    fig = go.Figure(data=[go.Candlestick(
+        x=df['Date'],
+        open=df['Open'],
+        high=df['High'],
+        low=df['Low'],
+        close=df['Close']
+    )])
+    fig.update_layout(
+        title=f"Gráfico de Velas - {empresa_seleccionada}",
+        xaxis_title="Fecha",
+        yaxis_title="Precio",
+        template="plotly_white"
+    )
+    return fig
 
-        # Crear el gráfico de velas
-        fig = go.Figure(data=[go.Candlestick(
-            x=dataframe['Date'],
-            open=dataframe['Open'],
-            high=dataframe['High'],
-            low=dataframe['Low'],
-            close=dataframe['Close']
-        )])
-
-        # Configuración del diseño
-        fig.update_layout(
-            title=titulo,
-            xaxis_title="Fecha",
-            yaxis_title="Precio",
-            xaxis_rangeslider_visible=False
-        )
-        return fig
-    except Exception as e:
-        print(f"Error al crear el gráfico de velas: {e}")
-        return None

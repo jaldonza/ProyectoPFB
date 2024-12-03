@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
-from funciones import obtener_cotizaciones, graficar_precios_historicos, graficar_medias_moviles, graficar_rsi, calcular_metricas
+from funciones import obtener_cotizaciones, graficar_precios_historicos, graficar_medias_moviles, graficar_rsi, calcular_metricas, graficar_velas
 
 # Configuración de la aplicación Streamlit
 st.set_page_config(page_title="Yahoo Finance App", layout="wide")
@@ -36,12 +36,12 @@ if pagina == "Landing Page":
 # Análisis Exploratorio
 elif pagina == "Análisis Exploratorio":
     st.header("Análisis Exploratorio")
+    
     # Introducción a la sección
     st.write("""
     En esta sección puedes explorar visualizaciones clave y relaciones entre activos del S&P500. 
     Estas herramientas permiten analizar tendencias, correlaciones y comportamientos históricos para una mejor toma de decisiones financieras.
     """)
-    cotizaciones_df = obtener_cotizaciones()
 
     # Cargar datos de cotización
     cotizaciones_df = obtener_cotizaciones()
@@ -50,70 +50,32 @@ elif pagina == "Análisis Exploratorio":
     if cotizaciones_df['Date'].dtype != 'datetime64[ns]':
         cotizaciones_df['Date'] = pd.to_datetime(cotizaciones_df['Date'])
 
-    # Dropdown para seleccionar la empresa
+    # Seleccionar empresa y rango de fechas
     empresas = cotizaciones_df['Company'].unique()
     empresa_seleccionada = st.selectbox("Seleccione la empresa", empresas)
-
-    # Seleccionar el rango de fechas
     min_date = cotizaciones_df['Date'].min()
     max_date = cotizaciones_df['Date'].max()
     fecha_inicio = st.date_input("Fecha de inicio", value=min_date, min_value=min_date, max_value=max_date)
     fecha_fin = st.date_input("Fecha de fin", value=max_date, min_value=min_date, max_value=max_date)
 
-    # Convertir fechas seleccionadas a datetime si no lo están
-    fecha_inicio = pd.to_datetime(fecha_inicio)
-    fecha_fin = pd.to_datetime(fecha_fin)
-
-    # Validar que fecha_inicio no sea posterior a fecha_fin
-    if fecha_inicio > fecha_fin:
-        st.error("La fecha de inicio no puede ser posterior a la fecha de fin.")
-    else:
-        # Filtrar los datos para el rango de fechas
-        df = cotizaciones_df[
-            (cotizaciones_df['Company'] == empresa_seleccionada) & 
-            (cotizaciones_df['Date'] >= fecha_inicio) & 
-            (cotizaciones_df['Date'] <= fecha_fin)
-        ]
-
-        # Seleccionar el tipo de gráfico
-        tab = st.selectbox("Seleccione una visualización", ["Precios Históricos", "Medias Móviles", "RSI"])
-    
-        # Mostrar gráfico según la pestaña seleccionada
-        if not df.empty:
-            if tab == "Precios Históricos":
-                st.plotly_chart(graficar_precios_historicos(df, empresa_seleccionada))
-                st.write("""
-                **Precios Históricos:**
-                Este gráfico muestra la evolución histórica de los precios de cierre del activo seleccionado.
-                Es útil para identificar tendencias generales y períodos de alta o baja volatilidad.
-                """)
-            elif tab == "Medias Móviles":
-                st.plotly_chart(graficar_medias_moviles(df, empresa_seleccionada))
-                st.write("""
-                **Medias Móviles Simples (SMA):**
-                - La SMA50 (50 días) es una medida de corto plazo que suaviza los movimientos diarios del precio para identificar tendencias inmediatas.
-                - La SMA200 (200 días) es una medida de largo plazo que muestra la tendencia general de un activo.
-                
-                **Cómo Interpretar:**
-                - Cuando la SMA50 cruza por encima de la SMA200, puede ser una señal de compra (cambio a tendencia alcista).
-                - Cuando la SMA50 cruza por debajo de la SMA200, puede ser una señal de venta (cambio a tendencia bajista).
-                """)
-            elif tab == "RSI":
-                st.plotly_chart(graficar_rsi(df, empresa_seleccionada))
-                st.write("""
-                **Índice de Fuerza Relativa (RSI):**
-                - El RSI mide la velocidad y el cambio de los movimientos de precios.
-                - Escala de 0 a 100.
-                
-                **Cómo Interpretar:**
-                - Un RSI por encima de 70 indica un activo sobrecomprado (potencial corrección o reversión a la baja).
-                - Un RSI por debajo de 30 indica un activo sobrevendido (potencial rebote o recuperación).
-                
-                **Uso Práctico:**
-                Ayuda a identificar condiciones extremas del mercado y posibles puntos de entrada/salida.
-                """)
+    # Botón para mostrar gráfico de velas
+    if st.button("Mostrar Gráfico de Velas"):
+        # Validar rango de fechas
+        if fecha_inicio > fecha_fin:
+            st.error("La fecha de inicio no puede ser posterior a la fecha de fin.")
         else:
-            st.warning(f"No hay datos disponibles para {empresa_seleccionada} en el rango de fechas seleccionado.")
+            # Filtrar datos para el rango de fechas y empresa seleccionada
+            df_filtrado = cotizaciones_df[
+                (cotizaciones_df['Company'] == empresa_seleccionada) &
+                (cotizaciones_df['Date'] >= fecha_inicio) &
+                (cotizaciones_df['Date'] <= fecha_fin)
+            ]
+            if not df_filtrado.empty:
+                # Mostrar gráfico de velas
+                fig = graficar_velas(df_filtrado, empresa_seleccionada)
+                st.plotly_chart(fig)
+            else:
+                st.warning(f"No hay datos disponibles para {empresa_seleccionada} en el rango de fechas seleccionado.")
 
     # Subsección: Análisis de correlación
     st.subheader("Análisis de Correlación entre Activos")
@@ -121,7 +83,7 @@ elif pagina == "Análisis Exploratorio":
     Este análisis muestra cómo se relacionan los precios de diferentes activos. 
     Una alta correlación positiva indica que los activos tienden a moverse en la misma dirección, mientras que una correlación negativa indica movimientos opuestos.
     """)
-    activo_principal = st.selectbox("Seleccione el activo principal", empresas)
+    activo_principal = st.selectbox("Seleccione el activo principal", empresas, key="activo_principal")
     activos_comparar = st.multiselect("Seleccione hasta 4 activos para comparar", empresas, default=empresas[:4])
 
     if activo_principal and len(activos_comparar) > 0:
@@ -149,23 +111,25 @@ elif pagina == "Análisis Exploratorio":
         ))
         fig_heatmap.update_layout(title="Mapa de Calor de Correlación", xaxis_title="Activos", yaxis_title="Activos")
         st.plotly_chart(fig_heatmap)
+
     # Explicaciones al final
     st.subheader("Explicaciones")
     st.write("""
-    ### Medias Móviles (SMA)
-    Las medias móviles suavizan las fluctuaciones de precios para identificar tendencias más fácilmente. 
-    - **Interpretación:** Cuando el precio actual está por encima de una media móvil, puede indicar una tendencia alcista.
-    - **SMA-50:** Utilizada para analizar tendencias de corto plazo.
-    - **SMA-200:** Ayuda a identificar tendencias de largo plazo.
+    ### Gráfico de Velas
+    Este gráfico muestra los precios de apertura, cierre, máximos y mínimos de un activo para el rango de fechas seleccionado. 
+    Es útil para identificar patrones de precios y tendencias de mercado.
+    - **Interpretación:**
+      - Una vela verde indica que el precio de cierre fue superior al de apertura (tendencia alcista).
+      - Una vela roja indica que el precio de cierre fue inferior al de apertura (tendencia bajista).
 
-    ### RSI (Índice de Fuerza Relativa)
-    El RSI mide la fuerza de las recientes ganancias frente a las recientes pérdidas en un rango de tiempo.
-    - **Interpretación:** Un RSI superior a 70 puede indicar una acción sobrecomprada, mientras que un RSI inferior a 30 puede señalar una acción sobrevendida.
-    
     ### Análisis de Correlación
-    Evalúa cómo los movimientos de diferentes activos están relacionados.
-    - **Interpretación:** Una correlación cercana a 1 indica una relación directa fuerte, mientras que una correlación cercana a -1 indica una relación inversa fuerte.
+    Este análisis evalúa cómo se relacionan los movimientos de precios entre diferentes activos:
+    - **Valores cercanos a 1:** Los activos tienden a moverse en la misma dirección.
+    - **Valores cercanos a -1:** Los activos tienden a moverse en direcciones opuestas.
+    - **Valores cercanos a 0:** Los activos no tienen relación significativa.
     """)
+
+
 # Dashboard Financiero
 elif pagina == "Dashboard Financiero":
     st.header("Dashboard Financiero")
