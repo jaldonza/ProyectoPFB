@@ -3,9 +3,6 @@ import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
 from funciones import obtener_cotizaciones, graficar_precios_historicos, graficar_medias_moviles, graficar_rsi, calcular_metricas, graficar_velas
-from sklearn.cluster import KMeans
-from sklearn.ensemble import RandomForestClassifier
-import mysql.connector
 
 # Configuración de la aplicación Streamlit
 st.set_page_config(page_title="Yahoo Finance App", layout="wide")
@@ -461,7 +458,8 @@ elif pagina == "Dashboard Financiero":
         """, unsafe_allow_html=True)
 
 
-# Análisis de Métricas Financieras 
+
+# Análisis de Métricas Financieras Mejorado
 elif pagina == "Análisis de Métricas Financieras":
     st.markdown("""
     <div style="text-align: center; padding: 20px; background-color: #f4f4f4; border-radius: 10px; margin-bottom: 20px;">
