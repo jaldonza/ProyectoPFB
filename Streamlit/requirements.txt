@@ -8,4 +8,8 @@ dash
 plotly>=5.0.0
 dash-core-components
 dash-html-components
-
+scikit-learn
+sqlalchemy
+plotly-express
+psycopg2-binary
+mysql-connector-python
