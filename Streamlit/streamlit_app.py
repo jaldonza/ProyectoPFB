@@ -3,6 +3,11 @@ import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
 from funciones import obtener_cotizaciones, graficar_precios_historicos, graficar_medias_moviles, graficar_rsi, calcular_metricas, graficar_velas
+import plotly.express as px
+import pickle
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
 
 # Configuración de la aplicación Streamlit
 st.set_page_config(page_title="Yahoo Finance App", layout="wide")
