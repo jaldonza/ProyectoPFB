@@ -275,3 +275,107 @@ def graficar_velas(df, empresa_seleccionada):
     )
     return fig
 
+
+
+import pandas as pd
+import pymysql
+from sqlalchemy import create_engine
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+import pickle
+import os
+
+# Si usas Streamlit cache
+import streamlit as st
+
+def conectar_bbdd():
+    host = "pfb.cp2wsq8yih32.eu-north-1.rds.amazonaws.com"
+    user = "admin"
+    password = "11jablum11"
+    database = "yfinance"
+    port = 3306
+    connection_url = f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+    engine = create_engine(connection_url)
+    return engine
+
+def cargar_modelo():
+    # Ruta relativa al archivo actual
+    modelo_path = os.path.join(os.path.dirname(__file__), "modelo_clustering_entrenado.pkl")
+    try:
+        with open(modelo_path, "rb") as file:
+            modelo = pickle.load(file)
+        return modelo
+    except FileNotFoundError:
+        raise FileNotFoundError(f"No se encontró el archivo del modelo en la ruta: {modelo_path}")
+    except Exception as e:
+        raise RuntimeError(f"Error al cargar el modelo: {e}")
+
+def obtener_datos(engine):
+    query = """
+    SELECT
+        e.id_empresa,
+        e.simbolo,
+        e.sector,
+        e.industria,
+        p.precio_apertura,
+        p.precio_cierre,
+        p.maximo,
+        p.minimo,
+        p.volumen
+    FROM
+        empresas_sp500 e
+    INNER JOIN
+        precios_historicos p
+    ON
+        e.id_empresa = p.id_empresa
+    """
+    return pd.read_sql(query, engine)
+
+
+import os
+import pickle
+
+def cargar_columnas_y_scaler():
+    # Ruta base donde están los archivos
+    base_path = os.path.dirname(__file__)  # Obtiene el directorio del archivo actual
+    columnas_path = os.path.join(base_path, "columnas_entrenamiento.pkl")
+    scaler_path = os.path.join(base_path, "scaler_entrenado.pkl")
+    
+    try:
+        # Cargar columnas de entrenamiento
+        with open(columnas_path, "rb") as f_col:
+            columnas_entrenamiento = pickle.load(f_col)
+        
+        # Cargar el escalador
+        with open(scaler_path, "rb") as f_scaler:
+            scaler = pickle.load(f_scaler)
+        
+        return columnas_entrenamiento, scaler
+    except FileNotFoundError as e:
+        raise FileNotFoundError(
+            f"No se encontraron los archivos necesarios. "
+            f"Verifica que estén en la ruta correcta:\n"
+            f"Columnas: {columnas_path}\n"
+            f"Scaler: {scaler_path}"
+        ) from e
+
+
+def preprocesar_datos(datos, columnas_entrenamiento, scaler):
+    """
+    Preprocesa los datos de entrada para que coincidan con el formato esperado por el modelo.
+
+    Parámetros:
+    - datos: DataFrame con las características originales.
+    - columnas_entrenamiento: lista de columnas esperadas por el modelo.
+    - scaler: objeto StandardScaler utilizado en el entrenamiento.
+
+    Retorna:
+    - datos_normalizados: matriz de datos escalados lista para ser utilizada por el modelo.
+    """
+    # Asegurar que los datos tengan las mismas columnas que el modelo de entrenamiento
+    datos_procesados = datos.reindex(columns=columnas_entrenamiento, fill_value=0)
+
+    # Escalar los datos
+    datos_normalizados = scaler.transform(datos_procesados)
+
+    return datos_normalizados

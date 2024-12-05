@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
-from funciones import obtener_cotizaciones, graficar_precios_historicos, graficar_medias_moviles, graficar_rsi, calcular_metricas, graficar_velas
+from funciones import obtener_cotizaciones, graficar_precios_historicos, graficar_medias_moviles, graficar_rsi, calcular_metricas, graficar_velas, conectar_bbdd, cargar_modelo, obtener_datos, cargar_columnas_y_scaler, preprocesar_datos
 import plotly.express as px
 import pickle
 from sklearn.preprocessing import StandardScaler
@@ -630,9 +630,85 @@ elif pagina == "Base de Datos":
 # Modelo de CLusterig
 elif pagina == "Modelo de Clustering":
     st.header("Modelo de Clustering")
-    st.write("""
-    en desarrollo...
-    """)
+    # Introducción estilizada
+    st.markdown("""
+    <div style="padding:10px; background-color:#f9f9f9; border-radius:10px;">
+        <h4 style="color:#3498db;">¿Qué puedes hacer aquí?</h4>
+        <ul>
+            <li>Seleccionar empresas de la base de datos y clasificarlas.</li>
+            <li>Ver a qué clúster pertenecen.</li>
+            <li>Visualizar los clústeres en un espacio reducido (PCA).</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Conectar a la base de datos y cargar el modelo
+    engine = conectar_bbdd()
+    modelo = cargar_modelo()
+    columnas_entrenamiento, scaler = cargar_columnas_y_scaler()
+
+    # Cargar datos desde la base de datos
+    st.markdown("### Selección de Empresas")
+    datos = obtener_datos(engine)
+
+    # Mostrar las empresas disponibles
+    empresas_disponibles = datos["simbolo"].unique()
+    empresa_seleccionada = st.selectbox("Seleccione una empresa para clasificar:", empresas_disponibles)
+
+    # Botón para clasificar
+    if st.button("Clasificar Empresa"):
+        # Filtrar los datos de la empresa seleccionada
+        datos_empresa = datos[datos["simbolo"] == empresa_seleccionada]
+
+        if not datos_empresa.empty:
+            # Procesar los datos de entrada
+            columnas_relevantes = [col for col in datos_empresa.columns if col not in ["id_empresa", "simbolo", "sector", "industria"]]
+            datos_empresa_procesados = datos_empresa[columnas_relevantes]
+
+            try:
+                # Preprocesar datos
+                datos_normalizados = preprocesar_datos(datos_empresa_procesados, columnas_entrenamiento, scaler)
+
+                # Realizar la predicción
+                prediccion = modelo.predict(datos_normalizados)
+                datos_empresa["cluster"] = prediccion
+
+                st.success(f"Clasificación completada. {empresa_seleccionada} pertenece al clúster {prediccion[0]}.")
+                st.dataframe(datos_empresa)
+
+                # Visualización de clústeres
+                st.markdown("### Visualización del Clúster")
+                pca = PCA(n_components=2)
+                pca_result = pca.fit_transform(datos_normalizados)
+                pca_df = pd.DataFrame({
+                    "Componente Principal 1": pca_result[:, 0],
+                    "Componente Principal 2": pca_result[:, 1],
+                    "Cluster": datos_empresa["cluster"]
+                })
+
+                fig = px.scatter(
+                    pca_df,
+                    x="Componente Principal 1",
+                    y="Componente Principal 2",
+                    color="Cluster",
+                    title="Visualización de Clúster (PCA)",
+                    color_continuous_scale=px.colors.sequential.Viridis,
+                    labels={"Cluster": "Cluster"},
+                    template="plotly_white"
+                )
+                st.plotly_chart(fig)
+
+            except ValueError as e:
+                st.error(f"Error durante el preprocesamiento o predicción: {e}")
+        else:
+            st.warning(f"No se encontraron datos para la empresa seleccionada ({empresa_seleccionada}).")
+
+    # Mensaje final
+    st.markdown("""
+    <div style="text-align:center; margin-top:20px;">
+        <p>Explora más funcionalidades en otras secciones de la aplicación.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # About Us
 elif pagina == "About Us":
